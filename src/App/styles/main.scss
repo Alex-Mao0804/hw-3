@@ -1,0 +1,43 @@
+@use './variables.scss' as vars;
+@use './fonts.scss';
+
+html, body {
+  font-family: 'Roboto';
+  margin: 0;
+  padding: 0;
+}
+
+// * {
+//   box-sizing: border-box;
+// }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+pre {
+  margin: 0;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border: unset;
+  background: unset;
+}

@@ -1,0 +1,24 @@
+@use "@variables" as vars;
+
+.header__tabs {
+  height: 100%;
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    height: 100%;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      height: 100%;
+    }
+  }
+}
+
+.active {
+  border-bottom: 2px solid vars.$color-accent;
+}

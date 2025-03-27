@@ -1,0 +1,33 @@
+@use "@variables" as vars;
+
+.product_page {
+  @include vars.center-container;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 128px;
+}
+
+.navigation {
+  margin-right: auto;
+  margin-top: 60px;
+  margin-bottom: 32px;
+  height: 48px;
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: vars.$space-xs;
+    cursor: pointer;
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    rotate: 180deg;
+  }
+}
+
+.content {
+  display: flex;
+  gap: vars.$space-xxl;
+  flex-direction: column;
+}

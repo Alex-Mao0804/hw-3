@@ -1,0 +1,17 @@
+@use '@variables' as vars;
+
+.icon {
+  color: inherit;
+
+  &.primary {
+    color: vars.$color-primary;
+  }
+
+  &.secondary {
+    color: vars.$color-secondary;
+  }
+
+  &.accent {
+    color: vars.$color-accent;
+  }
+}

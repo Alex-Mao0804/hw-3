@@ -1,0 +1,60 @@
+@use '@variables' as vars;
+
+.card {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  cursor: pointer;
+  background: vars.$color-card-bg;
+  // background-color: vars.$color-bg;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.card__image {
+  @include vars.skeleton(360px, 360px);
+}
+
+.card__content {
+  padding:  vars.$space-xl vars.$space-xs;
+  display: flex;
+  flex-direction: column;
+  background: vars.$color-bg;
+}
+
+.card__text {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$space-xxs;
+  margin-bottom: vars.$space-l;
+}
+
+.card__footer {
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+
+.card__footer__action {
+  margin-left: auto;
+  @include vars.skeleton(150px, 52px);
+
+}
+
+.skeleton {
+  &__captionSlot {
+    @include vars.skeleton(240px, 18px);
+  }
+
+  &__title {
+    @include vars.skeleton(100%, 43px);
+  }
+
+  &__subtitle{
+    @include vars.skeleton(100%, 14px);
+  }
+}

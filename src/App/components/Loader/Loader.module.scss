@@ -1,0 +1,33 @@
+@use '@variables' as vars;
+
+.loader {
+  animation: rotation 1s linear infinite;
+}
+
+.loader__color {
+  fill: vars.$color-accent;
+}
+
+.s_size {
+  width: 24px;
+  height: 24px;
+}
+
+.m_size {
+  width: 48px;
+  height: 48px;
+}
+
+.l_size {
+  width: 60px;
+  height: 60px;
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 

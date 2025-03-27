@@ -1,0 +1,36 @@
+@use '@variables' as vars;
+
+.input_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: vars.$space-m vars.$space-xs;
+  gap: vars.$space-xxs;
+  box-sizing: border-box;
+  border: 1px solid vars.$button-primary-text;;
+  background: vars.$button-primary-text;
+  height: 52px;
+}
+
+.input_field {
+  flex: 1;
+  border: none;
+  font-size: vars.$font-size-p-16;
+  font-weight: vars.$font-weight-normal;
+  line-height: 125%;
+  color: vars.$color-primary;
+  outline: none;
+}
+
+.input_field:disabled {
+  background: none;
+}
+
+.input_container:focus-within {
+  border: 1px solid vars.$color-accent;
+}
+
+.input_after_slot {
+  display: flex;
+  align-items: center;
+}
