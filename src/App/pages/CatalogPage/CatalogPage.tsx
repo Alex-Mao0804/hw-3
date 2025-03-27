@@ -6,11 +6,7 @@ import Button from "@components/Button";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogProducts from "./components/CatalogProducts";
 import Pagination from "@components/Pagination";
-import {
-  getCategories,
-  getProductsTotal,
-  getProductsWithLimit,
-} from "@api";
+import { getCategories, getProductsTotal, getProductsWithLimit } from "@api";
 import { TCategory, TProduct } from "@types";
 
 const CatalogPage = () => {

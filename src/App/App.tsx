@@ -4,7 +4,7 @@ import "@styles/main.scss";
 import CatalogPage from "@pages/CatalogPage";
 import Header from "@components/Header";
 import ProductPage from "@pages/ProductPage";
-import ROUTES from '@routes';
+import ROUTES from "@routes";
 
 const App = () => {
   return (

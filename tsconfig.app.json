@@ -16,16 +16,14 @@
     "jsx": "react-jsx",
 
     /* Aliases */
-    "baseUrl": ".", 
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"], 
+      "@/*": ["src/*"],
       "@routes": ["src/App/utils/routes"],
       "@components/*": ["src/App/components/*"],
       "@pages/*": ["src/App/pages/*"],
       "@api": ["src/App/utils/api"],
-      "@types": ["src/App/utils/types"],
-
-
+      "@types": ["src/App/utils/types"]
     },
 
     /* Linting */
