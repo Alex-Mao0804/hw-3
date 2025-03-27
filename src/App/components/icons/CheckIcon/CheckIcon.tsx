@@ -1,5 +1,6 @@
-import * as React from 'react';
-import Icon, { IconProps } from '../Icon';
+import React from "react";
+import Icon from "@components/icons/Icon";
+import { IconProps } from "@components/icons/Icon/Icon";
 
 const CheckIcon: React.FC<IconProps> = (props) => {
   return (

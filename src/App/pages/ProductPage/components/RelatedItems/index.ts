@@ -1,1 +1,1 @@
-export {default} from './RelatedItems';
+export { default } from "./RelatedItems";

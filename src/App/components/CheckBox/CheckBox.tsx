@@ -1,11 +1,11 @@
-import React from 'react';
-import clsx from 'clsx';
-import styles from './CheckBox.module.scss';
-import CheckIcon from '../icons/CheckIcon';
+import React from "react";
+import clsx from "clsx";
+import styles from "./CheckBox.module.scss";
+import CheckIcon from "@components/icons/CheckIcon";
 
 export type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
+  "onChange"
 > & {
   /** Вызывается при клике на чекбокс */
   onChange: (checked: boolean) => void;
@@ -29,8 +29,21 @@ const CheckBox: React.FC<CheckBoxProps> = ({
         aria-checked={checked}
         {...props}
       />
-      <span className={clsx(styles.checkbox_custom, !disabled && styles.checkbox_custom_hover, { checked, disabled })}>
-        {checked && <CheckIcon className={styles.checkbox_icon} width={40} height={40} color={disabled ? 'secondary' : 'accent'} />}
+      <span
+        className={clsx(
+          styles.checkbox_custom,
+          !disabled && styles.checkbox_custom_hover,
+          { checked, disabled },
+        )}
+      >
+        {checked && (
+          <CheckIcon
+            className={styles.checkbox_icon}
+            width={40}
+            height={40}
+            color={disabled ? "secondary" : "accent"}
+          />
+        )}
       </span>
     </label>
   );

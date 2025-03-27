@@ -1,16 +1,16 @@
-@use '@variables' as vars;
+@use "@variables" as vars;
 
 .button {
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
   min-height: 52px;
-  background-color: vars.$button-primary-bg;
   border: none;
-  color: vars.$button-primary-text;
   padding: 0 vars.$space-l;
-  font-size: vars.$font-size-p-18;
+  color: vars.$button-primary-text;
+  font-family: "Roboto", sans-serif;
   font-weight: vars.$font-weight-normal;
-  line-height: 100%;  
+  font-size: vars.$font-size-p-18;
+  line-height: 100%;
+  background-color: vars.$button-primary-bg;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -22,14 +22,14 @@
 }
 
 .button:disabled {
-  cursor: not-allowed;
   background-color: vars.$button-disabled-bg;
+  cursor: not-allowed;
 }
 
 .button.button__disabled {
+  background-color: vars.$button-primary-bg;
   cursor: not-allowed;
   pointer-events: none;
-  background-color: vars.$button-primary-bg;
 }
 
 .button__loader {

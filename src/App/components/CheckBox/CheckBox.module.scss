@@ -1,10 +1,10 @@
-@use '@variables' as vars;
+@use "@variables" as vars;
 
 .checkbox_wrapper {
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .checkbox_wrapper:hover .checkbox_custom_hover {
@@ -16,19 +16,19 @@
 }
 
 .checkbox_custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
-  background: vars.$button-primary-text;
   width: 40px;
   height: 40px;
   border: 1px solid vars.$button-primary-text;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: vars.$button-primary-text;
 }
 
 .checkbox_custom.disabled {
-  background: vars.$color-bg-disabled;
   border: 1px solid rgba(255, 255, 255, 0);
+  background: vars.$color-bg-disabled;
   pointer-events: none;
 }
 
@@ -37,6 +37,5 @@
 }
 
 .checkbox_icon {
- margin: -1px;
+  margin: -1px;
 }
-

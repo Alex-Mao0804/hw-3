@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./ProductPage.module.scss";
-import ArrowPaginationIcon from "../../components/icons/ArrowPaginationIcon";
-import Text from "../../components/Text";
+import ArrowPaginationIcon from "@components/icons/ArrowPaginationIcon";
+import Text from "@components/Text";
 import ProductItem from "./components/ProductItem";
-import { TProduct } from "../../utils/types";
+import { TProduct } from "@types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProduct, getRelatedProducts } from "../../utils/api";
+import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 

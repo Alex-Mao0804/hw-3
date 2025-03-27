@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Pagination.module.scss";
-import ArrowPaginationIcon from "../icons/ArrowPaginationIcon";
+import ArrowPaginationIcon from "@components/icons/ArrowPaginationIcon";
 import clsx from "clsx";
-import Button from "../Button";
+import Button from "@components/Button";
 
 export type TPaginationProps = {
   pageCount: number;
@@ -35,7 +35,7 @@ const Pagination: React.FC<TPaginationProps> = ({
 
   const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
     const pageNumber = Number((e.target as HTMLButtonElement).textContent);
-    setPage(pageNumber);    
+    setPage(pageNumber);
   };
   return (
     <div className={styles.pagination}>
@@ -47,16 +47,19 @@ const Pagination: React.FC<TPaginationProps> = ({
         <ArrowPaginationIcon />
       </button>
       <div>
-      {getPaginationGroup().map((item, index) => (
-        <Button
-          key={index}
-          onClick={changePage}
-          className={clsx(styles.pagination__button_group,page !== item && styles.pagination__button_noActive)}
-          disabled={item === "..."}
-        >
-          {item}
-        </Button>
-      ))}
+        {getPaginationGroup().map((item, index) => (
+          <Button
+            key={index}
+            onClick={changePage}
+            className={clsx(
+              styles.pagination__button_group,
+              page !== item && styles.pagination__button_noActive,
+            )}
+            disabled={item === "..."}
+          >
+            {item}
+          </Button>
+        ))}
       </div>
       <button
         className={styles.pagination__button}

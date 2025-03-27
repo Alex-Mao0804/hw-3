@@ -1,11 +1,10 @@
 import React from "react";
-
 import styles from "./Header.module.scss";
 import HeaderLogo from "./components/HeaderLogo";
 import HeaderTabs from "./components/HeaderTabs";
 import HeaderActions from "./components/HeaderActions";
 import { Link } from "react-router-dom";
-import ROUTES from "../../utils/routes";
+import ROUTES from "@routes";
 
 const Header: React.FC = () => {
   return (

@@ -1,16 +1,16 @@
 @use "@variables" as vars;
 
 .catalog_page {
-  @include vars.center-container;
   display: flex;
   flex-direction: column;
+  @include vars.center-container;
   &__header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 100px auto 50px;
     gap: vars.$space-xl;
     width: 653px;
+    margin: 100px auto 50px;
 
     &__description {
       text-align: center;
@@ -38,21 +38,17 @@
     }
   }
 
-  &__products {
-    
-  }
-
   &__pagination {
-    margin: 69px auto 115px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 69px auto 115px;
 
     &__button {
-      cursor: pointer;
       width: 35px;
       height: 35px;
       text-align: center;
+      cursor: pointer;
       &:first-child {
         rotate: 180deg;
       }

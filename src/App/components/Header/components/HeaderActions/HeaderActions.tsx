@@ -1,8 +1,6 @@
-import React from "react";
-import clsx from "clsx";
 import styles from "./HeaderActions.module.scss";
 import { Link } from "react-router-dom";
-import ROUTES from "../../../../utils/routes";
+import ROUTES from "@routes";
 
 const HeaderActions = () => {
   return (

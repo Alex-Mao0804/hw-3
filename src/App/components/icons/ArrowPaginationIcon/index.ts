@@ -1,1 +1,1 @@
-export { default } from './ArrowPaginationIcon';
+export { default } from "./ArrowPaginationIcon";

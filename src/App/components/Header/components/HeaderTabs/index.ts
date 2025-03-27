@@ -1,1 +1,1 @@
-export { default } from './HeaderTabs';
+export { default } from "./HeaderTabs";

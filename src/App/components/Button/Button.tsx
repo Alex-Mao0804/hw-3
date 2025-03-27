@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './Button.module.scss'; 
-import Loader from '../Loader';
-import clsx from 'clsx';
+import React from "react";
+import styles from "./Button.module.scss";
+import Loader from "@components/Loader";
+import clsx from "clsx";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
@@ -10,20 +10,33 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
 };
 
-const Button: React.FC<ButtonProps> = ({ loading, children, className, disabled,  onClick, ...props }) => {
+const Button: React.FC<ButtonProps> = ({
+  loading,
+  children,
+  className,
+  disabled,
+  onClick,
+  ...props
+}) => {
   return (
     <button
-      className={clsx(styles.button, className, 
-        styles.button__disabled && (!disabled && loading),
+      className={clsx(
+        styles.button,
+        className,
+        styles.button__disabled && !disabled && loading,
       )}
       disabled={disabled || loading}
-      onClick={loading ? undefined : onClick} 
+      onClick={loading ? undefined : onClick}
       {...props}
     >
-      {loading ? <div className={styles.button__loader}>
-        <Loader size='s' className={styles.loader_color_white}/>
-        <span>{children}</span>
-      </div> : children}
+      {loading ? (
+        <div className={styles.button__loader}>
+          <Loader size="s" className={styles.loader_color_white} />
+          <span>{children}</span>
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 };

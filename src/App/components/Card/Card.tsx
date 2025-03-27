@@ -1,5 +1,5 @@
 import React from "react";
-import Text from "../Text";
+import Text from "@components/Text";
 import styles from "./Card.module.scss";
 import clsx from "clsx";
 
@@ -46,7 +46,12 @@ const Card: React.FC<CardProps> = ({
               {captionSlot}
             </Text>
           )}
-          <Text className={styles.card__title} maxLines={2} weight="medium" view="p-20">
+          <Text
+            className={styles.card__title}
+            maxLines={2}
+            weight="medium"
+            view="p-20"
+          >
             {title}
           </Text>
           <Text maxLines={3} weight="normal" view="p-16" color="secondary">

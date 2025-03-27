@@ -1,11 +1,11 @@
 import React from "react";
-import Text from "../../../../components/Text";
+import Text from "@components/Text";
 import styles from "./RelatedItems.module.scss";
-import { TProduct } from "../../../../utils/types";
-import Button from "../../../../components/Button";
-import Card from "../../../../components/Card";
+import { TProduct } from "@types";
+import Button from "@components/Button";
+import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
-import SkeletonCard from "../../../../components/Card/SkeletonCard/SkeletonCard";
+import SkeletonCard from "@components/Card/SkeletonCard/SkeletonCard";
 
 type RelatedItemsProps = {
   loading: boolean;

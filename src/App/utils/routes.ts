@@ -1,14 +1,11 @@
 const ROUTES = {
-  HOME: '/',
-  CATALOG: '/',
+  HOME: "/",
+  CATALOG: "/",
   PRODUCT: (id: string) => `/${id}`,
-  CATEGORIES: '/categories',
-  ABOUT: '/about',
-  CART: '/cart',
-  USER: '/user',
-  // LOGIN: '/login',
-  // REGISTER: '/register',
-  // CHECKOUT: '/checkout',
+  CATEGORIES: "/categories",
+  ABOUT: "/about",
+  CART: "/cart",
+  USER: "/user",
 };
 
 export default ROUTES;

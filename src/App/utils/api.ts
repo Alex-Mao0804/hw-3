@@ -49,4 +49,4 @@ export const getRelatedProducts = async (id: string) => {
     console.error("Ошибка при получении связанных товаров:", error);
     throw error;
   }
-}
+};

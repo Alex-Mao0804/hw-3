@@ -1,14 +1,13 @@
-@use '@variables' as vars;
+@use "@variables" as vars;
 
 .card {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
   cursor: pointer;
   background: vars.$color-card-bg;
-  // background-color: vars.$color-bg;
 }
 
 .card:hover {
@@ -20,7 +19,7 @@
 }
 
 .card__content {
-  padding:  vars.$space-xl vars.$space-xs;
+  padding: vars.$space-xl vars.$space-xs;
   display: flex;
   flex-direction: column;
   background: vars.$color-bg;
@@ -34,15 +33,14 @@
 }
 
 .card__footer {
-display: flex;
-flex-direction: row;
-align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .card__footer__action {
   margin-left: auto;
   @include vars.skeleton(150px, 52px);
-
 }
 
 .skeleton {
@@ -54,7 +52,7 @@ align-items: center;
     @include vars.skeleton(100%, 43px);
   }
 
-  &__subtitle{
+  &__subtitle {
     @include vars.skeleton(100%, 14px);
   }
 }

@@ -1,7 +1,4 @@
-import React from "react";
-import clsx from "clsx";
 import styles from "./HeaderLogo.module.scss";
-import Text from "../../../Text";
 
 const HeaderLogo = () => {
   return (

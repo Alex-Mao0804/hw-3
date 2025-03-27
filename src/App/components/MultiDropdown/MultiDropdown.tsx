@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import Input from "../Input";
-import ArrowDownIcon from "../icons/ArrowDownIcon";
+import Input from "@components/Input";
+import ArrowDownIcon from "@components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
-import Text from "../Text";
+import Text from "@components/Text";
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
   key: string;

@@ -22,7 +22,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "react/prop-types": "off", // Не нужен в TypeScript
+    "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
   },
   settings: {

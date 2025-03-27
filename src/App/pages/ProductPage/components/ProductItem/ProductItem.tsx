@@ -1,15 +1,14 @@
 import React from "react";
-import Text from "../../../../components/Text";
+import Text from "@components/Text";
 import styles from "./ProductItem.module.scss";
-import { TProduct } from "../../../../utils/types";
-import Button from "../../../../components/Button";
+import { TProduct } from "@types";
+import Button from "@components/Button";
 
 type ProductItemProps = {
   product: TProduct;
 };
 
-const ProductItem: React.FC<ProductItemProps> = ({ product}) => {
-
+const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
     <div className={styles.product_item}>
       <div className={styles.product_item__image}>
@@ -30,8 +29,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ product}) => {
           </Text>
 
           <div className={styles.product_item__actions}>
-            <Button className={styles.product_item__actions__button}>Buy Now</Button>
-            <Button className={styles.product_item__actions__button}>Add to Cart</Button>
+            <Button className={styles.product_item__actions__button}>
+              Buy Now
+            </Button>
+            <Button className={styles.product_item__actions__button}>
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>
