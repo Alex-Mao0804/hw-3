@@ -1,7 +1,6 @@
-import React from "react";
 import Text from "@components/Text";
 import styles from "./RelatedItems.module.scss";
-import { TProduct } from "@types";
+import { ProductEntity } from "@types";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,7 @@ import SkeletonCard from "@components/Card/SkeletonCard/SkeletonCard";
 
 type RelatedItemsProps = {
   loading: boolean;
-  relatedProducts: TProduct[] | undefined;
+  relatedProducts: ProductEntity[] | undefined;
 };
 
 const RelatedItems: React.FC<RelatedItemsProps> = ({
@@ -42,7 +41,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
         Related Items
       </Text>
       <ul className={styles.related_items__list}>
-        {relatedProducts.map((product: TProduct) => (
+        {relatedProducts.map((product: ProductEntity) => (
           <li key={product.id}>
             <Card
               className={styles.catalog_products__card}

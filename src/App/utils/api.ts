@@ -1,29 +1,30 @@
 import api from "./axiosInstance";
+import { CategoryEntity, ProductEntity } from "./types";
 
-export const getProductsTotal = async () => {
+export const getProducts = async (
+  page?: number,
+  limit?: number,
+): Promise<ProductEntity[]> => {
   try {
-    const response = await api.get("/products");
-    return response.data.length;
+    if (page && limit) {
+      const offset = (page - 1) * limit;
+      const response = await api.get<ProductEntity[]>(
+        `/products?offset=${offset}&limit=${limit}`,
+      );
+      return response.data;
+    } else {
+      const response = await api.get<ProductEntity[]>("/products");
+      return response.data;
+    }
   } catch (error) {
     console.error("Ошибка при получении товаров:", error);
     throw error;
   }
 };
 
-export const getProductsWithLimit = async (page: number, limit: number) => {
-  const offset = (page - 1) * limit;
+export const getCategories = async (): Promise<CategoryEntity[]> => {
   try {
-    const response = await api.get(`/products?offset=${offset}&limit=${limit}`);
-    return response.data;
-  } catch (error) {
-    console.error("Ошибка при получении товаров:", error);
-    throw error;
-  }
-};
-
-export const getCategories = async () => {
-  try {
-    const response = await api.get("/categories");
+    const response = await api.get<CategoryEntity[]>("/categories");
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении категорий:", error);
@@ -31,9 +32,9 @@ export const getCategories = async () => {
   }
 };
 
-export const getProduct = async (id: string) => {
+export const getProduct = async (id: string): Promise<ProductEntity> => {
   try {
-    const response = await api.get(`/products/${id}`);
+    const response = await api.get<ProductEntity>(`/products/${id}`);
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении товара:", error);
@@ -41,9 +42,11 @@ export const getProduct = async (id: string) => {
   }
 };
 
-export const getRelatedProducts = async (id: string) => {
+export const getRelatedProducts = async (
+  id: string,
+): Promise<ProductEntity[]> => {
   try {
-    const response = await api.get(`/products/${id}/related`);
+    const response = await api.get<ProductEntity[]>(`/products/${id}/related`);
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении связанных товаров:", error);

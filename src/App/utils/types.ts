@@ -1,16 +1,16 @@
-export type TProduct = {
+export type ProductEntity = {
   id: number;
   title: string;
   slug: string;
   price: number;
   description: string;
-  category: TCategory;
+  category: CategoryEntity;
   images: string[];
   creationAt: string;
   updatedAt: string;
 };
 
-export type TCategory = {
+export type CategoryEntity = {
   id: number;
   name: string;
   slug: string;

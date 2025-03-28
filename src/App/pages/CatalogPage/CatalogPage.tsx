@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./CatalogPage.module.scss";
 import Text from "@components/Text";
 import Input from "@components/Input";
@@ -6,51 +6,47 @@ import Button from "@components/Button";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogProducts from "./components/CatalogProducts";
 import Pagination from "@components/Pagination";
-import { getCategories, getProductsTotal, getProductsWithLimit } from "@api";
-import { TCategory, TProduct } from "@types";
+import { getCategories, getProducts } from "@api";
+import { CategoryEntity, ProductEntity } from "@types";
+import { useFetchData } from "@/App/hooks/useFetchData";
 
 const CatalogPage = () => {
-  const [products, setProducts] = useState<TProduct[]>([]);
   const [pageCount, setPageCount] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState<TCategory[]>([]);
+  const [categories, setCategories] = useState<CategoryEntity[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<
     { key: string; value: string }[]
   >([]);
   const dataLimit = 9;
-
+  const {
+    data: products,
+    loading,
+    fetchData,
+  } = useFetchData<ProductEntity[], [number, number]>(getProducts);
   useEffect(() => {
-    getProductsTotal().then((total) => {
-      setPageCount(Math.round(total / dataLimit));
-      setTotal(total);
+    getProducts().then((total) => {
+      setPageCount(Math.round(total.length / dataLimit));
+      setTotal(total.length);
     });
     getCategories().then((categories) => {
       setCategories(categories);
     });
   }, []);
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const data = await getProductsWithLimit(page, dataLimit);
-        setProducts(data);
-      } catch (error) {
-        console.error("Ошибка при загрузке товаров:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchData(page, dataLimit);
+  }, [fetchData, page, dataLimit]);
 
-    fetchProducts();
-  }, [page, dataLimit]);
-
-  const categoriesType = categories.map((category) => ({
-    key: String(category.id),
-    value: category.name,
-  }));
+  const categoriesType = useMemo(
+    () =>
+      categories.map((category) => ({
+        key: String(category.id),
+        value: category.name,
+      })),
+    [categories],
+  );
 
   return (
     <div className={styles.catalog_page}>
@@ -79,7 +75,6 @@ const CatalogPage = () => {
           <Button
             className={styles.catalog_page__options__button}
             disabled={false}
-            loading={false}
             onClick={() => console.log(searchValue)}
           >
             Find now
@@ -90,7 +85,6 @@ const CatalogPage = () => {
             options={categoriesType}
             value={selectedCategories}
             onChange={setSelectedCategories}
-            disabled={false}
             getTitle={(values) =>
               values.length === 0
                 ? "Выберите категории"
@@ -102,7 +96,7 @@ const CatalogPage = () => {
       <CatalogProducts
         limit={dataLimit}
         total={total}
-        products={products}
+        products={products || []}
         loading={loading}
       />
       <Pagination pageCount={pageCount} page={page} setPage={setPage} />

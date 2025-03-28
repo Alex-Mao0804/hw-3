@@ -1,11 +1,10 @@
-import React from "react";
 import Text from "@components/Text";
 import styles from "./ProductItem.module.scss";
-import { TProduct } from "@types";
+import { ProductEntity } from "@types";
 import Button from "@components/Button";
 
 type ProductItemProps = {
-  product: TProduct;
+  product: ProductEntity;
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {

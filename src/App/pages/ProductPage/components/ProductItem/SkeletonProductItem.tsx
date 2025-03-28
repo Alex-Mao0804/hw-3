@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./ProductItem.module.scss";
 
-const SkeletonProductItem: React.FC = () => {
+const SkeletonProductItem = () => {
   return (
     <div className={styles.product_item}>
       <span className={styles.skeleton__image}></span>

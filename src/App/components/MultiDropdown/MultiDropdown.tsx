@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import Input from "@components/Input";
 import ArrowDownIcon from "@components/icons/ArrowDownIcon";
@@ -31,7 +31,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   options,
   value,
   onChange,
-  disabled,
+  disabled = false,
   getTitle,
 }) => {
   const [isOpen, setIsOpen] = useState(false);

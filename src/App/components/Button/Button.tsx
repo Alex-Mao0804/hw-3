@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Button.module.scss";
 import Loader from "@components/Loader";
 import clsx from "clsx";
@@ -11,7 +10,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button: React.FC<ButtonProps> = ({
-  loading,
+  loading = false,
   children,
   className,
   disabled,
@@ -26,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
         styles.button__disabled && !disabled && loading,
       )}
       disabled={disabled || loading}
-      onClick={loading ? undefined : onClick}
+      onClick={onClick}
       {...props}
     >
       {loading ? (

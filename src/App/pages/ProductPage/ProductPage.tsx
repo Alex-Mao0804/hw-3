@@ -1,53 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./ProductPage.module.scss";
 import ArrowPaginationIcon from "@components/icons/ArrowPaginationIcon";
 import Text from "@components/Text";
 import ProductItem from "./components/ProductItem";
-import { TProduct } from "@types";
+import { ProductEntity } from "@types";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
+import { useFetchData } from "@/App/hooks/useFetchData";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [loadingItem, setLoadingItem] = useState(false);
-  const [loadingRelatedItem, setLoadingRelatedItem] = useState(false);
-  const [product, setProduct] = useState<TProduct>();
-  const [relatedProducts, setRelatedProducts] = useState<TProduct[]>();
-
+  const {
+    data: product,
+    loading: loadingItem,
+    fetchData: fetchProduct,
+  } = useFetchData<ProductEntity, [string]>(getProduct);
+  const {
+    data: relatedProducts,
+    loading: loadingRelatedItem,
+    fetchData: fetchRelatedProducts,
+  } = useFetchData<ProductEntity[], [string]>(getRelatedProducts);
   useEffect(() => {
     if (!id) {
       return;
     }
-    const fetchProduct = async () => {
-      try {
-        setLoadingItem(true);
-        const data = await getProduct(id);
-        setProduct(data);
-      } catch (error) {
-        console.error("Ошибка при загрузке товаров:", error);
-      } finally {
-        setLoadingItem(false);
-      }
-    };
 
-    const fetchRelatedProducts = async () => {
-      try {
-        setLoadingRelatedItem(true);
-        const data = await getRelatedProducts(id);
-        setRelatedProducts(data);
-      } catch (error) {
-        console.error("Ошибка при загрузке товаров:", error);
-      } finally {
-        setLoadingRelatedItem(false);
-      }
-    };
-
-    fetchRelatedProducts();
-    fetchProduct();
-  }, [id]);
+    fetchRelatedProducts(id);
+    fetchProduct(id);
+  }, [fetchRelatedProducts, fetchProduct, id]);
   return (
     <div className={styles.product_page}>
       <div className={styles.navigation}>
@@ -69,7 +52,7 @@ const ProductPage = () => {
         )}
         <RelatedItems
           loading={loadingRelatedItem}
-          relatedProducts={relatedProducts}
+          relatedProducts={relatedProducts || []}
         />
         <div className={styles.content__related}></div>
       </div>

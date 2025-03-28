@@ -30,4 +30,7 @@ module.exports = {
       version: "detect",
     },
   },
+  rules: {
+    "eol-last": ["error", "always"],
+  },
 };

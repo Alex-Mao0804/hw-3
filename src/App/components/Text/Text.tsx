@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Text.module.scss";
 import clsx from "clsx";
 

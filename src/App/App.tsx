@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.module.scss";
+import styles from "./App.module.scss";
 import "@styles/main.scss";
 import CatalogPage from "@pages/CatalogPage";
 import Header from "@components/Header";
@@ -8,7 +8,7 @@ import ROUTES from "@routes";
 
 const App = () => {
   return (
-    <div style={{ background: "#fafafa", minHeight: "100vh" }}>
+    <div className={styles.app}>
       <Header />
       <Routes>
         <Route path={ROUTES.CATALOG} element={<CatalogPage />} />

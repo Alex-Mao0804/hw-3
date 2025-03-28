@@ -1,4 +1,3 @@
-import React from "react";
 import Icon from "@components/icons/Icon";
 import { IconProps } from "@components/icons/Icon/Icon";
 
