@@ -1,41 +1,37 @@
 @use "@variables" as vars;
 
-.checkbox_wrapper {
-  display: inline-flex;
-  align-items: center;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.checkbox_wrapper:hover .checkbox_custom_hover {
-  border-color: vars.$color-accent;
-}
-
-.checkbox_hidden {
-  display: none;
-}
-
-.checkbox_custom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  border: 1px solid vars.$button-primary-text;
-  background: vars.$button-primary-text;
-}
-
-.checkbox_custom.disabled {
-  border: 1px solid rgba(255, 255, 255, 0);
-  background: vars.$color-bg-disabled;
-  pointer-events: none;
-}
-
-.checkbox_custom.disabled svg {
-  opacity: 0.8;
-}
-
-.checkbox_icon {
-  margin: -1px;
+.checkbox {
+  &_wrapper {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  &_hidden {
+    display: none;
+  }
+  &_custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    border: 1px solid vars.$button-primary-text;
+    background: vars.$button-primary-text;
+  }
+  &_custom.disabled {
+    border: 1px solid rgba(255, 255, 255, 0);
+    background: vars.$color-bg-disabled;
+    pointer-events: none;
+  }
+  &_custom.disabled svg {
+    opacity: 0.8;
+  }
+  &_icon {
+    margin: -1px;
+  }
+  &_wrapper:hover &_custom_hover {
+    border-color: vars.$color-accent;
+  }
 }

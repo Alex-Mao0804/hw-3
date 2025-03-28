@@ -1,7 +1,7 @@
 import styles from "./Text.module.scss";
 import clsx from "clsx";
 
-export type TextProps = {
+type TextProps = {
   /** Дополнительный класс */
   className?: string;
   /** Стиль отображения */

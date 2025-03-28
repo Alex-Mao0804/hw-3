@@ -15,10 +15,10 @@
     "clsx": "^2.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.4.0",
-    "sass": "^1.86.0"
+    "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
+    "sass": "^1.86.0",
     "@eslint/js": "^9.21.0",
     "@types/node": "^22.13.13",
     "@types/react": "^19.0.10",

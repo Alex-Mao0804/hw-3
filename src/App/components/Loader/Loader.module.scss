@@ -2,25 +2,24 @@
 
 .loader {
   animation: rotation 1s linear infinite;
-}
+  &__color {
+    fill: vars.$color-accent;
+  }
 
-.loader__color {
-  fill: vars.$color-accent;
-}
-
-.s_size {
-  width: 24px;
-  height: 24px;
-}
-
-.m_size {
-  width: 48px;
-  height: 48px;
-}
-
-.l_size {
-  width: 60px;
-  height: 60px;
+  &__size {
+    &_s {
+      width: 24px;
+      height: 24px;
+    }
+    &_m {
+      width: 48px;
+      height: 48px;
+    }
+    &_l {
+      width: 60px;
+      height: 60px;
+    }
+  }
 }
 
 @keyframes rotation {

@@ -7,7 +7,7 @@ import MultiDropdown from "@components/MultiDropdown";
 import CatalogProducts from "./components/CatalogProducts";
 import Pagination from "@components/Pagination";
 import { getCategories, getProducts } from "@api";
-import { CategoryEntity, ProductEntity } from "@types";
+import { CategoryEntity, OptionMultiDropdown, ProductEntity } from "@types";
 import { useFetchData } from "@/App/hooks/useFetchData";
 
 const CatalogPage = () => {
@@ -15,9 +15,8 @@ const CatalogPage = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState<CategoryEntity[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<
-    { key: string; value: string }[]
+    OptionMultiDropdown[]
   >([]);
   const dataLimit = 9;
   const {
@@ -25,15 +24,21 @@ const CatalogPage = () => {
     loading,
     fetchData,
   } = useFetchData<ProductEntity[], [number, number]>(getProducts);
+
+  const { data: categories, fetchData: fetchCategories } = useFetchData<
+    CategoryEntity[],
+    []
+  >(getCategories);
+
+  const loadInitialData = async () => {
+    const productsData = await getProducts();
+    setPageCount(Math.ceil(productsData.length / dataLimit));
+    setTotal(productsData.length);
+  };
   useEffect(() => {
-    getProducts().then((total) => {
-      setPageCount(Math.round(total.length / dataLimit));
-      setTotal(total.length);
-    });
-    getCategories().then((categories) => {
-      setCategories(categories);
-    });
-  }, []);
+    loadInitialData();
+    fetchCategories();
+  }, [fetchCategories]);
 
   useEffect(() => {
     fetchData(page, dataLimit);
@@ -41,7 +46,7 @@ const CatalogPage = () => {
 
   const categoriesType = useMemo(
     () =>
-      categories.map((category) => ({
+      categories?.map((category) => ({
         key: String(category.id),
         value: category.name,
       })),
@@ -82,7 +87,7 @@ const CatalogPage = () => {
         </div>
         <div className={styles.catalog_page__options__filter}>
           <MultiDropdown
-            options={categoriesType}
+            options={categoriesType || []}
             value={selectedCategories}
             onChange={setSelectedCategories}
             getTitle={(values) =>

@@ -1,22 +1,18 @@
 import clsx from "clsx";
 import styles from "./Loader.module.scss";
 
-export type LoaderProps = {
+type LoaderProps = {
   /** Размер */
   size?: "s" | "m" | "l";
   /** Дополнительный класс */
   className?: string;
 };
 
-const sizeClasses = {
-  s: styles.s_size,
-  m: styles.m_size,
-  l: styles.l_size,
-};
-
 const Loader: React.FC<LoaderProps> = ({ size = "l", className }) => {
   return (
-    <div className={clsx(styles.loader, sizeClasses[size], className)}>
+    <div
+      className={clsx(styles.loader, styles[`loader__size_${size}`], className)}
+    >
       <svg
         width="100%"
         height="100%"

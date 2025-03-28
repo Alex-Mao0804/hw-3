@@ -14,45 +14,39 @@
   &__subtitle {
     height: 60px;
   }
-}
+  &:hover {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+  }
 
-.card:hover {
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
-}
-
-.card__image {
-  width: 360px;
-  height: 360px;
-  object-fit: cover;
-}
-
-.card__content {
-  display: flex;
-  flex-direction: column;
-  padding: vars.$space-xl vars.$space-xs;
-  background: vars.$color-bg;
-}
-
-.card__text {
-  display: flex;
-  flex-direction: column;
-  gap: vars.$space-xxs;
-  margin-bottom: vars.$space-l;
-}
-
-.card__title {
-  height: 3rem;
-}
-
-.card__footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.card__footer__action {
-  margin-left: auto;
-  width: 155px;
+  &__image {
+    width: 360px;
+    height: 360px;
+    object-fit: cover;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: vars.$space-xl vars.$space-xs;
+    background: vars.$color-bg;
+  }
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-xxs;
+    margin-bottom: vars.$space-l;
+  }
+  &__title {
+    height: 3rem;
+  }
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__footer__action {
+    margin-left: auto;
+    width: 155px;
+  }
 }
 
 .skeleton {

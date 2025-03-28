@@ -1,60 +1,75 @@
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import styles from "./HeaderTabs.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
 import Text from "@components/Text";
 import ROUTES from "@routes";
 
 const HeaderTabs = () => {
-  const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
-  const navigate = useNavigate();
   return (
     <nav className={styles.header__tabs}>
       <ul className={styles.header__tabs__list}>
-        <li
-          onClick={() => navigate(ROUTES.CATALOG)}
-          className={clsx(
-            styles.header__tabs__list__item,
-            isActive(ROUTES.CATALOG) && styles.active,
-          )}
-        >
-          <Text
-            view="p-18"
-            weight={isActive(ROUTES.CATALOG) ? "bold" : "normal"}
-            color={isActive(ROUTES.CATALOG) ? "accent" : "primary"}
+        <li className={styles.header__tabs__list__item}>
+          <NavLink
+            to={ROUTES.CATALOG}
+            className={({ isActive }) =>
+              clsx(
+                styles.header__tabs__list__item__navLink,
+                isActive && styles.active,
+              )
+            }
           >
-            Products
-          </Text>
+            {({ isActive }) => (
+              <Text
+                view="p-18"
+                weight={isActive ? "bold" : "normal"}
+                color={isActive ? "accent" : "primary"}
+              >
+                Products
+              </Text>
+            )}
+          </NavLink>
         </li>
-        <li
-          onClick={() => navigate(ROUTES.CATEGORIES)}
-          className={clsx(
-            styles.header__tabs__list__item,
-            isActive(ROUTES.CATEGORIES) && styles.active,
-          )}
-        >
-          <Text
-            view="p-18"
-            weight={isActive(ROUTES.CATEGORIES) ? "bold" : "normal"}
-            color={isActive(ROUTES.CATEGORIES) ? "accent" : "primary"}
+        <li className={styles.header__tabs__list__item}>
+          <NavLink
+            to={"ROUTES.CATEGORIES"}
+            className={({ isActive }) =>
+              clsx(
+                styles.header__tabs__list__item__navLink,
+                isActive && styles.active,
+              )
+            }
           >
-            Categories
-          </Text>
+            {({ isActive }) => (
+              <Text
+                view="p-18"
+                weight={isActive ? "bold" : "normal"}
+                color={isActive ? "accent" : "primary"}
+              >
+                Categories
+              </Text>
+            )}
+          </NavLink>
         </li>
-        <li
-          onClick={() => navigate(ROUTES.ABOUT)}
-          className={clsx(
-            styles.header__tabs__list__item,
-            isActive(ROUTES.ABOUT) && styles.active,
-          )}
-        >
-          <Text
-            view="p-18"
-            weight={isActive(ROUTES.ABOUT) ? "bold" : "normal"}
-            color={isActive(ROUTES.ABOUT) ? "accent" : "primary"}
+        <li className={styles.header__tabs__list__item}>
+          <NavLink
+            to={"ROUTES.ABOUT"}
+            className={({ isActive }) =>
+              clsx(
+                styles.header__tabs__list__item__navLink,
+                isActive && styles.active,
+              )
+            }
           >
-            About us
-          </Text>
+            {({ isActive }) => (
+              <Text
+                view="p-18"
+                weight={isActive ? "bold" : "normal"}
+                color={isActive ? "accent" : "primary"}
+              >
+                About us
+              </Text>
+            )}
+          </NavLink>
         </li>
       </ul>
     </nav>

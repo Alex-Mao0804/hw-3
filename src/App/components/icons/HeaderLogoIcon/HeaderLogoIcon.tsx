@@ -1,6 +1,6 @@
-import styles from "./HeaderLogo.module.scss";
+import styles from "./HeaderLogoIcon.module.scss";
 
-const HeaderLogo = () => {
+const HeaderLogoIcon = () => {
   return (
     <div className={styles.header__logo}>
       <svg
@@ -71,4 +71,4 @@ const HeaderLogo = () => {
   );
 };
 
-export default HeaderLogo;
+export default HeaderLogoIcon;

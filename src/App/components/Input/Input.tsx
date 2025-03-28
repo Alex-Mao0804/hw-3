@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./Input.module.scss";
 
-export type InputProps = Omit<
+type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange" | "value"
 > & {

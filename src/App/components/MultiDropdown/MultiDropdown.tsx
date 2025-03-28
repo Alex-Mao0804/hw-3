@@ -1,29 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import Input from "@components/Input";
 import ArrowDownIcon from "@components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import Text from "@components/Text";
-export type Option = {
-  /** Ключ варианта, используется для отправки на бек/использования в коде */
-  key: string;
-  /** Значение варианта, отображается пользователю */
-  value: string;
-};
+import { OptionMultiDropdown } from "@/App/utils/types";
 
 /** Пропсы, которые принимает компонент Dropdown */
-export type MultiDropdownProps = {
+type MultiDropdownProps = {
   className?: string;
   /** Массив возможных вариантов для выбора */
-  options: Option[];
+  options: OptionMultiDropdown[];
   /** Текущие выбранные значения поля, может быть пустым */
-  value: Option[];
+  value: OptionMultiDropdown[];
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Option[]) => void;
+  onChange: (value: OptionMultiDropdown[]) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
   /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
-  getTitle: (value: Option[]) => string;
+  getTitle: (value: OptionMultiDropdown[]) => string;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -38,32 +33,39 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredOptions = options.filter((option) =>
-    option.value.toLowerCase().includes(search.toLowerCase()),
+  const filteredOptions = useMemo(
+    () =>
+      options.filter((option) =>
+        option.value.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [options, search],
   );
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const handleSelect = (option: Option) => {
-    const newValue = value.some((item) => item.key === option.key)
-      ? value.filter((item) => item.key !== option.key)
-      : [...value, option];
-
-    onChange(newValue);
-  };
+  const handleSelect = useCallback(
+    (option: OptionMultiDropdown) => {
+      onChange(
+        value.some((item) => item.key === option.key)
+          ? value.filter((item) => item.key !== option.key)
+          : [...value, option],
+      );
+    },
+    [onChange, value],
+  );
 
   useEffect(() => {
     if (disabled) {

@@ -2,11 +2,9 @@ import styles from "./Button.module.scss";
 import Loader from "@components/Loader";
 import clsx from "clsx";
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
   loading?: boolean;
-  /** Текст кнопки */
-  children: React.ReactNode;
 };
 
 const Button: React.FC<ButtonProps> = ({

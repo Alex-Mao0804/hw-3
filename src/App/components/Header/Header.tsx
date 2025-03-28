@@ -1,5 +1,5 @@
 import styles from "./Header.module.scss";
-import HeaderLogo from "./components/HeaderLogo";
+import HeaderLogo from "../icons/HeaderLogoIcon";
 import HeaderTabs from "./components/HeaderTabs";
 import HeaderActions from "./components/HeaderActions";
 import { Link } from "react-router-dom";

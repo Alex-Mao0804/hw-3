@@ -7,11 +7,13 @@ export const getProducts = async (
   limit?: number,
 ): Promise<ProductEntity[]> => {
   try {
-    let url = API_ROUTES.PRODUCTS;
+    const params = new URLSearchParams();
     if (page && limit) {
-      const offset = (page - 1) * limit;
-      url += `?offset=${offset}&limit=${limit}`;
+      params.set("offset", ((page - 1) * limit).toString());
+      params.set("limit", limit.toString());
     }
+
+    const url = `${API_ROUTES.PRODUCTS}?${params.toString()}`;
     const response = await api.get<ProductEntity[]>(url);
     return response.data;
   } catch (error) {

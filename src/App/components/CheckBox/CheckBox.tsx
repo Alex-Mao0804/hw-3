@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import styles from "./CheckBox.module.scss";
 import CheckIcon from "@components/icons/CheckIcon";
+import { useCallback } from "react";
 
-export type CheckBoxProps = Omit<
+type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange"
 > & {
@@ -17,13 +18,19 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   className,
   ...props
 }) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.checked);
+    },
+    [onChange],
+  );
   return (
     <label className={clsx(styles.checkbox_wrapper, className)}>
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={handleChange}
         className={styles.checkbox_hidden}
         aria-checked={checked}
         {...props}
