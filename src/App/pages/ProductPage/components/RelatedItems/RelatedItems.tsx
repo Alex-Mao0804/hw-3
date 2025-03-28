@@ -4,7 +4,7 @@ import { ProductEntity } from "@types";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
-import SkeletonCard from "@components/Card/SkeletonCard/SkeletonCard";
+import SkeletonCard from "@components/Card/SkeletonCard";
 
 type RelatedItemsProps = {
   loading: boolean;

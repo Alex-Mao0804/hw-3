@@ -53,7 +53,13 @@ const Card: React.FC<CardProps> = ({
           >
             {title}
           </Text>
-          <Text maxLines={3} weight="normal" view="p-16" color="secondary">
+          <Text
+            className={styles.card__subtitle}
+            maxLines={3}
+            weight="normal"
+            view="p-16"
+            color="secondary"
+          >
             {subtitle}
           </Text>
         </div>

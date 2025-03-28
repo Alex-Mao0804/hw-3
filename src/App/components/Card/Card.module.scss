@@ -6,8 +6,14 @@
   justify-content: space-between;
   overflow: hidden;
   font-family: "Roboto", sans-serif;
-  background-color: vars.$color-bg;
+  background: vars.$color-card-bg;
   cursor: pointer;
+  width: vars.$card-width;
+  height: vars.$card-height;
+
+  &__subtitle {
+    height: 60px;
+  }
 }
 
 .card:hover {
@@ -35,7 +41,7 @@
 }
 
 .card__title {
-  height: 2em;
+  height: 3rem;
 }
 
 .card__footer {
@@ -46,4 +52,32 @@
 
 .card__footer__action {
   margin-left: auto;
+  width: 155px;
+}
+
+.skeleton {
+  &__image {
+    @include vars.skeleton(360px, 360px);
+  }
+
+  &__captionSlot {
+    @include vars.skeleton(240px, 18px);
+  }
+
+  &__title {
+    @include vars.skeleton(100%, 3em);
+  }
+
+  &__subtitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &__child {
+      @include vars.skeleton(100%, 16px);
+    }
+  }
+
+  &__button {
+    @include vars.skeleton(155px, 52px);
+  }
 }

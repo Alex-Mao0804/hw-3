@@ -5,7 +5,7 @@ import { ProductEntity } from "@types";
 import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useNavigate } from "react-router-dom";
-import SkeletonCard from "@components/Card/SkeletonCard/SkeletonCard";
+import SkeletonCard from "@components/Card/SkeletonCard";
 
 type CatalogProductsProps = {
   total: number;
@@ -52,7 +52,6 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
           products.map((product: ProductEntity) => (
             <li key={product.id}>
               <Card
-                className={styles.catalog_products__card}
                 image={product.images[0]}
                 title={product.title}
                 subtitle={product.description}
