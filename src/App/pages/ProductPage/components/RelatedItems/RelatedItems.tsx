@@ -5,6 +5,7 @@ import Button from "@components/Button";
 import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
+import ROUTES from "@/App/utils/routes";
 
 type RelatedItemsProps = {
   loading: boolean;
@@ -33,7 +34,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
     );
   }
   const handleClickCard = (id: number) => {
-    navigate(`/${id}`, { replace: true });
+    navigate(ROUTES.PRODUCT(String(id)), { replace: true });
   };
   return (
     <div className={styles.related_items}>

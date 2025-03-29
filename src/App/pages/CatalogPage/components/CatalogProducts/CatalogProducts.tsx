@@ -6,6 +6,7 @@ import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
+import ROUTES from "@/App/utils/routes";
 
 type CatalogProductsProps = {
   total: number;
@@ -23,7 +24,7 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
   const navigate = useNavigate();
 
   const handleClickCard = (id: number) => {
-    navigate(`/${id}`);
+    navigate(ROUTES.PRODUCT(String(id)));
   };
 
   return (
