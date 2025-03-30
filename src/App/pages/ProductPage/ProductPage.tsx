@@ -9,6 +9,7 @@ import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { useFetchData } from "@/App/hooks/useFetchData";
+import PreviewSwiper from "@/App/components/PreviewSwiper/PreviewSwiper";
 
 const ProductPage = () => {
   const navigate = useNavigate();
