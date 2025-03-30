@@ -1,7 +1,7 @@
 import Icon from "@components/icons/Icon";
 import { IconProps } from "@components/icons/Icon/Icon";
 
-const ArrowPaginationIcon: React.FC<IconProps> = (props) => {
+const ArrowSideIcon: React.FC<IconProps> = (props) => {
   return (
     <Icon {...props} viewBox="0 0 24 24">
       <path
@@ -16,4 +16,4 @@ const ArrowPaginationIcon: React.FC<IconProps> = (props) => {
   );
 };
 
-export default ArrowPaginationIcon;
+export default ArrowSideIcon;

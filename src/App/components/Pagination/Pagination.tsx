@@ -1,5 +1,5 @@
 import styles from "./Pagination.module.scss";
-import ArrowPaginationIcon from "@components/icons/ArrowPaginationIcon";
+import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import clsx from "clsx";
 import Button from "@components/Button";
 import { memo, useCallback, useMemo } from "react";
@@ -56,7 +56,7 @@ const Pagination: React.FC<TPaginationProps> = memo(
           disabled={page === 1}
           onClick={decrementPage}
         >
-          <ArrowPaginationIcon />
+          <ArrowSideIcon />
         </button>
         <div>
           {paginationGroup.map((item, index) => (
@@ -78,7 +78,7 @@ const Pagination: React.FC<TPaginationProps> = memo(
           disabled={page === pageCount}
           onClick={incrementPage}
         >
-          <ArrowPaginationIcon />
+          <ArrowSideIcon />
         </button>
       </div>
     );

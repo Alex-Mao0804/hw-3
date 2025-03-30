@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styles from "./ProductPage.module.scss";
-import ArrowPaginationIcon from "@components/icons/ArrowPaginationIcon";
+import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import Text from "@components/Text";
 import ProductItem from "./components/ProductItem";
 import { ProductEntity } from "@types";
@@ -9,7 +9,6 @@ import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { useFetchData } from "@/App/hooks/useFetchData";
-import PreviewSwiper from "@/App/components/PreviewSwiper/PreviewSwiper";
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ const ProductPage = () => {
           className={styles.navigation__button}
           onClick={() => navigate(-1)}
         >
-          <ArrowPaginationIcon className={styles.navigation__icon} />
+          <ArrowSideIcon className={styles.navigation__icon} />
           <Text view="p-20" color="primary" weight="normal">
             Назад
           </Text>
