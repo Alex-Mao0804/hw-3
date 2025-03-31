@@ -54,7 +54,15 @@
     "**/*.{ts,tsx,js,jsx}": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "**/*.{json,md,scss,css}": [
+      "prettier --write"
     ]
   },
-  "packageManager": "yarn@4.8.1"
+  "packageManager": "yarn@4.8.1",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
