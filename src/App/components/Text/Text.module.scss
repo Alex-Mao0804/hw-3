@@ -1,0 +1,66 @@
+@use "@variables" as vars;
+
+.text {
+  color: inherit;
+  word-wrap: break-word;
+
+  &[style*="WebkitLineClamp"] {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  &.title {
+    font-size: vars.$font-size-title;
+    line-height: 109%;
+  }
+
+  &.button {
+    font-size: vars.$font-size-p-18;
+    line-height: 100%;
+  }
+
+  &.p-20 {
+    font-size: vars.$font-size-p-20;
+    line-height: 120%;
+  }
+
+  &.p-18 {
+    font-size: vars.$font-size-p-18;
+    line-height: 122%;
+  }
+
+  &.p-16 {
+    font-size: vars.$font-size-p-16;
+    line-height: 125%;
+  }
+
+  &.p-14 {
+    font-size: vars.$font-size-p-14;
+    line-height: 129%;
+  }
+
+  &.normal {
+    font-weight: vars.$font-weight-normal;
+  }
+
+  &.medium {
+    font-weight: vars.$font-weight-medium;
+  }
+
+  &.bold {
+    font-weight: vars.$font-weight-bold;
+  }
+
+  &.primary {
+    color: vars.$color-primary;
+  }
+
+  &.secondary {
+    color: vars.$color-secondary;
+  }
+
+  &.accent {
+    color: vars.$color-accent;
+  }
+}

@@ -1,0 +1,6 @@
+@use "@variables" as vars;
+
+.app {
+  background-color: vars.$color-bg-main;
+  min-height: 100vh;
+}

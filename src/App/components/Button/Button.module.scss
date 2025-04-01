@@ -1,0 +1,41 @@
+@use "@variables" as vars;
+
+.button {
+  min-height: 52px;
+  border: none;
+  padding: 0 vars.$space-l;
+  color: vars.$button-primary-text;
+  font-family: "Roboto", sans-serif;
+  font-weight: vars.$font-weight-normal;
+  font-size: vars.$font-size-p-18;
+  line-height: 100%;
+  background-color: vars.$button-primary-bg;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: vars.$button-hover-bg;
+  }
+  &:active {
+    background-color: vars.$button-active-bg;
+  }
+  &:disabled {
+    background-color: vars.$button-disabled-bg;
+    cursor: not-allowed;
+  }
+  &__loader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: vars.$space-xxs;
+  }
+}
+
+.button.button__disabled {
+  background-color: vars.$button-primary-bg;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.loader_color_white path {
+  fill: vars.$color-bg;
+}
