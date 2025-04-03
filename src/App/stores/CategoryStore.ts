@@ -1,8 +1,9 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { getCategories } from "@api";
-import { CategoryEntity } from "@types";
+import { CategoryEntity, OptionMultiDropdown } from "@types";
 
 class CategoryStore {
+  private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
   constructor() {
@@ -17,6 +18,10 @@ class CategoryStore {
     return this._categories;
   }
 
+  get categoriesMultiDropdown() {
+    return this._categoriesMultiDropdown;
+  }
+
   async fetchCategories() {
     runInAction(() => {
       this._isLoading = true;
@@ -25,6 +30,10 @@ class CategoryStore {
       const data = await getCategories();
       runInAction(() => {
         this._categories = data;
+        this._categoriesMultiDropdown = data.map((category) => ({
+          key: String(category.id),
+          value: category.name,
+        }));
       });
     } catch (error) {
       console.error("Ошибка загрузки категорий:", error);
