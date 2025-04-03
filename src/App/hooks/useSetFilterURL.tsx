@@ -8,8 +8,19 @@ const useSetFilters = () => {
     page?: number;
     title?: string;
     categoryId?: number | number[] | null;
+    priceRange?: { min: string; max: string };
   }) => {
     const params = new URLSearchParams(window.location.search);
+
+    // Берём priceRange из `filters` или оставляем текущее значение из `filterStore`
+    const priceMin = filters.priceRange?.min ?? filterStore.priceRange.min;
+    const priceMax = filters.priceRange?.max ?? filterStore.priceRange.max;
+
+    if (priceMin) params.set("price_min", priceMin);
+    else params.delete("price_min");
+
+    if (priceMax) params.set("price_max", priceMax);
+    else params.delete("price_max");
 
     if (filters.page && filterStore.filtersState.limit) {
       params.set(

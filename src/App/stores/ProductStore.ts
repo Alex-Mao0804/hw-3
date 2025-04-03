@@ -39,7 +39,6 @@ class ProductStore {
         page: page,
         limit: limit,
       };
-
       const data = await getProducts({ ...paginationParams, ...otherParams });
       const dataWithoutPagination = await getProducts(otherParams);
 

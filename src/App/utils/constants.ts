@@ -5,4 +5,6 @@ export const initialFilters: TFiltersApi = {
   categoryId: null,
   page: 1,
   limit: 9,
+  price_min: null,
+  price_max: null,
 };

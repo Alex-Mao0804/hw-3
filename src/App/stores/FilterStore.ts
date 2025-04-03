@@ -7,12 +7,36 @@ import categoryStore from "@stores/CategoryStore";
 class FilterStore {
   private _searchQuery: string = "";
   private _category: OptionMultiDropdown | OptionMultiDropdown[] | null = null;
+  private _priceRange: {
+    min: string;
+    max: string;
+  } = {
+    min: "",
+    max: "",
+  };
   private _filtersState: TFiltersApi = initialFilters;
 
   private _prevFilters: TFiltersApi | null = null;
 
   constructor() {
     makeAutoObservable(this);
+
+    reaction(
+      () => this._filtersState.price_max,
+      (max) => {
+        if (max && this._priceRange.max !== String(max)) {
+          this._priceRange.max = String(max);
+        }
+      },
+    );
+    reaction(
+      () => this._filtersState.price_min,
+      (min) => {
+        if (min && this._priceRange.min !== String(min)) {
+          this._priceRange.min = String(min);
+        }
+      },
+    );
 
     reaction(
       () => this._filtersState.title,
@@ -58,6 +82,9 @@ class FilterStore {
       : null;
   }
 
+  get priceRange() {
+    return this._priceRange;
+  }
   get filtersState() {
     return this._filtersState;
   }
@@ -82,6 +109,19 @@ class FilterStore {
     return this._searchQuery;
   }
 
+  setPriceRangeFilters() {
+    runInAction(() => {
+      this._filtersState.price_min = Number(this._priceRange.min);
+      this._filtersState.price_max = Number(this._priceRange.max);
+    });
+  }
+
+  setPriceRange(min?: string, max?: string) {
+    runInAction(() => {
+      if (min !== undefined) this._priceRange.min = min;
+      if (max !== undefined) this._priceRange.max = max;
+    });
+  }
   setSearchQuery(query: string) {
     runInAction(() => {
       this._searchQuery = query;

@@ -33,8 +33,17 @@
       gap: vars.$space-xl;
     }
 
-    &__filter {
+    &__filters {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: vars.$space-xl;
+      flex-wrap: wrap;
+    }
+
+    &__filters &__dropdown {
       width: 300px;
+      height: fit-content;
     }
   }
 

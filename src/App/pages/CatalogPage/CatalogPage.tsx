@@ -15,6 +15,7 @@ import { runInAction, toJS } from "mobx";
 import useSetFilters from "@hooks/useSetFilterURL";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import useSyncFiltersWithURL from "@hooks/useSyncFiltersWithURL";
+import CatalogPriceRange from "./components/CatalogPriceRange";
 
 const CatalogPage = observer(() => {
   const updateFilters = useSetFilters();
@@ -122,14 +123,16 @@ const CatalogPage = observer(() => {
             Find now
           </Button>
         </form>
-        <div className={styles.catalog_page__options__filter}>
+        <div className={styles.catalog_page__options__filters}>
           <MultiDropdown
+            className={styles.catalog_page__options__dropdown}
             options={toJS(categoryStore.categoriesMultiDropdown)}
             value={toJS(filterStore.category)}
             onChange={handleMultiDropdownChange}
             isMulti={false}
             getTitle={getTitle}
           />
+          <CatalogPriceRange />
         </div>
       </div>
       <CatalogProducts

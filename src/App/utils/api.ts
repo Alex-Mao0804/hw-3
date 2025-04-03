@@ -17,6 +17,12 @@ export const getProducts = async (
     if (filters.categoryId) {
       params.set("categoryId", filters.categoryId.toString());
     }
+    if (filters.price_max) {
+      params.set("price_max", String(filters.price_max));
+    }
+    if (filters.price_min) {
+      params.set("price_min", String(filters.price_min));
+    }
     const url = `${API_ROUTES.PRODUCTS}?${params.toString()}`;
     const response = await api.get<ProductEntity[]>(url);
     return response.data;
