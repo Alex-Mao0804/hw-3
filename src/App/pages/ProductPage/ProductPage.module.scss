@@ -39,3 +39,9 @@
   flex-direction: column;
   gap: vars.$space-xxl;
 }
+
+@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
+  .product_page {
+    padding: 0 30px;
+  }
+}

@@ -36,3 +36,11 @@
     }
   }
 }
+
+@media screen and (max-width: calc(vars.$breakpoint-desktop - 40px)) {
+  .catalog_products {
+    &__list {
+      justify-content: space-around;
+    }
+  }
+}
