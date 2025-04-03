@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect } from "react";
 import styles from "./CatalogPage.module.scss";
 import Text from "@components/Text";
 import Input from "@components/Input";
@@ -6,51 +6,86 @@ import Button from "@components/Button";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogProducts from "./components/CatalogProducts";
 import Pagination from "@components/Pagination";
-import { getCategories, getProducts } from "@api";
-import { CategoryEntity, OptionMultiDropdown, ProductEntity } from "@types";
-import { useFetchData } from "@/App/hooks/useFetchData";
+import productStore from "@stores/ProductStore";
+import filterStore from "@stores/FilterStore";
+import categoryStore from "@stores/CategoryStore";
+import { observer } from "mobx-react-lite";
+import { OptionMultiDropdown } from "@/App/utils/types";
+import { runInAction, toJS } from "mobx";
+import useSetFilters from "@hooks/useSetFilterURL";
+import { getCategoryKey } from "@utils/getCategoryKey";
+import useSyncFiltersWithURL from "@hooks/useSyncFiltersWithURL";
 
-const CatalogPage = () => {
-  const [pageCount, setPageCount] = useState(0);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
-  const [total, setTotal] = useState(0);
-  const [selectedCategories, setSelectedCategories] = useState<
-    OptionMultiDropdown[]
-  >([]);
-  const dataLimit = 9;
-  const {
-    data: products,
-    loading,
-    fetchData,
-  } = useFetchData<ProductEntity[], [number, number]>(getProducts);
-
-  const { data: categories, fetchData: fetchCategories } = useFetchData<
-    CategoryEntity[],
-    []
-  >(getCategories);
-
-  const loadInitialData = async () => {
-    const productsData = await getProducts();
-    setPageCount(Math.ceil(productsData.length / dataLimit));
-    setTotal(productsData.length);
-  };
-  useEffect(() => {
-    loadInitialData();
-    fetchCategories();
-  }, [fetchCategories]);
+const CatalogPage = observer(() => {
+  const updateFilters = useSetFilters();
 
   useEffect(() => {
-    fetchData(page, dataLimit);
-  }, [fetchData, page, dataLimit]);
+    categoryStore.fetchCategories();
+  }, []);
 
-  const categoriesType = useMemo(
-    () =>
-      categories?.map((category) => ({
-        key: String(category.id),
-        value: category.name,
-      })),
-    [categories],
+  const { isFiltersReady } = useSyncFiltersWithURL(filterStore.filtersState);
+
+  useEffect(() => {
+    runInAction(() => {
+      if (filterStore.applyFilters()) {
+        productStore.fetchProducts(filterStore.filtersState);
+      }
+    });
+  }, [isFiltersReady]);
+
+  const getTitle = useCallback(
+    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
+      if (Array.isArray(value)) {
+        return value.map((option) => option.value).join(", ");
+      } else if (value) {
+        return value.value;
+      } else {
+        return "Выберите категорию";
+      }
+    },
+    [],
+  );
+
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      runInAction(() => {
+        updateFilters({
+          title: filterStore.searchQuery,
+        });
+        filterStore.setTitle();
+      });
+    },
+    [],
+  );
+
+  const handleChangePage = useCallback((page: number) => {
+    runInAction(() => {
+      updateFilters({
+        page: page,
+      });
+      filterStore.setPage(page);
+    });
+  }, []);
+
+  const handleMultiDropdownChange = useCallback(
+    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
+      runInAction(() => {
+        if (getCategoryKey(value) === filterStore.filtersState.categoryId) {
+          filterStore.setCategory(null);
+          updateFilters({
+            categoryId: null,
+          });
+        } else {
+          filterStore.setCategory(value);
+          updateFilters({
+            categoryId: getCategoryKey(value),
+          });
+          filterStore.setCategoryId();
+        }
+      });
+    },
+    [],
   );
 
   return (
@@ -71,42 +106,47 @@ const CatalogPage = () => {
         </Text>
       </div>
       <div className={styles.catalog_page__options}>
-        <div className={styles.catalog_page__options__search}>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.catalog_page__options__search}
+        >
           <Input
-            value={searchValue}
-            onChange={setSearchValue}
+            value={toJS(filterStore.searchQuery)}
+            onChange={(e) => filterStore.setSearchQuery(e)}
             placeholder="Product name"
           />
           <Button
             className={styles.catalog_page__options__button}
             disabled={false}
-            onClick={() => console.log(searchValue)}
           >
             Find now
           </Button>
-        </div>
+        </form>
         <div className={styles.catalog_page__options__filter}>
           <MultiDropdown
-            options={categoriesType || []}
-            value={selectedCategories}
-            onChange={setSelectedCategories}
-            getTitle={(values) =>
-              values.length === 0
-                ? "Выберите категории"
-                : values.map(({ value }) => value).join(", ")
-            }
+            options={toJS(categoryStore.categoriesMultiDropdown)}
+            value={toJS(filterStore.category)}
+            onChange={handleMultiDropdownChange}
+            isMulti={false}
+            getTitle={getTitle}
           />
         </div>
       </div>
       <CatalogProducts
-        limit={dataLimit}
-        total={total}
-        products={products || []}
-        loading={loading}
+        products={toJS(productStore.products)}
+        loading={toJS(productStore.isLoading)}
+        total={toJS(productStore.totalProducts)}
+        limit={toJS(filterStore.limit)}
       />
-      <Pagination pageCount={pageCount} page={page} setPage={setPage} />
+      {filterStore.page && (
+        <Pagination
+          totalPages={toJS(productStore.totalPages)}
+          currentPage={toJS(filterStore.page)}
+          goToPage={handleChangePage}
+        />
+      )}
     </div>
   );
-};
+});
 
 export default CatalogPage;

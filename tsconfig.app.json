@@ -23,7 +23,10 @@
       "@components/*": ["src/App/components/*"],
       "@pages/*": ["src/App/pages/*"],
       "@api": ["src/App/utils/api"],
-      "@types": ["src/App/utils/types"]
+      "@types": ["src/App/utils/types"],
+      "@stores/*": ["src/App/stores/*"],
+      "@hooks/*": ["src/App/hooks/*"],
+      "@utils/*": ["src/App/utils/*"]
     },
 
     /* Linting */

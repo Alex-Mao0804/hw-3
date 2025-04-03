@@ -20,8 +20,13 @@ export type CategoryEntity = {
 };
 
 export type OptionMultiDropdown = {
-  /** Ключ варианта, используется для отправки на бек/использования в коде */
   key: string;
-  /** Значение варианта, отображается пользователю */
   value: string;
+};
+
+export type TFiltersApi = {
+  title?: string;
+  categoryId?: number | undefined | null;
+  page?: number;
+  limit?: number;
 };

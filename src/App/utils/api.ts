@@ -1,18 +1,22 @@
 import api from "./axiosInstance";
-import { CategoryEntity, ProductEntity } from "./types";
+import { CategoryEntity, ProductEntity, TFiltersApi } from "@types";
 import { API_ROUTES } from "./apiRoutes";
 
 export const getProducts = async (
-  page?: number,
-  limit?: number,
+  filters: TFiltersApi,
 ): Promise<ProductEntity[]> => {
   try {
     const params = new URLSearchParams();
-    if (page && limit) {
-      params.set("offset", ((page - 1) * limit).toString());
-      params.set("limit", limit.toString());
+    if (filters.page && filters.limit) {
+      params.set("offset", ((filters.page - 1) * filters.limit).toString());
+      params.set("limit", filters.limit.toString());
     }
-
+    if (filters.title) {
+      params.set("title", filters.title);
+    }
+    if (filters.categoryId) {
+      params.set("categoryId", filters.categoryId.toString());
+    }
     const url = `${API_ROUTES.PRODUCTS}?${params.toString()}`;
     const response = await api.get<ProductEntity[]>(url);
     return response.data;

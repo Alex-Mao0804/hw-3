@@ -3,34 +3,29 @@ import styles from "./ProductPage.module.scss";
 import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import Text from "@components/Text";
 import ProductItem from "./components/ProductItem";
-import { ProductEntity } from "@types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
-import { useFetchData } from "@/App/hooks/useFetchData";
+import itemStore from "@stores/ItemStore";
+import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const {
-    data: product,
-    loading: loadingItem,
-    fetchData: fetchProduct,
-  } = useFetchData<ProductEntity, [string]>(getProduct);
-  const {
-    data: relatedProducts,
-    loading: loadingRelatedItem,
-    fetchData: fetchRelatedProducts,
-  } = useFetchData<ProductEntity[], [string]>(getRelatedProducts);
+
+  const { fetchItemAndRelated, item, related } = itemStore;
+
   useEffect(() => {
     if (!id) {
       return;
     }
+    fetchItemAndRelated(id);
+  }, [id]);
 
-    fetchRelatedProducts(id);
-    fetchProduct(id);
-  }, [fetchRelatedProducts, fetchProduct, id]);
+  const { product, loading: loadingItem } = item;
+  const { relatedProducts, loading: loadingRelatedItem } = related;
+
   return (
     <div className={styles.product_page}>
       <div className={styles.navigation}>
@@ -48,11 +43,11 @@ const ProductPage = () => {
         {loadingItem || !product ? (
           <SkeletonProductItem />
         ) : (
-          <ProductItem product={product} />
+          <ProductItem product={toJS(product)} />
         )}
         <RelatedItems
-          loading={loadingRelatedItem}
-          relatedProducts={relatedProducts || []}
+          loading={toJS(loadingRelatedItem)}
+          relatedProducts={toJS(relatedProducts) || []}
         />
         <div className={styles.content__related}></div>
       </div>
@@ -60,4 +55,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default observer(ProductPage);
