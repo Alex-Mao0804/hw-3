@@ -1,51 +1,51 @@
-import { useEffect, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { TFiltersApi } from "@types";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { runInAction } from "mobx";
 import filterStore from "@stores/FilterStore";
-import { initialFilters } from "@utils/constants";
+import productStore from "@stores/ProductStore";
 
-const useSyncFiltersWithURL = (userFilters: TFiltersApi) => {
-  const [searchParams] = useSearchParams();
-
-  const offset = Number(searchParams.get("offset")) || 0;
-  const limit = Number(searchParams.get("limit")) || userFilters.limit;
-  const title = searchParams.get("title") || "";
-  const categoryId = Number(searchParams.get("categoryId")) || null;
-  const page = limit ? Math.floor(offset / limit) + 1 : undefined;
-
-  const priceRange_min = searchParams.get("price_min") || "";
-  const priceRange_max = searchParams.get("price_max") || "";
-
-  const urlFilters: TFiltersApi = {
-    title,
-    categoryId,
-    page,
-    limit,
-    price_max: Number(priceRange_max),
-    price_min: Number(priceRange_min),
-  };
-
-  const isFiltersDifferent = useMemo(() => {
-    return (
-      urlFilters.title !== userFilters.title ||
-      urlFilters.categoryId !== userFilters.categoryId ||
-      urlFilters.page !== userFilters.page ||
-      urlFilters.limit !== userFilters.limit ||
-      urlFilters.price_max !== userFilters.price_max ||
-      urlFilters.price_min !== userFilters.price_min
-    );
-  }, [urlFilters]);
+const useSyncFiltersWithURL = () => {
+  const { search } = useLocation();
 
   useEffect(() => {
-    if (
-      isFiltersDifferent ||
-      JSON.stringify(urlFilters) !== JSON.stringify(initialFilters)
-    ) {
-      filterStore.setFiltersValues(urlFilters);
-    }
-  }, [isFiltersDifferent, searchParams]);
+    const params = new URLSearchParams(search);
 
-  return { isFiltersReady: !isFiltersDifferent };
+    const title = params.get("title");
+    const categoryId = params.get("categoryId");
+    const offset = Number(params.get("offset")) || 0;
+    const limit = Number(params.get("limit")) || filterStore.filtersState.limit;
+    const page = limit ? Math.floor(offset / limit) + 1 : undefined;
+    const priceRange_min = params.get("price_min") || "";
+    const priceRange_max = params.get("price_max") || "";
+
+    runInAction(() => {
+      if (title !== filterStore.filtersState.title) {
+        if (title) {
+          filterStore.setTitle(title);
+        }
+      }
+      if (categoryId !== filterStore.filtersState.categoryId) {
+        if (categoryId) {
+          filterStore.setCategoryId(Number(categoryId));
+        }
+      }
+      if (Number(priceRange_min) !== filterStore.filtersState.price_min) {
+        filterStore.setPriceRange_min(priceRange_min);
+      }
+      if (Number(priceRange_max) !== filterStore.filtersState.price_max) {
+        filterStore.setPriceRange_max(priceRange_max);
+      }
+
+      if (page !== filterStore.filtersState.page) {
+        filterStore.setPage(Number(page));
+      }
+
+      filterStore.setLimit(Number(limit));
+      filterStore.setPage(Number(page));
+
+      productStore.fetchProducts(filterStore.filtersState);
+    });
+  }, [search]);
 };
 
 export default useSyncFiltersWithURL;

@@ -1,71 +1,51 @@
 import { useCallback, useEffect } from "react";
 import styles from "./CatalogPage.module.scss";
-import Text from "@components/Text";
 import Input from "@components/Input";
 import Button from "@components/Button";
-import MultiDropdown from "@components/MultiDropdown";
 import CatalogProducts from "./components/CatalogProducts";
-import Pagination from "@components/Pagination";
 import productStore from "@stores/ProductStore";
 import filterStore from "@stores/FilterStore";
-import categoryStore from "@stores/CategoryStore";
 import { observer } from "mobx-react-lite";
-import { OptionMultiDropdown } from "@/App/utils/types";
 import { runInAction, toJS } from "mobx";
 import useSetFilters from "@hooks/useSetFilterURL";
-import { getCategoryKey } from "@utils/getCategoryKey";
 import useSyncFiltersWithURL from "@hooks/useSyncFiltersWithURL";
+import Pagination from "@components/Pagination";
+import MultiDropdown from "@components/MultiDropdown";
 import CatalogPriceRange from "./components/CatalogPriceRange";
+import categoryStore from "@stores/CategoryStore";
+import { OptionMultiDropdown } from "@types";
+import { getCategoryKey } from "@utils/getCategoryKey";
+import Text from "@components/Text";
 
 const CatalogPage = observer(() => {
   const updateFilters = useSetFilters();
+  useSyncFiltersWithURL();
 
   useEffect(() => {
     categoryStore.fetchCategories();
   }, []);
-
-  const { isFiltersReady } = useSyncFiltersWithURL(filterStore.filtersState);
-
-  useEffect(() => {
-    runInAction(() => {
-      if (filterStore.applyFilters()) {
-        productStore.fetchProducts(filterStore.filtersState);
-      }
-    });
-  }, [isFiltersReady]);
-
-  const getTitle = useCallback(
-    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
-      if (Array.isArray(value)) {
-        return value.map((option) => option.value).join(", ");
-      } else if (value) {
-        return value.value;
-      } else {
-        return "Выберите категорию";
-      }
-    },
-    [],
-  );
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       runInAction(() => {
         updateFilters({
-          title: filterStore.searchQuery,
+          title: filterStore.filtersState.title,
         });
-        filterStore.setTitle();
+        // }
       });
     },
-    [],
+
+    [filterStore.filtersState.title, updateFilters],
   );
 
   const handleChangePage = useCallback((page: number) => {
     runInAction(() => {
-      updateFilters({
-        page: page,
-      });
-      filterStore.setPage(page);
+      if (filterStore.filtersState.page !== page) {
+        updateFilters({
+          page: page,
+        });
+      }
     });
   }, []);
 
@@ -73,22 +53,21 @@ const CatalogPage = observer(() => {
     (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
       runInAction(() => {
         if (getCategoryKey(value) === filterStore.filtersState.categoryId) {
-          filterStore.setCategory(null);
+          filterStore.setCategoryId(null);
+          categoryStore.setCategoryMultiDropdownValue(null);
           updateFilters({
             categoryId: null,
           });
         } else {
-          filterStore.setCategory(value);
+          categoryStore.setCategoryMultiDropdownValue(value);
           updateFilters({
             categoryId: getCategoryKey(value),
           });
-          filterStore.setCategoryId();
         }
       });
     },
     [],
   );
-
   return (
     <div className={styles.catalog_page}>
       <div className={styles.catalog_page__header}>
@@ -112,8 +91,12 @@ const CatalogPage = observer(() => {
           className={styles.catalog_page__options__search}
         >
           <Input
-            value={toJS(filterStore.searchQuery)}
-            onChange={(e) => filterStore.setSearchQuery(e)}
+            value={String(filterStore.filtersState.title)}
+            onChange={(e) => {
+              runInAction(() => {
+                filterStore.setTitle(e);
+              });
+            }}
             placeholder="Product name"
           />
           <Button
@@ -127,10 +110,10 @@ const CatalogPage = observer(() => {
           <MultiDropdown
             className={styles.catalog_page__options__dropdown}
             options={toJS(categoryStore.categoriesMultiDropdown)}
-            value={toJS(filterStore.category)}
+            value={toJS(categoryStore.categoryMultiDropdownValue)}
             onChange={handleMultiDropdownChange}
             isMulti={false}
-            getTitle={getTitle}
+            getTitle={categoryStore.getTitleMultiDropdown}
           />
           <CatalogPriceRange />
         </div>
@@ -139,12 +122,12 @@ const CatalogPage = observer(() => {
         products={toJS(productStore.products)}
         loading={toJS(productStore.isLoading)}
         total={toJS(productStore.totalProducts)}
-        limit={toJS(filterStore.limit)}
+        limit={toJS(filterStore.filtersState.limit)}
       />
-      {filterStore.page && (
+      {filterStore.filtersState.page && (
         <Pagination
           totalPages={toJS(productStore.totalPages)}
-          currentPage={toJS(filterStore.page)}
+          currentPage={toJS(filterStore.filtersState.page)}
           goToPage={handleChangePage}
         />
       )}

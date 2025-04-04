@@ -12,9 +12,8 @@ const useSetFilters = () => {
   }) => {
     const params = new URLSearchParams(window.location.search);
 
-    // Берём priceRange из `filters` или оставляем текущее значение из `filterStore`
-    const priceMin = filters.priceRange?.min ?? filterStore.priceRange.min;
-    const priceMax = filters.priceRange?.max ?? filterStore.priceRange.max;
+    const priceMin = filters.priceRange?.min;
+    const priceMax = filters.priceRange?.max;
 
     if (priceMin) params.set("price_min", priceMin);
     else params.delete("price_min");
