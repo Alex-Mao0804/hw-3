@@ -7,7 +7,7 @@ type InputProps = Omit<
   "onChange" | "value"
 > & {
   /** Значение поля */
-  value: string;
+  value: string | number;
   /** Callback, вызываемый при вводе данных в поле */
   onChange: (value: string) => void;
   /** Слот для иконки справа */

@@ -35,6 +35,9 @@ $button-hover-bg: $color-primary-hover;
 $button-active-bg: $color-primary-active;
 $button-disabled-bg: $color-card-bg;
 
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1240px;
+
 @mixin center-container {
   display: flex;
   justify-content: center;

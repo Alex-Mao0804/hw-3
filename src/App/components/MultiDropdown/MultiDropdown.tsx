@@ -4,21 +4,18 @@ import Input from "@components/Input";
 import ArrowDownIcon from "@components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import Text from "@components/Text";
-import { OptionMultiDropdown } from "@/App/utils/types";
+import { OptionMultiDropdown } from "@utils/types";
 
-/** Пропсы, которые принимает компонент Dropdown */
 type MultiDropdownProps = {
   className?: string;
-  /** Массив возможных вариантов для выбора */
   options: OptionMultiDropdown[];
-  /** Текущие выбранные значения поля, может быть пустым */
-  value: OptionMultiDropdown[];
-  /** Callback, вызываемый при выборе варианта */
-  onChange: (value: OptionMultiDropdown[]) => void;
-  /** Заблокирован ли дропдаун */
+  value: OptionMultiDropdown | OptionMultiDropdown[] | null;
+  onChange: (value: OptionMultiDropdown | OptionMultiDropdown[]) => void;
   disabled?: boolean;
-  /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
-  getTitle: (value: OptionMultiDropdown[]) => string;
+  getTitle: (
+    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
+  ) => string;
+  isMulti?: boolean;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -28,6 +25,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   onChange,
   disabled = false,
   getTitle,
+  isMulti = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,6 +38,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       ),
     [options, search],
   );
+
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
@@ -58,13 +57,20 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   const handleSelect = useCallback(
     (option: OptionMultiDropdown) => {
-      onChange(
-        value.some((item) => item.key === option.key)
-          ? value.filter((item) => item.key !== option.key)
-          : [...value, option],
-      );
+      if (isMulti) {
+        const newValue = Array.isArray(value) ? [...value] : [];
+        const exists = newValue.some((item) => item.key === option.key);
+        onChange(
+          exists
+            ? newValue.filter((item) => item.key !== option.key)
+            : [...newValue, option],
+        );
+      } else {
+        onChange(option);
+        setIsOpen(false);
+      }
     },
-    [onChange, value],
+    [onChange, value, isMulti],
   );
 
   useEffect(() => {
@@ -76,13 +82,11 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   return (
     <div className={clsx(styles.multi_dropdown, className)} ref={dropdownRef}>
       <Input
-        value={isOpen || value.length === 0 ? search : getTitle(value)}
+        value={isOpen || !value ? search : getTitle(value)}
         onChange={setSearch}
         placeholder={getTitle(value)}
         disabled={disabled}
-        onFocus={() => {
-          setIsOpen(true);
-        }}
+        onFocus={() => setIsOpen(true)}
         afterSlot={<ArrowDownIcon color="secondary" />}
       />
       {isOpen && (
@@ -92,9 +96,10 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
               <li
                 key={option.key}
                 className={clsx(styles.dropdown_option, {
-                  [styles.selected]: value.some(
-                    (item) => item.key === option.key,
-                  ),
+                  [styles.selected]: isMulti
+                    ? Array.isArray(value) &&
+                      value.some((item) => item.key === option.key)
+                    : (value as OptionMultiDropdown)?.key === option.key,
                 })}
                 onClick={() => handleSelect(option)}
               >
@@ -111,4 +116,5 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     </div>
   );
 };
+
 export default MultiDropdown;
