@@ -16,8 +16,8 @@ const useSyncFiltersWithURL = () => {
     const offset = Number(params.get("offset")) || 0;
     const limit = Number(params.get("limit")) || initialFilters.limit;
     const page = limit ? Math.floor(offset / limit) + 1 : undefined;
-    const priceRange_min = params.get("price_min") || "";
-    const priceRange_max = params.get("price_max") || "";
+    const priceRange_min = Number(params.get("price_min"));
+    const priceRange_max = Number(params.get("price_max"));
 
     runInAction(() => {
       if (title !== filterStore.filtersState.title) {
@@ -30,10 +30,10 @@ const useSyncFiltersWithURL = () => {
           filterStore.setCategoryId(Number(categoryId));
         }
       }
-      if (Number(priceRange_min) !== filterStore.filtersState.price_min) {
+      if (priceRange_min !== filterStore.filtersState.price_min) {
         filterStore.setPriceRange_min(priceRange_min);
       }
-      if (Number(priceRange_max) !== filterStore.filtersState.price_max) {
+      if (priceRange_max !== filterStore.filtersState.price_max) {
         filterStore.setPriceRange_max(priceRange_max);
       }
 
@@ -42,7 +42,6 @@ const useSyncFiltersWithURL = () => {
       }
 
       filterStore.setLimit(Number(limit));
-      filterStore.setPage(Number(page));
 
       productStore.fetchProducts(filterStore.filtersState);
     });

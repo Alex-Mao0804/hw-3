@@ -29,15 +29,15 @@ class FilterStore {
     });
   }
 
-  setPriceRange_min(priceRange_min: string) {
+  setPriceRange_min(priceRange_min: number | null) {
     runInAction(() => {
-      this._filtersState.price_min = Number(priceRange_min);
+      this._filtersState.price_min = priceRange_min;
     });
   }
 
-  setPriceRange_max(priceRange_max: string) {
+  setPriceRange_max(priceRange_max: number | null) {
     runInAction(() => {
-      this._filtersState.price_max = Number(priceRange_max);
+      this._filtersState.price_max = priceRange_max;
     });
   }
 

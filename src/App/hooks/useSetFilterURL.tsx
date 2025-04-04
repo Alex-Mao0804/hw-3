@@ -1,25 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import filterStore from "@stores/FilterStore";
+import { TFiltersApi } from "../utils/types";
 
 const useSetFilters = () => {
   const navigate = useNavigate();
 
-  const updateFilters = (filters: {
-    page?: number;
-    title?: string;
-    categoryId?: number | number[] | null;
-    priceRange?: { min: string; max: string };
-  }) => {
+  const updateFilters = (filters: TFiltersApi) => {
     const params = new URLSearchParams(window.location.search);
-
-    const priceMin = filters.priceRange?.min;
-    const priceMax = filters.priceRange?.max;
-
-    if (priceMin) params.set("price_min", priceMin);
-    else params.delete("price_min");
-
-    if (priceMax) params.set("price_max", priceMax);
-    else params.delete("price_max");
 
     if (filters.page && filterStore.filtersState.limit) {
       params.set(
@@ -37,6 +24,22 @@ const useSetFilters = () => {
         params.set("title", filters.title);
       } else {
         params.delete("title");
+      }
+    }
+
+    if (filters.price_max !== undefined) {
+      if (filters.price_max) {
+        params.set("price_max", filters.price_max.toString());
+      } else {
+        params.delete("price_max");
+      }
+    }
+
+    if (filters.price_min !== undefined) {
+      if (filters.price_min) {
+        params.set("price_min", filters.price_min.toString());
+      } else {
+        params.delete("price_min");
       }
     }
 

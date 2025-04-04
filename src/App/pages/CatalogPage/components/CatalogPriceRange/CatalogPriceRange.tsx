@@ -12,10 +12,8 @@ const CatalogPriceRange: React.FC = () => {
     e.preventDefault();
     runInAction(() => {
       updateFilters({
-        priceRange: {
-          min: String(filterStore.filtersState.price_min),
-          max: String(filterStore.filtersState.price_max),
-        },
+        price_min: filterStore.filtersState.price_min,
+        price_max: filterStore.filtersState.price_max,
       });
     });
   };
@@ -26,24 +24,42 @@ const CatalogPriceRange: React.FC = () => {
         min={0}
         type="number"
         value={Number(filterStore.filtersState.price_min)}
-        onChange={(e) => filterStore.setPriceRange_min(e)}
+        onChange={(e) => filterStore.setPriceRange_min(Number(e))}
         placeholder="price from"
       />
       <Input
         min={0}
         type="number"
         value={Number(filterStore.filtersState.price_max)}
-        onChange={(e) => filterStore.setPriceRange_max(e)}
+        onChange={(e) => filterStore.setPriceRange_max(Number(e))}
         placeholder="price to"
       />
       <Button
         className={styles.price_range__button}
         disabled={
-          filterStore.filtersState.price_max === 0 &&
-          filterStore.filtersState.price_min === 0
+          filterStore.filtersState.price_max === 0 ||
+          filterStore.filtersState.price_min === 0 ||
+          Number(filterStore.filtersState.price_max) <
+            Number(filterStore.filtersState.price_min)
         }
       >
         Filter by price
+      </Button>
+
+      <Button
+        onClick={() => {
+          runInAction(() => {
+            filterStore.filtersState.price_max = null;
+            filterStore.filtersState.price_min = null;
+            updateFilters({
+              price_min: null,
+              price_max: null,
+            });
+          });
+        }}
+        className={styles.price_range__button}
+      >
+        Reset
       </Button>
     </form>
   );
