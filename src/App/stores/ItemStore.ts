@@ -72,6 +72,13 @@ class ItemStore {
     await this.fetchItem(id);
     await this.fetchRelatedProducts(id);
   }
+
+  destroy() {
+    runInAction(() => {
+      this._item = { product: null, loading: false };
+      this._related = { relatedProducts: null, loading: false };
+    });
+  }
 }
 
 export default new ItemStore();

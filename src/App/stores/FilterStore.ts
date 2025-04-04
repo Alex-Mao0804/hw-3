@@ -52,6 +52,12 @@ class FilterStore {
       this._filtersState.limit = limit;
     });
   }
+
+  destroy() {
+    runInAction(() => {
+      this._filtersState = initialFilters;
+    });
+  }
 }
 
 export default new FilterStore();

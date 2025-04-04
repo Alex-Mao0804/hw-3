@@ -23,6 +23,12 @@ const CatalogPage = observer(() => {
 
   useEffect(() => {
     categoryStore.fetchCategories();
+
+    return () => {
+      categoryStore.destroy();
+      productStore.destroy();
+      filterStore.destroy();
+    };
   }, []);
 
   const handleSubmit = useCallback(

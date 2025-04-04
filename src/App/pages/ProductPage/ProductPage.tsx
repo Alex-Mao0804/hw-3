@@ -21,6 +21,10 @@ const ProductPage = () => {
       return;
     }
     fetchItemAndRelated(id);
+
+    return () => {
+      itemStore.destroy();
+    };
   }, [id]);
 
   const { product, loading: loadingItem } = item;

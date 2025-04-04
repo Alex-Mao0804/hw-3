@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { runInAction } from "mobx";
 import filterStore from "@stores/FilterStore";
 import productStore from "@stores/ProductStore";
+import { initialFilters } from "@utils/constants";
 
 const useSyncFiltersWithURL = () => {
   const { search } = useLocation();
@@ -13,7 +14,7 @@ const useSyncFiltersWithURL = () => {
     const title = params.get("title");
     const categoryId = params.get("categoryId");
     const offset = Number(params.get("offset")) || 0;
-    const limit = Number(params.get("limit")) || filterStore.filtersState.limit;
+    const limit = Number(params.get("limit")) || initialFilters.limit;
     const page = limit ? Math.floor(offset / limit) + 1 : undefined;
     const priceRange_min = params.get("price_min") || "";
     const priceRange_max = params.get("price_max") || "";

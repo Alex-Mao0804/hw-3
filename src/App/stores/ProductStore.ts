@@ -59,6 +59,15 @@ class ProductStore {
       });
     }
   }
+
+  destroy() {
+    runInAction(() => {
+      this._products = [];
+      this._isLoading = false;
+      this._totalPages = 1;
+      this._totalProducts = 0;
+    });
+  }
 }
 
 export default new ProductStore();

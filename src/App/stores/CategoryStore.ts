@@ -1,4 +1,9 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import {
+  makeAutoObservable,
+  reaction,
+  runInAction,
+  IReactionDisposer,
+} from "mobx";
 import { getCategories } from "@api";
 import { CategoryEntity, OptionMultiDropdown } from "@types";
 import filterStore from "./FilterStore";
@@ -11,27 +16,44 @@ class CategoryStore {
   private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
+
+  private reactions: IReactionDisposer[] = [];
+
   constructor() {
     makeAutoObservable(this);
-    reaction(
-      () => this.isLoading,
-      (isLoading) => {
-        if (!isLoading) {
-          this.initializeCategory();
-        }
-      },
-    );
 
-    reaction(
-      () => filterStore.filtersState.categoryId,
-      (categoryId) => {
-        if (categoryId) {
-          this.updateCategoryFromId(categoryId);
-        }
-      },
+    this.reactions.push(
+      reaction(
+        () => this.isLoading,
+        (isLoading) => {
+          if (!isLoading) {
+            this.initializeCategory();
+          }
+        },
+      ),
+      reaction(
+        () => filterStore.filtersState.categoryId,
+        (categoryId) => {
+          if (categoryId) {
+            this.updateCategoryFromId(categoryId);
+          }
+        },
+      ),
     );
 
     this.initializeCategory();
+  }
+
+  destroy() {
+    this.reactions.forEach((dispose) => dispose());
+    this.reactions = [];
+
+    runInAction(() => {
+      this._categoryMultiDropdownValue = null;
+      this._categoriesMultiDropdown = [];
+      this._categories = [];
+      this._isLoading = false;
+    });
   }
 
   private initializeCategory() {
@@ -49,6 +71,7 @@ class CategoryStore {
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
   }
+
   get isLoading() {
     return this._isLoading;
   }
