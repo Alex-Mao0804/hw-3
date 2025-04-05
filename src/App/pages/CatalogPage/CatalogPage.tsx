@@ -3,8 +3,8 @@ import styles from "./CatalogPage.module.scss";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import CatalogProducts from "./components/CatalogProducts";
-import productStore from "@stores/ProductStore";
-import filterStore from "@stores/FilterStore";
+// import productStore from "@stores/ProductStore";
+// import filterStore from "@stores/FilterStore";
 import { observer } from "mobx-react-lite";
 import { runInAction, toJS } from "mobx";
 import useSetFilters from "@hooks/useSetFilterURL";
@@ -16,10 +16,13 @@ import categoryStore from "@stores/CategoryStore";
 import { OptionMultiDropdown } from "@types";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import Text from "@components/Text";
+import useProductStore from "@/App/stores/RootStore/hooks/useProductStore";
 
 const CatalogPage = observer(() => {
-  const updateFilters = useSetFilters();
-  useSyncFiltersWithURL();
+  const productStore = useProductStore(); // ✅ локальный store
+  const filterStore = productStore.filters; // доступ к filters через prod
+  const updateFilters = useSetFilters(filterStore.filtersState); // передаем filtersState в хук
+  // useSyncFiltersWithURL();
 
   useEffect(() => {
     categoryStore.fetchCategories();
@@ -27,13 +30,13 @@ const CatalogPage = observer(() => {
     return () => {
       categoryStore.destroy();
       productStore.destroy();
-      filterStore.destroy();
+      // filterStore.destroy();
     };
   }, []);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+      event.preventDefault();      
       runInAction(() => {
         updateFilters({
           title: filterStore.filtersState.title,
@@ -121,7 +124,7 @@ const CatalogPage = observer(() => {
             isMulti={false}
             getTitle={categoryStore.getTitleMultiDropdown}
           />
-          <CatalogPriceRange />
+          {/* <CatalogPriceRange /> */}
         </div>
       </div>
       <CatalogProducts

@@ -13,33 +13,33 @@ class CategoryStore {
   private _isLoading: boolean = false;
   constructor() {
     makeAutoObservable(this);
-    reaction(
-      () => this.isLoading,
-      (isLoading) => {
-        if (!isLoading) {
-          this.initializeCategory();
-        }
-      },
-    );
+    // reaction(
+    //   () => this.isLoading,
+    //   (isLoading) => {
+    //     if (!isLoading) {
+    //       this.initializeCategory();
+    //     }
+    //   },
+    // );
 
-    reaction(
-      () => filterStore.filtersState.categoryId,
-      (categoryId) => {
-        if (categoryId) {
-          this.updateCategoryFromId(categoryId);
-        }
-      },
-    );
+    // reaction(
+    //   () => filterStore.filtersState.categoryId,
+    //   (categoryId) => {
+    //     if (categoryId) {
+    //       this.updateCategoryFromId(categoryId);
+    //     }
+    //   },
+    // );
 
-    this.initializeCategory();
+    // this.initializeCategory();
   }
 
-  private initializeCategory() {
-    const categoryId = filterStore.filtersState.categoryId;
-    if (categoryId) {
-      this.updateCategoryFromId(categoryId);
-    }
-  }
+  // private initializeCategory() {
+  //   const categoryId = filterStore.filtersState.categoryId;
+  //   if (categoryId) {
+  //     this.updateCategoryFromId(categoryId);
+  //   }
+  // }
 
   private updateCategoryFromId(categoryId: number) {
     const categorySelected = this.categories.find(

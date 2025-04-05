@@ -1,56 +1,70 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { TFiltersApi } from "@types";
 import { initialFilters } from "@utils/constants";
+import RootStore from "./RootStore";
 
-class FilterStore {
+export default class FilterStore {
   private _filtersState: TFiltersApi = initialFilters;
 
   constructor() {
     makeAutoObservable(this);
+
+    reaction(
+      () => ({
+        title: RootStore.query.getParam("title"),
+        categoryId: RootStore.query.getParam("categoryId"),
+        price_min: RootStore.query.getParam("price_min"),
+        price_max: RootStore.query.getParam("price_max"),
+        page: RootStore.query.getParam("page"),
+        limit: RootStore.query.getParam("limit"),
+        offset: RootStore.query.getParam("offset"),
+      }),
+      (params) => {
+        const { title, categoryId, price_min, price_max, page, limit, offset } = params;
+
+        if (title) this.setTitle(String(title));
+        if (categoryId) this.setCategoryId(Number(categoryId));
+        if (price_min) this.setPriceRange_min(Number(price_min));
+        if (price_max) this.setPriceRange_max(Number(price_max));
+
+        if (limit) this.setLimit(Number(limit));
+        if (offset && limit) {
+          const computedPage = Math.floor(Number(offset) / Number(limit)) + 1;
+          this.setPage(computedPage);
+        } else if (page) {
+          this.setPage(Number(page));
+        }
+      },
+      { fireImmediately: true }
+    );
   }
 
   get filtersState() {
     return this._filtersState;
   }
 
-  get title() {
-    return this._filtersState.title;
-  }
-
   setTitle(title: string) {
-    runInAction(() => {
-      this._filtersState.title = title;
-    });
+    this._filtersState.title = title;
   }
 
   setCategoryId(categoryId: number | null) {
-    runInAction(() => {
-      this._filtersState.categoryId = categoryId;
-    });
+    this._filtersState.categoryId = categoryId;
   }
 
   setPriceRange_min(priceRange_min: number | null) {
-    runInAction(() => {
-      this._filtersState.price_min = priceRange_min;
-    });
+    this._filtersState.price_min = priceRange_min;
   }
 
   setPriceRange_max(priceRange_max: number | null) {
-    runInAction(() => {
-      this._filtersState.price_max = priceRange_max;
-    });
+    this._filtersState.price_max = priceRange_max;
   }
 
   setPage(page: number) {
-    runInAction(() => {
-      this._filtersState.page = page;
-    });
+    this._filtersState.page = page;
   }
 
   setLimit(limit: number) {
-    runInAction(() => {
-      this._filtersState.limit = limit;
-    });
+    this._filtersState.limit = limit;
   }
 
   destroy() {
@@ -59,5 +73,3 @@ class FilterStore {
     });
   }
 }
-
-export default new FilterStore();

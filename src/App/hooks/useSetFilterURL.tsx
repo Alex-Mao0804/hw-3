@@ -1,22 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import filterStore from "@stores/FilterStore";
 import { TFiltersApi } from "../utils/types";
 
-const useSetFilters = () => {
+const useSetFilters = (filtersState: TFiltersApi) => {
   const navigate = useNavigate();
 
   const updateFilters = (filters: TFiltersApi) => {
     const params = new URLSearchParams(window.location.search);
 
-    if (filters.page && filterStore.filtersState.limit) {
+    if (filters.page && filters.limit) {
       params.set(
         "offset",
-        ((filters.page - 1) * filterStore.filtersState.limit).toString(),
+        ((filters.page - 1) * filters.limit).toString(),
       );
-      params.set("limit", filterStore.filtersState.limit.toString());
-    } else if (filterStore.filtersState.limit) {
+      params.set("limit", filters.limit.toString());
+    } else if (filters.limit) {
       params.set("offset", "0");
-      params.set("limit", filterStore.filtersState.limit.toString());
+      params.set("limit", filters.limit.toString());
     }
 
     if (filters.title !== undefined) {

@@ -1,15 +1,34 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import {
+  IReactionDisposer,
+  makeAutoObservable,
+  reaction,
+  runInAction,
+} from "mobx";
 import { getProducts } from "@api";
 import { ProductEntity, TFiltersApi } from "@types";
+import rootStore from "./RootStore";
+import FilterStore from "./FilterStore";
 
 class ProductStore {
   private _products: ProductEntity[] = [];
   private _isLoading: boolean = false;
   private _totalPages: number = 1;
   private _totalProducts: number = 0;
+  filters: FilterStore;
+  private _qpReaction: IReactionDisposer;
 
   constructor() {
     makeAutoObservable(this);
+    this.filters = new FilterStore();
+    this._qpReaction = reaction(
+      () => rootStore.query.getParams(),
+      () => {
+        this.fetchProducts(this.filters.filtersState);
+      },
+      {
+        fireImmediately: true,
+      },
+    );
   }
 
   get products() {
@@ -70,4 +89,4 @@ class ProductStore {
   }
 }
 
-export default new ProductStore();
+export default ProductStore;
