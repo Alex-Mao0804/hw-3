@@ -12,7 +12,6 @@ export default class QueryParamsStore {
       _params: observable.ref,
       setSearch: action,
       setParam: action,
-      removeParam: action,
     });
   }
 
@@ -29,24 +28,7 @@ export default class QueryParamsStore {
     setParam(key: string, value: any) {
       runInAction(() => {
         this._params[key] = value;
-        this.updateSearch();
       });
-    }
-  
-    // Удалить параметр
-    removeParam(key: string) {
-      runInAction(() => {
-        delete this._params[key];
-        this.updateSearch();
-      });
-    }
-  
-    // Обновить строку запроса
-    private updateSearch() {
-      const search = qs.stringify(this._params, { addQueryPrefix: true });
-      if (this._search !== search) {
-        this._search = search;
-      }
     }
   
   getParam (key: string) {

@@ -45,7 +45,7 @@ const Pagination: React.FC<TPaginationProps> = ({
     <div className={styles.pagination}>
       <button
         className={styles.pagination__button}
-        disabled={currentPage === 1}
+        disabled={currentPage === 1 || totalPages === 0}
         onClick={() => goToPage(currentPage - 1)}
       >
         <ArrowSideIcon />
@@ -67,7 +67,7 @@ const Pagination: React.FC<TPaginationProps> = ({
       </div>
       <button
         className={styles.pagination__button}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || totalPages === 0}
         onClick={() => goToPage(currentPage + 1)}
       >
         <ArrowSideIcon />

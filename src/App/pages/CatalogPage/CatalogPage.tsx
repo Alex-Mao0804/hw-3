@@ -8,7 +8,6 @@ import CatalogProducts from "./components/CatalogProducts";
 import { observer } from "mobx-react-lite";
 import { runInAction, toJS } from "mobx";
 import useSetFilters from "@hooks/useSetFilterURL";
-import useSyncFiltersWithURL from "@hooks/useSyncFiltersWithURL";
 import Pagination from "@components/Pagination";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogPriceRange from "./components/CatalogPriceRange";
@@ -17,16 +16,19 @@ import { OptionMultiDropdown } from "@types";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import Text from "@components/Text";
 import useProductStore from "@/App/stores/RootStore/hooks/useProductStore";
+import { useNavigate } from "react-router-dom";
 
 const CatalogPage = observer(() => {
   const productStore = useProductStore(); // ✅ локальный store
   const filterStore = productStore.filters; // доступ к filters через prod
+  const categoryStore = productStore.category;
   const updateFilters = useSetFilters(filterStore.filtersState); // передаем filtersState в хук
-  // useSyncFiltersWithURL();
+  const navigate = useNavigate();
 
   useEffect(() => {
     categoryStore.fetchCategories();
-
+    
+    // productStore.fetchInit();
     return () => {
       categoryStore.destroy();
       productStore.destroy();
@@ -50,7 +52,7 @@ const CatalogPage = observer(() => {
 
   const handleChangePage = useCallback((page: number) => {
     runInAction(() => {
-      if (filterStore.filtersState.page !== page) {
+      if (filterStore.filtersState.page !== page) {        
         updateFilters({
           page: page,
         });
@@ -124,7 +126,7 @@ const CatalogPage = observer(() => {
             isMulti={false}
             getTitle={categoryStore.getTitleMultiDropdown}
           />
-          {/* <CatalogPriceRange /> */}
+          <CatalogPriceRange productStore={productStore} />
         </div>
       </div>
       <CatalogProducts

@@ -6,13 +6,14 @@ import ProductItem from "./components/ProductItem";
 import { useNavigate, useParams } from "react-router-dom";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
-import itemStore from "@stores/ItemStore";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
+import useItemStore from "@/App/stores/RootStore/hooks/useItemStore";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const itemStore = useItemStore();
 
   const { fetchItemAndRelated, item, related } = itemStore;
 

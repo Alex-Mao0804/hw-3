@@ -5,15 +5,21 @@ import { runInAction } from "mobx";
 import filterStore from "@stores/FilterStore";
 import { observer } from "mobx-react-lite";
 import useSetFilters from "@hooks/useSetFilterURL";
+import ProductStore from "@/App/stores/ProductStore/ProductStore";
 
-const CatalogPriceRange: React.FC = () => {
-  const updateFilters = useSetFilters();
+type TPriceRange = {
+  productStore: ProductStore;
+}
+
+const CatalogPriceRange: React.FC<TPriceRange> = ({ productStore }) => {
+  
+  const updateFilters = useSetFilters(productStore.filters.filtersState);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     runInAction(() => {
       updateFilters({
-        price_min: filterStore.filtersState.price_min,
-        price_max: filterStore.filtersState.price_max,
+        price_min: productStore.filters.filtersState.price_min,
+        price_max: productStore.filters.filtersState.price_max,
       });
     });
   };
@@ -23,24 +29,32 @@ const CatalogPriceRange: React.FC = () => {
       <Input
         min={0}
         type="number"
-        value={Number(filterStore.filtersState.price_min)}
-        onChange={(e) => filterStore.setPriceRange_min(Number(e))}
+        value={Number(productStore.filters.filtersState.price_min)}
+        onChange={(e) => {
+          runInAction(() => {
+            productStore.filters.setPriceRange_min(Number(e));
+          });
+        }}
         placeholder="price from"
       />
       <Input
         min={0}
         type="number"
-        value={Number(filterStore.filtersState.price_max)}
-        onChange={(e) => filterStore.setPriceRange_max(Number(e))}
+        value={Number(productStore.filters.filtersState.price_max)}
+        onChange={(e) => {
+          runInAction(() => {
+            productStore.filters.setPriceRange_max(Number(e));
+          });
+        }}
         placeholder="price to"
       />
       <Button
         className={styles.price_range__button}
         disabled={
-          filterStore.filtersState.price_max === 0 ||
-          filterStore.filtersState.price_min === 0 ||
-          Number(filterStore.filtersState.price_max) <
-            Number(filterStore.filtersState.price_min)
+          productStore.filters.filtersState.price_max === 0 ||
+          productStore.filters.filtersState.price_min === 0 ||
+          Number(productStore.filters.filtersState.price_max) <
+            Number(productStore.filters.filtersState.price_min)
         }
       >
         Filter by price
@@ -49,8 +63,8 @@ const CatalogPriceRange: React.FC = () => {
       <Button
         onClick={() => {
           runInAction(() => {
-            filterStore.filtersState.price_max = null;
-            filterStore.filtersState.price_min = null;
+            productStore.filters.filtersState.price_max = null;
+            productStore.filters.filtersState.price_min = null;
             updateFilters({
               price_min: null,
               price_max: null,

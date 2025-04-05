@@ -81,4 +81,4 @@ class ItemStore {
   }
 }
 
-export default new ItemStore();
+export default ItemStore;

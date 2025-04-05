@@ -1,9 +1,9 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { getCategories } from "@api";
 import { CategoryEntity, OptionMultiDropdown } from "@types";
-import filterStore from "./FilterStore";
+import ProductStore from "./ProductStore"; // Убедитесь, что вы импортируете корректный тип
 
-class CategoryStore {
+export default class CategoryStore {
   private _categoryMultiDropdownValue:
     | OptionMultiDropdown
     | OptionMultiDropdown[]
@@ -11,35 +11,42 @@ class CategoryStore {
   private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
-  constructor() {
-    makeAutoObservable(this);
-    // reaction(
-    //   () => this.isLoading,
-    //   (isLoading) => {
-    //     if (!isLoading) {
-    //       this.initializeCategory();
-    //     }
-    //   },
-    // );
+  private productStore: ProductStore; // Оборачиваем productStore в поле класса
 
-    // reaction(
-    //   () => filterStore.filtersState.categoryId,
-    //   (categoryId) => {
-    //     if (categoryId) {
-    //       this.updateCategoryFromId(categoryId);
-    //     }
-    //   },
-    // );
+  constructor(productStore: ProductStore) {
+    makeAutoObservable(this);
+    this.productStore = productStore; // Присваиваем productStore в поле
+
+    // Обращаемся к filters через productStore
+    const filters = this.productStore.filters;
+    
+    reaction(
+      () => this.isLoading,
+      (isLoading) => {
+        if (!isLoading) {
+          this.initializeCategory();
+        }
+      },
+    );
+
+    reaction(
+      () => filters.filtersState.categoryId,
+      (categoryId) => {
+        if (categoryId) {
+          this.updateCategoryFromId(categoryId);
+        }
+      },
+    );
 
     // this.initializeCategory();
   }
 
-  // private initializeCategory() {
-  //   const categoryId = filterStore.filtersState.categoryId;
-  //   if (categoryId) {
-  //     this.updateCategoryFromId(categoryId);
-  //   }
-  // }
+  private initializeCategory() {
+    const categoryId = this.productStore.filters.filtersState.categoryId; // Обращаемся к filters через productStore
+    if (categoryId) {
+      this.updateCategoryFromId(categoryId);
+    }
+  }
 
   private updateCategoryFromId(categoryId: number) {
     const categorySelected = this.categories.find(
@@ -49,6 +56,7 @@ class CategoryStore {
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
   }
+
   get isLoading() {
     return this._isLoading;
   }
@@ -113,4 +121,3 @@ class CategoryStore {
   }
 }
 
-export default new CategoryStore();

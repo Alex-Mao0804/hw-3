@@ -7,15 +7,15 @@ const useSetFilters = (filtersState: TFiltersApi) => {
   const updateFilters = (filters: TFiltersApi) => {
     const params = new URLSearchParams(window.location.search);
 
-    if (filters.page && filters.limit) {
+    if (filters.page && filtersState.limit) {
       params.set(
         "offset",
-        ((filters.page - 1) * filters.limit).toString(),
+        ((filters.page - 1) * filtersState.limit).toString(),
       );
-      params.set("limit", filters.limit.toString());
-    } else if (filters.limit) {
+      params.set("limit", filtersState.limit.toString());
+    } else if (filtersState.limit) {
       params.set("offset", "0");
-      params.set("limit", filters.limit.toString());
+      params.set("limit", filtersState.limit.toString());
     }
 
     if (filters.title !== undefined) {
