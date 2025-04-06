@@ -27,9 +27,9 @@ const Pagination: React.FC<TPaginationProps> = ({
     return [
       1,
       ELLIPSIS,
-      currentPage - 1,
-      currentPage,
-      currentPage + 1,
+      Number(currentPage) - 1,
+      Number(currentPage),
+      Number(currentPage) + 1,
       ELLIPSIS,
       totalPages,
     ];
@@ -45,8 +45,8 @@ const Pagination: React.FC<TPaginationProps> = ({
     <div className={styles.pagination}>
       <button
         className={styles.pagination__button}
-        disabled={currentPage === 1 || totalPages === 0}
-        onClick={() => goToPage(currentPage - 1)}
+        disabled={Number(currentPage) === 1 || totalPages === 0}
+        onClick={() => goToPage(Number(currentPage) - 1)}
       >
         <ArrowSideIcon />
       </button>
@@ -57,7 +57,7 @@ const Pagination: React.FC<TPaginationProps> = ({
             onClick={changePage}
             className={clsx(
               styles.pagination__button_group,
-              currentPage !== item && styles.pagination__button_noActive,
+              Number(currentPage) !== item && styles.pagination__button_noActive,
             )}
             disabled={item === ELLIPSIS}
           >
@@ -67,8 +67,8 @@ const Pagination: React.FC<TPaginationProps> = ({
       </div>
       <button
         className={styles.pagination__button}
-        disabled={currentPage === totalPages || totalPages === 0}
-        onClick={() => goToPage(currentPage + 1)}
+        disabled={Number(currentPage) === totalPages || totalPages === 0}
+        onClick={() => goToPage(Number(currentPage) + 1)}
       >
         <ArrowSideIcon />
       </button>

@@ -30,6 +30,7 @@ class ProductStore {
     this._qpReaction = reaction(
       () => rootStore.query.getParams(), // Отслеживаем изменения в query
       (newParams) => {
+        console.log("newParams2", newParams);
         const filters = this._filters.filtersState;
         const paramsChanged =
           newParams.page !== filters.page ||

@@ -3,15 +3,11 @@ import styles from "./CatalogPage.module.scss";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import CatalogProducts from "./components/CatalogProducts";
-// import productStore from "@stores/ProductStore";
-// import filterStore from "@stores/FilterStore";
 import { observer } from "mobx-react-lite";
 import { runInAction, toJS } from "mobx";
-import useSetFilters from "@hooks/useSetFilterURL";
 import Pagination from "@components/Pagination";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogPriceRange from "./components/CatalogPriceRange";
-import categoryStore from "@stores/CategoryStore";
 import { OptionMultiDropdown } from "@types";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import Text from "@components/Text";
@@ -22,14 +18,7 @@ const CatalogPage = observer(() => {
   const productStore = useProductStore(); // ✅ локальный store
   const filterStore = productStore.filters; // доступ к filters через prod
   const categoryStore = productStore.category;
-  const connector = filterStore.connector;
-
-  // const updateFilters = useSetFilters(filterStore.filtersState); // передаем filtersState в хук
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   connector.syncParamsToFilters();
-  // }, [connector]);
 
   useEffect(() => {
     filterStore.setNavigate(navigate);
@@ -37,8 +26,7 @@ const CatalogPage = observer(() => {
 
   useEffect(() => {
     categoryStore.fetchCategories();
-  //  console.log("filterStore.filters", filterStore.filters);
-    // productStore.fetchInit();
+
     return () => {
       categoryStore.destroy();
       productStore.destroy();
