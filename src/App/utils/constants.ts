@@ -1,4 +1,4 @@
-import { TFiltersApi } from "@types";
+import { TFiltersApi } from "@api/type/directionProduct/list";
 
 export const initialFilters: TFiltersApi = {
   title: "",

@@ -1,9 +1,10 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
-import { getProducts } from "@api";
-import { ProductEntity, TFiltersApi } from "@types";
 import rootStore from "@stores/RootStore";
-import FilterStore from "@/App/stores/FilterStore/FilterStore";
-import CategoryStore from "@/App/stores/CategoryStore/CategoryStore";
+import FilterStore from "@stores/FilterStore/FilterStore";
+import CategoryStore from "@stores/CategoryStore/CategoryStore";
+import { ProductEntity } from "@types";
+import { TFiltersApi } from "@api/type/directionProduct/list";
+import { getProducts } from "@api/handlers/directionProduct/list";
 
 class ProductStore {
   private _products: ProductEntity[] = [];

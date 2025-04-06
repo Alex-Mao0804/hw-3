@@ -8,7 +8,7 @@ export default defineConfig({
     alias: {
       "@": path.join(__dirname, "src"),
       "@components": path.join(__dirname, "src/App/components"),
-      "@api": path.join(__dirname, "src/App/utils/api.ts"),
+      "@api": path.join(__dirname, "src/App/api"),
       "@types": path.join(__dirname, "src/App/types"),
       "@pages": path.join(__dirname, "src/App/pages"),
       "@styles": path.join(__dirname, "src/App/styles"),
@@ -18,6 +18,8 @@ export default defineConfig({
       "@stores": path.join(__dirname, "src/App/stores"),
       "@hooks": path.join(__dirname, "src/App/hooks"),
       "@utils": path.join(__dirname, "src/App/utils"),
+      "@apiHandlers": path.join(__dirname, "src/App/api/handlers"),
+      "@apiTypes": path.join(__dirname, "src/App/api/types"),
     },
   },
 });

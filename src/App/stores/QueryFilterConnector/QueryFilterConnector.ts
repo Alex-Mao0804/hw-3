@@ -1,5 +1,5 @@
+import { TFiltersApi } from "@api/type/directionProduct/list";
 import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
-import { TFiltersApi } from "@types";
 import { runInAction } from "mobx";
 import { NavigateFunction } from "react-router-dom";
 

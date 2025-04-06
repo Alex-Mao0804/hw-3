@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { getCategories } from "@api";
 import { CategoryEntity, OptionEntity } from "@types";
 import ProductStore from "@stores/ProductStore";
+import { getCategories } from "@api/handlers/directionCategory/details";
 
 export default class CategoryStore {
   private _categoryMultiDropdownValue: OptionEntity | null = null;

@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { getProduct, getRelatedProducts } from "@api";
 import { ProductEntity } from "@types";
+import { getRelatedProducts } from "@api/handlers/directionProduct/related";
+import { getProduct } from "@api/handlers/directionProduct/item";
 
 class ItemStore {
   private _item: {

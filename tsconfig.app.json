@@ -22,11 +22,13 @@
       "@routes": ["src/App/utils/routes"],
       "@components/*": ["src/App/components/*"],
       "@pages/*": ["src/App/pages/*"],
-      "@api": ["src/App/utils/api"],
+      "@api/*": ["src/App/api/*"],
       "@types": ["src/App/utils/types"],
       "@stores/*": ["src/App/stores/*"],
       "@hooks/*": ["src/App/hooks/*"],
-      "@utils/*": ["src/App/utils/*"]
+      "@utils/*": ["src/App/utils/*"],
+      "@apiHandlers/*": ["src/App/api/handlers/*"],
+      "@apiTypes/*": ["src/App/api/types/*"]
     },
 
     /* Linting */
