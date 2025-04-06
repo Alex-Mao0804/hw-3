@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import * as qs from "qs";
 
 type PrivateFields = "_params";
@@ -11,7 +11,6 @@ export default class QueryParamsStore {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
       setSearch: action,
-      setParam: action,
     });
   }
 
@@ -22,13 +21,6 @@ export default class QueryParamsStore {
       this._params = qs.parse(search);
     }
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setParam(key: string, value: any) {
-    runInAction(() => {
-      this._params[key] = value;
-    });
-  }
-
   getParams() {
     return this._params;
   }
