@@ -39,7 +39,7 @@ const CatalogPage = observer(() => {
       event.preventDefault();
       runInAction(() => {
         filterStore.updateAndSync({
-          title: filterStore.filtersState.title,
+          title: filterStore.fieldTitle,
         });
       });
     },
@@ -95,7 +95,7 @@ const CatalogPage = observer(() => {
           className={styles.catalog_page__options__search}
         >
           <Input
-            value={String(filterStore.filtersState.title)}
+            value={String(filterStore.fieldTitle)}
             onChange={(e) => {
               runInAction(() => {
                 filterStore.setTitle(e);

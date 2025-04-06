@@ -12,8 +12,9 @@ type TPriceRange = {
 const CatalogPriceRange: React.FC<TPriceRange> = ({ productStore }) => {
   
   const { filters } = productStore;  // Деструктуризация для удобства
-  const { price_min, price_max } = filters.filtersState;
 
+  const price_min = filters.fieldPriceRange_min;
+  const price_max = filters.fieldPriceRange_max;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     runInAction(() => {

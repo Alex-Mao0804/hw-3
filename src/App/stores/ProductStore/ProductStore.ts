@@ -30,18 +30,20 @@ class ProductStore {
     this._qpReaction = reaction(
       () => rootStore.query.getParams(), // Отслеживаем изменения в query
       (newParams) => {
-        console.log("newParams2", newParams);
         const filters = this._filters.filtersState;
-        const paramsChanged =
-          newParams.page !== filters.page ||
-          newParams.limit !== filters.limit ||
-          newParams.title !== filters.title ||
-          newParams.categoryId !== filters.categoryId ||
-          newParams.price_min !== filters.price_min ||
-          newParams.price_max !== filters.price_max;
+        // const paramsChanged =
+        //   newParams.page !== filters.page ||
+        //   newParams.limit !== filters.limit ||
+        //   newParams.title !== filters.title ||
+        //   newParams.categoryId !== filters.categoryId ||
+        //   newParams.price_min !== filters.price_min ||
+        //   newParams.price_max !== filters.price_max;
 
-        if (paramsChanged) {
-          this._filters.setFilters(newParams);          
+        if (newParams !== filters) {
+          this._filters.setFilters(newParams);
+          newParams.title && this._filters.setTitle(String(newParams.title));  
+          newParams.price_max && this._filters.setPriceRange_max(Number(newParams.price_max));
+          newParams.price_min && this._filters.setPriceRange_min(Number(newParams.price_min));       
           this.fetchProducts(this._filters.filtersState);
         }
       },

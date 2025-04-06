@@ -6,6 +6,9 @@ import QueryFilterConnector from "./QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
 
 export default class FilterStore {
+  private _fieldTitle: string = "";
+  private _filedPriceRange_min: number|null = null;
+  private _filedPriceRange_max: number|null = null;
   private _filtersState: TFiltersApi = initialFilters;
   private _connector: QueryFilterConnector;
 
@@ -22,7 +25,8 @@ export default class FilterStore {
   // Метод для синхронизации фильтров с параметрами в query
   syncFiltersWithQueryParams() {
     const { title, categoryId, price_min, price_max, page, limit } = this.queryParamsStore.getParams();
-
+    console.log("params", title, categoryId, price_min, price_max, page, limit);
+    
     if (title) this.setTitle(String(title));
     if (categoryId) this.setCategoryId(Number(categoryId));
     if (price_min) this.setPriceRange_min(Number(price_min));
@@ -33,6 +37,18 @@ export default class FilterStore {
 
   get connector() {
     return this._connector;
+  }
+
+  get fieldTitle() {
+    return this._fieldTitle;
+  }
+
+  get fieldPriceRange_min() {
+    return this._filedPriceRange_min;
+  }
+
+  get fieldPriceRange_max() {
+    return this._filedPriceRange_max;
   }
 
   // Метод для обновления и синхронизации фильтров
@@ -58,19 +74,24 @@ export default class FilterStore {
 
   // Методы для обновления конкретных фильтров
   setTitle(title: string) {
-    this._filtersState.title = title;
+    this._fieldTitle = title;
+    this._filtersState.page = 1;
   }
 
   setCategoryId(categoryId: number | null) {
     this._filtersState.categoryId = categoryId;
+    this._filtersState.page = 1;
   }
 
   setPriceRange_min(priceRange_min: number | null) {
-    this._filtersState.price_min = priceRange_min;
-  }
+this._filedPriceRange_min = priceRange_min;
+this._filtersState.page = 1;
+
+}
 
   setPriceRange_max(priceRange_max: number | null) {
-    this._filtersState.price_max = priceRange_max;
+    this._filedPriceRange_max = priceRange_max;
+    this._filtersState.page = 1;
   }
 
   setPage(page: number) {
