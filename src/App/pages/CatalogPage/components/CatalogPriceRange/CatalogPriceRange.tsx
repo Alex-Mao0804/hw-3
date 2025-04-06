@@ -2,9 +2,7 @@ import styles from "./CatalogPriceRange.module.scss";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import { runInAction } from "mobx";
-import filterStore from "@stores/FilterStore";
 import { observer } from "mobx-react-lite";
-import useSetFilters from "@hooks/useSetFilterURL";
 import ProductStore from "@/App/stores/ProductStore/ProductStore";
 
 type TPriceRange = {
@@ -13,13 +11,26 @@ type TPriceRange = {
 
 const CatalogPriceRange: React.FC<TPriceRange> = ({ productStore }) => {
   
-  const updateFilters = useSetFilters(productStore.filters.filtersState);
+  const { filters } = productStore;  // Деструктуризация для удобства
+  const { price_min, price_max } = filters.filtersState;
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     runInAction(() => {
-      updateFilters({
-        price_min: productStore.filters.filtersState.price_min,
-        price_max: productStore.filters.filtersState.price_max,
+      filters.updateAndSync({
+        price_min,
+        price_max,
+      });
+    });
+  };
+
+  const handleReset = () => {
+    runInAction(() => {
+      filters.setPriceRange_min(0);
+      filters.setPriceRange_max(0);
+      filters.updateAndSync({
+        price_min: 0,
+        price_max: 0,
       });
     });
   };
@@ -29,10 +40,10 @@ const CatalogPriceRange: React.FC<TPriceRange> = ({ productStore }) => {
       <Input
         min={0}
         type="number"
-        value={Number(productStore.filters.filtersState.price_min)}
+        value={price_min || 0}  // Для предотвращения undefined
         onChange={(e) => {
           runInAction(() => {
-            productStore.filters.setPriceRange_min(Number(e));
+            filters.setPriceRange_min(Number(e));
           });
         }}
         placeholder="price from"
@@ -40,37 +51,26 @@ const CatalogPriceRange: React.FC<TPriceRange> = ({ productStore }) => {
       <Input
         min={0}
         type="number"
-        value={Number(productStore.filters.filtersState.price_max)}
+        value={price_max || 0}  // Для предотвращения undefined
         onChange={(e) => {
           runInAction(() => {
-            productStore.filters.setPriceRange_max(Number(e));
+            filters.setPriceRange_max(Number(e));
           });
         }}
         placeholder="price to"
       />
       <Button
         className={styles.price_range__button}
-        disabled={
-          productStore.filters.filtersState.price_max === 0 ||
-          productStore.filters.filtersState.price_min === 0 ||
-          Number(productStore.filters.filtersState.price_max) <
-            Number(productStore.filters.filtersState.price_min)
+        disabled={ !price_max || !price_min ||
+          price_max === 0 || price_min === 0 || 
+          price_max < price_min
         }
       >
         Filter by price
       </Button>
 
       <Button
-        onClick={() => {
-          runInAction(() => {
-            productStore.filters.filtersState.price_max = null;
-            productStore.filters.filtersState.price_min = null;
-            updateFilters({
-              price_min: null,
-              price_max: null,
-            });
-          });
-        }}
+        onClick={handleReset}  // Сброс фильтров
         className={styles.price_range__button}
       >
         Reset

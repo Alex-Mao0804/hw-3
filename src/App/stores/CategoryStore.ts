@@ -1,57 +1,23 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction, toJS } from "mobx";
 import { getCategories } from "@api";
 import { CategoryEntity, OptionMultiDropdown } from "@types";
-import ProductStore from "./ProductStore"; // Убедитесь, что вы импортируете корректный тип
+import ProductStore from "./ProductStore";
 
 export default class CategoryStore {
-  private _categoryMultiDropdownValue:
-    | OptionMultiDropdown
-    | OptionMultiDropdown[]
-    | null = null;
+  private _categoryMultiDropdownValue: OptionMultiDropdown | null = null;
   private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
-  private productStore: ProductStore; // Оборачиваем productStore в поле класса
+  private productStore: ProductStore;
 
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
-    this.productStore = productStore; // Присваиваем productStore в поле
+    this.productStore = productStore;
 
-    // Обращаемся к filters через productStore
-    const filters = this.productStore.filters;
-    
-    reaction(
-      () => this.isLoading,
-      (isLoading) => {
-        if (!isLoading) {
-          this.initializeCategory();
-        }
-      },
-    );
-
-    reaction(
-      () => filters.filtersState.categoryId,
-      (categoryId) => {
-        if (categoryId) {
-          this.updateCategoryFromId(categoryId);
-        }
-      },
-    );
-
-    // this.initializeCategory();
-  }
-
-  private initializeCategory() {
-    const categoryId = this.productStore.filters.filtersState.categoryId; // Обращаемся к filters через productStore
-    if (categoryId) {
-      this.updateCategoryFromId(categoryId);
-    }
   }
 
   private updateCategoryFromId(categoryId: number) {
-    const categorySelected = this.categories.find(
-      (cat) => cat.id === categoryId,
-    );
+    const categorySelected = this.categories.find((cat) => cat.id === categoryId);    
     this._categoryMultiDropdownValue = categorySelected
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
@@ -73,9 +39,7 @@ export default class CategoryStore {
     return this._categoryMultiDropdownValue;
   }
 
-  getTitleMultiDropdown(
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
-  ) {
+  getTitleMultiDropdown(value: OptionMultiDropdown | OptionMultiDropdown[] | null) {
     if (Array.isArray(value)) {
       return value.map((option) => option.value).join(", ");
     } else if (value) {
@@ -86,11 +50,14 @@ export default class CategoryStore {
   }
 
   setCategoryMultiDropdownValue(
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
+    value: OptionMultiDropdown | OptionMultiDropdown[] | null
   ) {
-    this._categoryMultiDropdownValue = value;
+    if (Array.isArray(value)) {
+      this._categoryMultiDropdownValue = value[0] || null; // Преобразуем массив в одиночный элемент
+    } else {
+      this._categoryMultiDropdownValue = value;
+    }
   }
-
   async fetchCategories() {
     runInAction(() => {
       this._isLoading = true;
@@ -103,6 +70,8 @@ export default class CategoryStore {
           key: String(category.id),
           value: category.name,
         }));
+        this.updateCategoryFromId(Number(this.productStore.filters.filtersState.categoryId));
+
       });
     } catch (error) {
       console.error("Ошибка загрузки категорий:", error);
@@ -120,4 +89,3 @@ export default class CategoryStore {
     this._isLoading = false;
   }
 }
-

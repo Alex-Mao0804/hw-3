@@ -39,4 +39,8 @@ export default class QueryParamsStore {
     return this._params;
   }
 
+  setParams (params: string) {
+    this.setSearch(params);
+  }
+
 }

@@ -4,6 +4,7 @@ import {
   makeAutoObservable,
   reaction,
   runInAction,
+  toJS,
 } from "mobx";
 import { getProducts } from "@api";
 import { ProductEntity, TFiltersApi } from "@types";
@@ -23,25 +24,12 @@ class ProductStore {
 
   constructor() {
     makeAutoObservable(this);
-    this._filters = new FilterStore();
+    this._filters = new FilterStore(rootStore.query);
     this._category = new CategoryStore(this);
-  // 💡 Если нет query-параметров — выполняем дефолтный запрос
-  const initialParams = rootStore.query.getParams();
-  const hasAnyParams = Object.keys(initialParams).length > 0;
-  console.log("hasAnyParams", hasAnyParams);
-  
-  if (!hasAnyParams) {
-    console.log("Нет query-параметров, выполняем дефолтный запрос");
-    
-    // 👇 Тут задаём параметры по умолчанию
-    this.fetchProducts({ page: 1, limit: 10 });
-  }
-    // Реакция на изменение параметров query
+
     this._qpReaction = reaction(
       () => rootStore.query.getParams(), // Отслеживаем изменения в query
       (newParams) => {
-        console.log("newParams", newParams);
-        // Проверяем, что параметры query действительно изменились и требуют запроса
         const filters = this._filters.filtersState;
         const paramsChanged =
           newParams.page !== filters.page ||
@@ -51,8 +39,8 @@ class ProductStore {
           newParams.price_min !== filters.price_min ||
           newParams.price_max !== filters.price_max;
 
-        if (paramsChanged
-      ) {
+        if (paramsChanged) {
+          this._filters.setFilters(newParams);          
           this.fetchProducts(this._filters.filtersState);
         }
       },

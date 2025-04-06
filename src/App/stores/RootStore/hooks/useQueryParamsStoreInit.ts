@@ -9,7 +9,6 @@ export const useQueryParamsStoreInit = (): void => {
   useEffect(() => {
     rootStore.query.setSearch(search);
     runInAction(() => {
-      console.log(rootStore.query.getParams());
 
     })
         

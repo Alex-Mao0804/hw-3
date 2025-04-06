@@ -22,12 +22,22 @@ const CatalogPage = observer(() => {
   const productStore = useProductStore(); // ✅ локальный store
   const filterStore = productStore.filters; // доступ к filters через prod
   const categoryStore = productStore.category;
-  const updateFilters = useSetFilters(filterStore.filtersState); // передаем filtersState в хук
+  const connector = filterStore.connector;
+
+  // const updateFilters = useSetFilters(filterStore.filtersState); // передаем filtersState в хук
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   connector.syncParamsToFilters();
+  // }, [connector]);
+
+  useEffect(() => {
+    filterStore.setNavigate(navigate);
+  }, [navigate]);
 
   useEffect(() => {
     categoryStore.fetchCategories();
-    
+  //  console.log("filterStore.filters", filterStore.filters);
     // productStore.fetchInit();
     return () => {
       categoryStore.destroy();
@@ -38,22 +48,19 @@ const CatalogPage = observer(() => {
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();      
+      event.preventDefault();
       runInAction(() => {
-        updateFilters({
+        filterStore.updateAndSync({
           title: filterStore.filtersState.title,
         });
-        // }
       });
     },
-
-    [filterStore.filtersState.title, updateFilters],
+    [filterStore.filtersState.title],
   );
-
   const handleChangePage = useCallback((page: number) => {
     runInAction(() => {
-      if (filterStore.filtersState.page !== page) {        
-        updateFilters({
+      if (filterStore.filtersState.page !== page) {
+        filterStore.updateAndSync({
           page: page,
         });
       }
@@ -63,22 +70,20 @@ const CatalogPage = observer(() => {
   const handleMultiDropdownChange = useCallback(
     (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
       runInAction(() => {
-        if (getCategoryKey(value) === filterStore.filtersState.categoryId) {
-          filterStore.setCategoryId(null);
-          categoryStore.setCategoryMultiDropdownValue(null);
-          updateFilters({
-            categoryId: null,
-          });
-        } else {
+        const selectedId = getCategoryKey(value);
+        if (selectedId === Number(filterStore.filtersState.categoryId)) {
+          filterStore.setCategoryId(null);  // Сброс категории в фильтре
+          categoryStore.setCategoryMultiDropdownValue(null);  // Сброс выбранного значения
+          filterStore.updateAndSync({ categoryId: null });
+        } else {          
           categoryStore.setCategoryMultiDropdownValue(value);
-          updateFilters({
-            categoryId: getCategoryKey(value),
-          });
+          filterStore.updateAndSync({ categoryId: selectedId });
         }
       });
     },
-    [],
+    [filterStore, categoryStore],
   );
+  
   return (
     <div className={styles.catalog_page}>
       <div className={styles.catalog_page__header}>
