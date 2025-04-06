@@ -1,7 +1,7 @@
-import { OptionMultiDropdown } from "@types";
+import { OptionEntity } from "@types";
 
-export const getCategoryKey = (
-  value: OptionMultiDropdown | OptionMultiDropdown[] | null,
+export const extractOptionKey = (
+  value: OptionEntity | OptionEntity[] | null,
 ): number | undefined => {
   if (Array.isArray(value)) {
     return value.length > 0 ? Number(value[0].key) : undefined;

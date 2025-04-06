@@ -12,8 +12,8 @@ type TPriceRange = {
 const CatalogPriceRange: React.FC<TPriceRange> = observer(
   ({ productStore }) => {
     const { filters } = productStore;
-    const price_min = filters.fieldPriceRange_min;
-    const price_max = filters.fieldPriceRange_max;
+    const price_min = filters.fieldPriceRangeMin;
+    const price_max = filters.fieldPriceRangeMax;
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       runInAction(() => {
@@ -26,8 +26,8 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
 
     const handleReset = () => {
       runInAction(() => {
-        filters.setPriceRange_min(0);
-        filters.setPriceRange_max(0);
+        filters.setPriceRangeMin(0);
+        filters.setPriceRangeMax(0);
         filters.updateAndSync({
           price_min: 0,
           price_max: 0,
@@ -43,7 +43,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           value={price_min || 0}
           onChange={(e) => {
             runInAction(() => {
-              filters.setPriceRange_min(Number(e));
+              filters.setPriceRangeMin(Number(e));
             });
           }}
           placeholder="price from"
@@ -54,7 +54,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           value={price_max || 0}
           onChange={(e) => {
             runInAction(() => {
-              filters.setPriceRange_max(Number(e));
+              filters.setPriceRangeMax(Number(e));
             });
           }}
           placeholder="price to"

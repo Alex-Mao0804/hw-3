@@ -8,8 +8,8 @@ import { runInAction, toJS } from "mobx";
 import Pagination from "@components/Pagination";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogPriceRange from "./components/CatalogPriceRange";
-import { OptionMultiDropdown } from "@types";
-import { getCategoryKey } from "@utils/getCategoryKey";
+import { OptionEntity } from "@types";
+import { extractOptionKey } from "@/App/utils/extractOptionKey";
 import Text from "@components/Text";
 import useProductStore from "@stores/RootStore/hooks/useProductStore";
 import { useNavigate } from "react-router-dom";
@@ -59,9 +59,9 @@ const CatalogPage = observer(() => {
   );
 
   const handleMultiDropdownChange = useCallback(
-    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
+    (value: OptionEntity | OptionEntity[] | null) => {
       runInAction(() => {
-        const selectedId = getCategoryKey(value);
+        const selectedId = extractOptionKey(value);
         if (selectedId === Number(filterStore.filtersState.categoryId)) {
           filterStore.setCategoryId(null);
           categoryStore.setCategoryMultiDropdownValue(null);

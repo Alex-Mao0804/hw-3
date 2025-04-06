@@ -2,8 +2,8 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { getProducts } from "@api";
 import { ProductEntity, TFiltersApi } from "@types";
 import rootStore from "@stores/RootStore";
-import FilterStore from "@stores/FilterStore";
-import CategoryStore from "@stores/CategoryStore";
+import FilterStore from "@/App/stores/FilterStore/FilterStore";
+import CategoryStore from "@/App/stores/CategoryStore/CategoryStore";
 
 class ProductStore {
   private _products: ProductEntity[] = [];
@@ -27,9 +27,9 @@ class ProductStore {
           this._filters.setFilters(newParams);
           if (newParams.title) this._filters.setTitle(String(newParams.title));
           if (newParams.price_max)
-            this._filters.setPriceRange_max(Number(newParams.price_max));
+            this._filters.setPriceRangeMax(Number(newParams.price_max));
           if (newParams.price_min)
-            this._filters.setPriceRange_min(Number(newParams.price_min));
+            this._filters.setPriceRangeMin(Number(newParams.price_min));
           this.fetchProducts(this._filters.filtersState);
         }
       },
@@ -77,24 +77,31 @@ class ProductStore {
       const data = await getProducts({ ...paginationParams, ...otherParams });
       const dataWithoutPagination = await getProducts(otherParams);
 
-      runInAction(() => {
-        this._products = data;
-        this._totalProducts = dataWithoutPagination.length;
-        if (filters.limit) {
-          this._totalPages = Math.ceil(
-            dataWithoutPagination.length / filters.limit,
-          );
-        }
-        this._isLoading = false;
-      });
+      this.setProducts(data);
+      this.setTotalProducts(dataWithoutPagination.length);
+      this.setTotalPages(dataWithoutPagination.length, limit);
     } catch (error) {
       console.error("Ошибка загрузки товаров:", error);
+    } finally {
       runInAction(() => {
         this._isLoading = false;
       });
     }
   }
 
+  setProducts(data: ProductEntity[]) {
+    this._products = data;
+  }
+
+  setTotalProducts(total: number) {
+    this._totalProducts = total;
+  }
+
+  setTotalPages(total: number, limit?: number) {
+    if (limit) {
+      this._totalPages = Math.ceil(total / limit);
+    }
+  }
   destroy() {
     runInAction(() => {
       this._products = [];

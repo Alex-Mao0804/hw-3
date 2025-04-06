@@ -19,9 +19,9 @@ export type CategoryEntity = {
   updatedAt: string;
 };
 
-export type OptionMultiDropdown = {
-  key: string;
-  value: string;
+export type OptionEntity<K = string, V = string> = {
+  value: K;
+  key: V;
 };
 
 export type TFiltersApi = {

@@ -4,17 +4,15 @@ import Input from "@components/Input";
 import ArrowDownIcon from "@components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import Text from "@components/Text";
-import { OptionMultiDropdown } from "@utils/types";
+import { OptionEntity } from "@utils/types";
 
 type MultiDropdownProps = {
   className?: string;
-  options: OptionMultiDropdown[];
-  value: OptionMultiDropdown | OptionMultiDropdown[] | null;
-  onChange: (value: OptionMultiDropdown | OptionMultiDropdown[]) => void;
+  options: OptionEntity[];
+  value: OptionEntity | OptionEntity[] | null;
+  onChange: (value: OptionEntity | OptionEntity[]) => void;
   disabled?: boolean;
-  getTitle: (
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
-  ) => string;
+  getTitle: (value: OptionEntity | OptionEntity[] | null) => string;
   isMulti?: boolean;
 };
 
@@ -56,7 +54,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   }, []);
 
   const handleSelect = useCallback(
-    (option: OptionMultiDropdown) => {
+    (option: OptionEntity) => {
       if (isMulti) {
         const newValue = Array.isArray(value) ? [...value] : [];
         const exists = newValue.some((item) => item.key === option.key);
@@ -99,7 +97,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
                   [styles.selected]: isMulti
                     ? Array.isArray(value) &&
                       value.some((item) => item.key === option.key)
-                    : (value as OptionMultiDropdown)?.key === option.key,
+                    : (value as OptionEntity)?.key === option.key,
                 })}
                 onClick={() => handleSelect(option)}
               >

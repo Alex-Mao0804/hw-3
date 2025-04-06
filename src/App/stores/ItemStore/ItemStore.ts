@@ -30,8 +30,16 @@ class ItemStore {
     return this._item;
   }
 
+  setItem(item: ProductEntity) {
+    this._item.product = item;
+  }
+
   get related() {
     return this._related;
+  }
+
+  setRelated(related: ProductEntity[]) {
+    this._related.relatedProducts = related;
   }
 
   async fetchItem(id: string) {
@@ -39,12 +47,10 @@ class ItemStore {
 
     try {
       const product = await getProduct(id);
-      runInAction(() => {
-        this._item.product = product;
-        this._item.loading = false;
-      });
+      this.setItem(product);
     } catch (error) {
       console.error("Ошибка загрузки товара:", error);
+    } finally {
       runInAction(() => {
         this._item.loading = false;
       });
@@ -56,12 +62,10 @@ class ItemStore {
 
     try {
       const related = await getRelatedProducts(id);
-      runInAction(() => {
-        this._related.relatedProducts = related;
-        this._related.loading = false;
-      });
+      this.setRelated(related);
     } catch (error) {
       console.error("Ошибка загрузки товаров:", error);
+    } finally {
       runInAction(() => {
         this._related.loading = false;
       });
@@ -74,10 +78,8 @@ class ItemStore {
   }
 
   destroy() {
-    runInAction(() => {
-      this._item = { product: null, loading: false };
-      this._related = { relatedProducts: null, loading: false };
-    });
+    this._item = { product: null, loading: false };
+    this._related = { relatedProducts: null, loading: false };
   }
 }
 

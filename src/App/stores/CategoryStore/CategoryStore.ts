@@ -1,11 +1,11 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { getCategories } from "@api";
-import { CategoryEntity, OptionMultiDropdown } from "@types";
+import { CategoryEntity, OptionEntity } from "@types";
 import ProductStore from "@stores/ProductStore";
 
 export default class CategoryStore {
-  private _categoryMultiDropdownValue: OptionMultiDropdown | null = null;
-  private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
+  private _categoryMultiDropdownValue: OptionEntity | null = null;
+  private _categoriesMultiDropdown: OptionEntity[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
   private productStore: ProductStore;
@@ -40,9 +40,7 @@ export default class CategoryStore {
     return this._categoryMultiDropdownValue;
   }
 
-  getTitleMultiDropdown(
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
-  ) {
+  getTitleMultiDropdown(value: OptionEntity | OptionEntity[] | null) {
     if (Array.isArray(value)) {
       return value.map((option) => option.value).join(", ");
     } else if (value) {
@@ -52,9 +50,7 @@ export default class CategoryStore {
     }
   }
 
-  setCategoryMultiDropdownValue(
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
-  ) {
+  setCategoryMultiDropdownValue(value: OptionEntity | OptionEntity[] | null) {
     if (Array.isArray(value)) {
       this._categoryMultiDropdownValue = value[0] || null;
     } else {
