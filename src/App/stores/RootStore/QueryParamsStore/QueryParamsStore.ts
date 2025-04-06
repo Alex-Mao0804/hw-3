@@ -29,10 +29,6 @@ export default class QueryParamsStore {
     });
   }
 
-  getParam(key: string) {
-    return this._params[key];
-  }
-
   getParams() {
     return this._params;
   }
