@@ -1,17 +1,52 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { getProducts } from "@api";
 import { ProductEntity, TFiltersApi } from "@types";
+import rootStore from "@stores/RootStore";
+import FilterStore from "@stores/FilterStore";
+import CategoryStore from "@stores/CategoryStore";
 
 class ProductStore {
   private _products: ProductEntity[] = [];
   private _isLoading: boolean = false;
   private _totalPages: number = 1;
   private _totalProducts: number = 0;
+  private _filters: FilterStore;
+  private _category: CategoryStore;
 
   constructor() {
     makeAutoObservable(this);
+    this._filters = new FilterStore(rootStore.query);
+    this._category = new CategoryStore(this);
+
+    reaction(
+      () => rootStore.query.getParams(),
+      (newParams) => {
+        const filters = this._filters.filtersState;
+
+        if (newParams !== filters) {
+          this._filters.setFilters(newParams);
+          if (newParams.title) this._filters.setTitle(String(newParams.title));
+          if (newParams.price_max)
+            this._filters.setPriceRange_max(Number(newParams.price_max));
+          if (newParams.price_min)
+            this._filters.setPriceRange_min(Number(newParams.price_min));
+          this.fetchProducts(this._filters.filtersState);
+        }
+      },
+    );
   }
 
+  get fetchCatalog() {
+    return rootStore.query.getParams();
+  }
+
+  get category() {
+    return this._category;
+  }
+
+  get filters() {
+    return this._filters;
+  }
   get products() {
     return this._products;
   }
@@ -70,4 +105,4 @@ class ProductStore {
   }
 }
 
-export default new ProductStore();
+export default ProductStore;

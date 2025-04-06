@@ -1,44 +1,18 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { getCategories } from "@api";
 import { CategoryEntity, OptionMultiDropdown } from "@types";
-import filterStore from "./FilterStore";
+import ProductStore from "@stores/ProductStore";
 
-class CategoryStore {
-  private _categoryMultiDropdownValue:
-    | OptionMultiDropdown
-    | OptionMultiDropdown[]
-    | null = null;
+export default class CategoryStore {
+  private _categoryMultiDropdownValue: OptionMultiDropdown | null = null;
   private _categoriesMultiDropdown: OptionMultiDropdown[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
-  constructor() {
+  private productStore: ProductStore;
+
+  constructor(productStore: ProductStore) {
     makeAutoObservable(this);
-    reaction(
-      () => this.isLoading,
-      (isLoading) => {
-        if (!isLoading) {
-          this.initializeCategory();
-        }
-      },
-    );
-
-    reaction(
-      () => filterStore.filtersState.categoryId,
-      (categoryId) => {
-        if (categoryId) {
-          this.updateCategoryFromId(categoryId);
-        }
-      },
-    );
-
-    this.initializeCategory();
-  }
-
-  private initializeCategory() {
-    const categoryId = filterStore.filtersState.categoryId;
-    if (categoryId) {
-      this.updateCategoryFromId(categoryId);
-    }
+    this.productStore = productStore;
   }
 
   private updateCategoryFromId(categoryId: number) {
@@ -49,6 +23,7 @@ class CategoryStore {
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
   }
+
   get isLoading() {
     return this._isLoading;
   }
@@ -80,9 +55,12 @@ class CategoryStore {
   setCategoryMultiDropdownValue(
     value: OptionMultiDropdown | OptionMultiDropdown[] | null,
   ) {
-    this._categoryMultiDropdownValue = value;
+    if (Array.isArray(value)) {
+      this._categoryMultiDropdownValue = value[0] || null;
+    } else {
+      this._categoryMultiDropdownValue = value;
+    }
   }
-
   async fetchCategories() {
     runInAction(() => {
       this._isLoading = true;
@@ -95,6 +73,9 @@ class CategoryStore {
           key: String(category.id),
           value: category.name,
         }));
+        this.updateCategoryFromId(
+          Number(this.productStore.filters.filtersState.categoryId),
+        );
       });
     } catch (error) {
       console.error("Ошибка загрузки категорий:", error);
@@ -112,5 +93,3 @@ class CategoryStore {
     this._isLoading = false;
   }
 }
-
-export default new CategoryStore();

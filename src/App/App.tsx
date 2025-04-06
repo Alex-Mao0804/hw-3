@@ -6,8 +6,11 @@ import Header from "@components/Header";
 import ProductPage from "@pages/ProductPage";
 import ROUTES from "@routes";
 import ScrollToTop from "@components/ScrollToTop";
+import { useQueryParamsStoreInit } from "@stores/RootStore/hooks/useQueryParamsStoreInit";
 
 const App = () => {
+  useQueryParamsStoreInit();
+
   return (
     <div className={styles.app}>
       <Header />

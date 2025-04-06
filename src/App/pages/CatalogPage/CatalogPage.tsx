@@ -3,23 +3,26 @@ import styles from "./CatalogPage.module.scss";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import CatalogProducts from "./components/CatalogProducts";
-import productStore from "@stores/ProductStore";
-import filterStore from "@stores/FilterStore";
 import { observer } from "mobx-react-lite";
 import { runInAction, toJS } from "mobx";
-import useSetFilters from "@hooks/useSetFilterURL";
-import useSyncFiltersWithURL from "@hooks/useSyncFiltersWithURL";
 import Pagination from "@components/Pagination";
 import MultiDropdown from "@components/MultiDropdown";
 import CatalogPriceRange from "./components/CatalogPriceRange";
-import categoryStore from "@stores/CategoryStore";
 import { OptionMultiDropdown } from "@types";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import Text from "@components/Text";
+import useProductStore from "@stores/RootStore/hooks/useProductStore";
+import { useNavigate } from "react-router-dom";
 
 const CatalogPage = observer(() => {
-  const updateFilters = useSetFilters();
-  useSyncFiltersWithURL();
+  const productStore = useProductStore();
+  const filterStore = productStore.filters;
+  const categoryStore = productStore.category;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    filterStore.setNavigate(navigate);
+  }, [navigate, filterStore]);
 
   useEffect(() => {
     categoryStore.fetchCategories();
@@ -29,51 +32,49 @@ const CatalogPage = observer(() => {
       productStore.destroy();
       filterStore.destroy();
     };
-  }, []);
+  }, [categoryStore, productStore, filterStore]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       runInAction(() => {
-        updateFilters({
-          title: filterStore.filtersState.title,
+        filterStore.updateAndSync({
+          title: filterStore.fieldTitle,
         });
-        // }
       });
     },
-
-    [filterStore.filtersState.title, updateFilters],
+    [filterStore],
   );
-
-  const handleChangePage = useCallback((page: number) => {
-    runInAction(() => {
-      if (filterStore.filtersState.page !== page) {
-        updateFilters({
-          page: page,
-        });
-      }
-    });
-  }, []);
-
-  const handleMultiDropdownChange = useCallback(
-    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
+  const handleChangePage = useCallback(
+    (page: number) => {
       runInAction(() => {
-        if (getCategoryKey(value) === filterStore.filtersState.categoryId) {
-          filterStore.setCategoryId(null);
-          categoryStore.setCategoryMultiDropdownValue(null);
-          updateFilters({
-            categoryId: null,
-          });
-        } else {
-          categoryStore.setCategoryMultiDropdownValue(value);
-          updateFilters({
-            categoryId: getCategoryKey(value),
+        if (filterStore.filtersState.page !== page) {
+          filterStore.updateAndSync({
+            page: page,
           });
         }
       });
     },
-    [],
+    [filterStore],
   );
+
+  const handleMultiDropdownChange = useCallback(
+    (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
+      runInAction(() => {
+        const selectedId = getCategoryKey(value);
+        if (selectedId === Number(filterStore.filtersState.categoryId)) {
+          filterStore.setCategoryId(null);
+          categoryStore.setCategoryMultiDropdownValue(null);
+          filterStore.updateAndSync({ categoryId: null });
+        } else {
+          categoryStore.setCategoryMultiDropdownValue(value);
+          filterStore.updateAndSync({ categoryId: selectedId });
+        }
+      });
+    },
+    [filterStore, categoryStore],
+  );
+
   return (
     <div className={styles.catalog_page}>
       <div className={styles.catalog_page__header}>
@@ -97,7 +98,7 @@ const CatalogPage = observer(() => {
           className={styles.catalog_page__options__search}
         >
           <Input
-            value={String(filterStore.filtersState.title)}
+            value={String(filterStore.fieldTitle)}
             onChange={(e) => {
               runInAction(() => {
                 filterStore.setTitle(e);
@@ -121,7 +122,7 @@ const CatalogPage = observer(() => {
             isMulti={false}
             getTitle={categoryStore.getTitleMultiDropdown}
           />
-          <CatalogPriceRange />
+          <CatalogPriceRange productStore={productStore} />
         </div>
       </div>
       <CatalogProducts
