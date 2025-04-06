@@ -5,7 +5,7 @@ import Button from "@components/Button";
 import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
-import ROUTES from "@/App/utils/routes";
+import ROUTES from "@routes";
 
 type RelatedItemsProps = {
   loading: boolean;

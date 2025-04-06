@@ -1,8 +1,9 @@
 @use "@variables" as vars;
 
 .product_item {
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
   gap: vars.$space-xxl;
   width: 100%;
 
@@ -58,7 +59,7 @@
   }
 
   &__title {
-    @include vars.skeleton(450px, 48px);
+    @include vars.skeleton(100%, 48px);
   }
 
   &__description {

@@ -1,11 +1,11 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
-import * as qs from 'qs';
+import { action, makeObservable, observable, runInAction } from "mobx";
+import * as qs from "qs";
 
-type PrivateFields = '_params';
+type PrivateFields = "_params";
 
 export default class QueryParamsStore {
   private _params: qs.ParsedQs = {};
-  private _search: string = '';
+  private _search: string = "";
 
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
@@ -15,32 +15,29 @@ export default class QueryParamsStore {
     });
   }
 
-    // Установить строку поискового запроса
-    setSearch(search: string) {
-      search = search.startsWith('?') ? search.slice(1) : search;
-      if (this._search !== search) {
-        this._search = search;
-        this._params = qs.parse(search);
-      }
+  setSearch(search: string) {
+    search = search.startsWith("?") ? search.slice(1) : search;
+    if (this._search !== search) {
+      this._search = search;
+      this._params = qs.parse(search);
     }
-  
-    // Установить конкретный параметр
-    setParam(key: string, value: any) {
-      runInAction(() => {
-        this._params[key] = value;
-      });
-    }
-  
-  getParam (key: string) {
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setParam(key: string, value: any) {
+    runInAction(() => {
+      this._params[key] = value;
+    });
+  }
+
+  getParam(key: string) {
     return this._params[key];
   }
 
-  getParams () {
+  getParams() {
     return this._params;
   }
 
-  setParams (params: string) {
+  setParams(params: string) {
     this.setSearch(params);
   }
-
 }

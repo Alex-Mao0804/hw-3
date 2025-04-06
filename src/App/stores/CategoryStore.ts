@@ -1,7 +1,7 @@
-import { makeAutoObservable, reaction, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { getCategories } from "@api";
 import { CategoryEntity, OptionMultiDropdown } from "@types";
-import ProductStore from "./ProductStore";
+import ProductStore from "@stores/ProductStore";
 
 export default class CategoryStore {
   private _categoryMultiDropdownValue: OptionMultiDropdown | null = null;
@@ -13,11 +13,12 @@ export default class CategoryStore {
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
     this.productStore = productStore;
-
   }
 
   private updateCategoryFromId(categoryId: number) {
-    const categorySelected = this.categories.find((cat) => cat.id === categoryId);    
+    const categorySelected = this.categories.find(
+      (cat) => cat.id === categoryId,
+    );
     this._categoryMultiDropdownValue = categorySelected
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
@@ -39,7 +40,9 @@ export default class CategoryStore {
     return this._categoryMultiDropdownValue;
   }
 
-  getTitleMultiDropdown(value: OptionMultiDropdown | OptionMultiDropdown[] | null) {
+  getTitleMultiDropdown(
+    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
+  ) {
     if (Array.isArray(value)) {
       return value.map((option) => option.value).join(", ");
     } else if (value) {
@@ -50,10 +53,10 @@ export default class CategoryStore {
   }
 
   setCategoryMultiDropdownValue(
-    value: OptionMultiDropdown | OptionMultiDropdown[] | null
+    value: OptionMultiDropdown | OptionMultiDropdown[] | null,
   ) {
     if (Array.isArray(value)) {
-      this._categoryMultiDropdownValue = value[0] || null; // Преобразуем массив в одиночный элемент
+      this._categoryMultiDropdownValue = value[0] || null;
     } else {
       this._categoryMultiDropdownValue = value;
     }
@@ -70,8 +73,9 @@ export default class CategoryStore {
           key: String(category.id),
           value: category.name,
         }));
-        this.updateCategoryFromId(Number(this.productStore.filters.filtersState.categoryId));
-
+        this.updateCategoryFromId(
+          Number(this.productStore.filters.filtersState.categoryId),
+        );
       });
     } catch (error) {
       console.error("Ошибка загрузки категорий:", error);

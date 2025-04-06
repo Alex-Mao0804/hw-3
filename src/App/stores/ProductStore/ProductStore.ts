@@ -1,16 +1,9 @@
-import {
-  autorun,
-  IReactionDisposer,
-  makeAutoObservable,
-  reaction,
-  runInAction,
-  toJS,
-} from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { getProducts } from "@api";
 import { ProductEntity, TFiltersApi } from "@types";
-import rootStore from "../RootStore";
-import FilterStore from "../FilterStore";
-import CategoryStore from "../CategoryStore";
+import rootStore from "@stores/RootStore";
+import FilterStore from "@stores/FilterStore";
+import CategoryStore from "@stores/CategoryStore";
 
 class ProductStore {
   private _products: ProductEntity[] = [];
@@ -18,42 +11,33 @@ class ProductStore {
   private _totalPages: number = 1;
   private _totalProducts: number = 0;
   private _filters: FilterStore;
-  private _category: CategoryStore
-
-  private _qpReaction: IReactionDisposer;
+  private _category: CategoryStore;
 
   constructor() {
     makeAutoObservable(this);
     this._filters = new FilterStore(rootStore.query);
     this._category = new CategoryStore(this);
 
-    this._qpReaction = reaction(
-      () => rootStore.query.getParams(), // Отслеживаем изменения в query
+    reaction(
+      () => rootStore.query.getParams(),
       (newParams) => {
         const filters = this._filters.filtersState;
-        // const paramsChanged =
-        //   newParams.page !== filters.page ||
-        //   newParams.limit !== filters.limit ||
-        //   newParams.title !== filters.title ||
-        //   newParams.categoryId !== filters.categoryId ||
-        //   newParams.price_min !== filters.price_min ||
-        //   newParams.price_max !== filters.price_max;
 
         if (newParams !== filters) {
           this._filters.setFilters(newParams);
-          newParams.title && this._filters.setTitle(String(newParams.title));  
-          newParams.price_max && this._filters.setPriceRange_max(Number(newParams.price_max));
-          newParams.price_min && this._filters.setPriceRange_min(Number(newParams.price_min));       
+          if (newParams.title) this._filters.setTitle(String(newParams.title));
+          if (newParams.price_max)
+            this._filters.setPriceRange_max(Number(newParams.price_max));
+          if (newParams.price_min)
+            this._filters.setPriceRange_min(Number(newParams.price_min));
           this.fetchProducts(this._filters.filtersState);
         }
       },
-
     );
-  
   }
 
   get fetchCatalog() {
-    return rootStore.query.getParams()
+    return rootStore.query.getParams();
   }
 
   get category() {

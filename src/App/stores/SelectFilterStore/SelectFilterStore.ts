@@ -1,27 +1,26 @@
-import { action, makeAutoObservable } from 'mobx';
-import QueryParamsStore from '@stores/RootStore/QueryParamsStore';
+import { makeAutoObservable } from "mobx";
+import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
 
 export default class SelectFilterStore {
-  value: string = '';
+  value: string = "";
 
   constructor(private queryParamsStore: QueryParamsStore) {
     makeAutoObservable(this);
-    this.syncWithQueryParams(); // синхронизация с глобальными параметрами при инициализации
+    this.syncWithQueryParams();
   }
 
   setValue(value: string) {
     this.value = value;
-    this.queryParamsStore.setParam('select', value); // обновляем параметры в глобальном сторе
+    this.queryParamsStore.setParam("select", value);
   }
 
   syncWithQueryParams() {
-    const select = this.queryParamsStore.getParam('select');
+    const select = this.queryParamsStore.getParam("select");
 
-    // Проверяем, если параметр select — это строка, то устанавливаем его как значение
-    if (typeof select === 'string') {
+    if (typeof select === "string") {
       this.value = select;
     } else {
-      this.value = ''; // если параметр отсутствует или не строка, сбрасываем значение
+      this.value = "";
     }
   }
 }

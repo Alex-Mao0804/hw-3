@@ -11,18 +11,18 @@ import CatalogPriceRange from "./components/CatalogPriceRange";
 import { OptionMultiDropdown } from "@types";
 import { getCategoryKey } from "@utils/getCategoryKey";
 import Text from "@components/Text";
-import useProductStore from "@/App/stores/RootStore/hooks/useProductStore";
+import useProductStore from "@stores/RootStore/hooks/useProductStore";
 import { useNavigate } from "react-router-dom";
 
 const CatalogPage = observer(() => {
-  const productStore = useProductStore(); // ✅ локальный store
-  const filterStore = productStore.filters; // доступ к filters через prod
+  const productStore = useProductStore();
+  const filterStore = productStore.filters;
   const categoryStore = productStore.category;
   const navigate = useNavigate();
 
   useEffect(() => {
     filterStore.setNavigate(navigate);
-  }, [navigate]);
+  }, [navigate, filterStore]);
 
   useEffect(() => {
     categoryStore.fetchCategories();
@@ -30,9 +30,9 @@ const CatalogPage = observer(() => {
     return () => {
       categoryStore.destroy();
       productStore.destroy();
-      // filterStore.destroy();
+      filterStore.destroy();
     };
-  }, []);
+  }, [categoryStore, productStore, filterStore]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,27 +43,30 @@ const CatalogPage = observer(() => {
         });
       });
     },
-    [filterStore.filtersState.title],
+    [filterStore],
   );
-  const handleChangePage = useCallback((page: number) => {
-    runInAction(() => {
-      if (filterStore.filtersState.page !== page) {
-        filterStore.updateAndSync({
-          page: page,
-        });
-      }
-    });
-  }, []);
+  const handleChangePage = useCallback(
+    (page: number) => {
+      runInAction(() => {
+        if (filterStore.filtersState.page !== page) {
+          filterStore.updateAndSync({
+            page: page,
+          });
+        }
+      });
+    },
+    [filterStore],
+  );
 
   const handleMultiDropdownChange = useCallback(
     (value: OptionMultiDropdown | OptionMultiDropdown[] | null) => {
       runInAction(() => {
         const selectedId = getCategoryKey(value);
         if (selectedId === Number(filterStore.filtersState.categoryId)) {
-          filterStore.setCategoryId(null);  // Сброс категории в фильтре
-          categoryStore.setCategoryMultiDropdownValue(null);  // Сброс выбранного значения
+          filterStore.setCategoryId(null);
+          categoryStore.setCategoryMultiDropdownValue(null);
           filterStore.updateAndSync({ categoryId: null });
-        } else {          
+        } else {
           categoryStore.setCategoryMultiDropdownValue(value);
           filterStore.updateAndSync({ categoryId: selectedId });
         }
@@ -71,7 +74,7 @@ const CatalogPage = observer(() => {
     },
     [filterStore, categoryStore],
   );
-  
+
   return (
     <div className={styles.catalog_page}>
       <div className={styles.catalog_page__header}>

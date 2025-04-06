@@ -8,9 +8,9 @@ import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
-import useItemStore from "@/App/stores/RootStore/hooks/useItemStore";
+import useItemStore from "@stores/RootStore/hooks/useItemStore";
 
-const ProductPage = () => {
+const ProductPage = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams();
   const itemStore = useItemStore();
@@ -26,7 +26,7 @@ const ProductPage = () => {
     return () => {
       itemStore.destroy();
     };
-  }, [id]);
+  }, [id, fetchItemAndRelated, itemStore]);
 
   const { product, loading: loadingItem } = item;
   const { relatedProducts, loading: loadingRelatedItem } = related;
@@ -58,6 +58,6 @@ const ProductPage = () => {
       </div>
     </div>
   );
-};
+});
 
-export default observer(ProductPage);
+export default ProductPage;
