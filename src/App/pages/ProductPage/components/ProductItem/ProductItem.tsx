@@ -2,7 +2,7 @@ import Text from "@components/Text";
 import styles from "./ProductItem.module.scss";
 import { ProductEntity } from "@types";
 import Button from "@components/Button";
-import PreviewSwiper from "@/App/components/PreviewSwiper/PreviewSwiper";
+import PreviewSwiper from "@components/PreviewSwiper/PreviewSwiper";
 
 type ProductItemProps = {
   product: ProductEntity;
@@ -13,7 +13,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
     <div className={styles.product_item}>
       <div className={styles.product_item__image}>
         <PreviewSwiper productData={product} />
-        </div>
+      </div>
       <div className={styles.product_item__info}>
         <div className={styles.product_item__info__top}>
           <Text view="title" weight="bold">

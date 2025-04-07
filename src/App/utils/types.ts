@@ -19,9 +19,7 @@ export type CategoryEntity = {
   updatedAt: string;
 };
 
-export type OptionMultiDropdown = {
-  /** Ключ варианта, используется для отправки на бек/использования в коде */
-  key: string;
-  /** Значение варианта, отображается пользователю */
-  value: string;
+export type OptionEntity<K = string, V = string> = {
+  value: K;
+  key: V;
 };

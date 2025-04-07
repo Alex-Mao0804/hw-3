@@ -3,34 +3,34 @@ import styles from "./ProductPage.module.scss";
 import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import Text from "@components/Text";
 import ProductItem from "./components/ProductItem";
-import { ProductEntity } from "@types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProduct, getRelatedProducts } from "@api";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
-import { useFetchData } from "@/App/hooks/useFetchData";
+import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
+import useItemStore from "@stores/RootStore/hooks/useItemStore";
 
-const ProductPage = () => {
+const ProductPage = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const {
-    data: product,
-    loading: loadingItem,
-    fetchData: fetchProduct,
-  } = useFetchData<ProductEntity, [string]>(getProduct);
-  const {
-    data: relatedProducts,
-    loading: loadingRelatedItem,
-    fetchData: fetchRelatedProducts,
-  } = useFetchData<ProductEntity[], [string]>(getRelatedProducts);
+  const itemStore = useItemStore();
+
+  const { fetchItemAndRelated, item, related } = itemStore;
+
   useEffect(() => {
     if (!id) {
       return;
     }
+    fetchItemAndRelated(id);
 
-    fetchRelatedProducts(id);
-    fetchProduct(id);
-  }, [fetchRelatedProducts, fetchProduct, id]);
+    return () => {
+      itemStore.destroy();
+    };
+  }, [id, fetchItemAndRelated, itemStore]);
+
+  const { product, loading: loadingItem } = item;
+  const { relatedProducts, loading: loadingRelatedItem } = related;
+
   return (
     <div className={styles.product_page}>
       <div className={styles.navigation}>
@@ -48,16 +48,16 @@ const ProductPage = () => {
         {loadingItem || !product ? (
           <SkeletonProductItem />
         ) : (
-          <ProductItem product={product} />
+          <ProductItem product={toJS(product)} />
         )}
         <RelatedItems
-          loading={loadingRelatedItem}
-          relatedProducts={relatedProducts || []}
+          loading={toJS(loadingRelatedItem)}
+          relatedProducts={toJS(relatedProducts) || []}
         />
         <div className={styles.content__related}></div>
       </div>
     </div>
   );
-};
+});
 
 export default ProductPage;

@@ -6,13 +6,13 @@ import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
-import ROUTES from "@/App/utils/routes";
+import ROUTES from "@routes";
 
 type CatalogProductsProps = {
   total: number;
   products: ProductEntity[];
   loading: boolean;
-  limit: number;
+  limit?: number;
 };
 
 const CatalogProducts: React.FC<CatalogProductsProps> = ({
@@ -43,7 +43,7 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
       </div>
       <ul className={styles.catalog_products__list}>
         {loading &&
-          Array.from({ length: limit }).map((_, index) => (
+          Array.from({ length: limit ?? 9 }).map((_, index) => (
             <li key={index}>
               <SkeletonCard />
             </li>

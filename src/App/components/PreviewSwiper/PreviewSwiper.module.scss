@@ -1,8 +1,10 @@
 @use "@variables" as vars;
 
 .swiper {
+  height: 100%;
   &__main {
     position: relative;
+    height: inherit;
   }
   &__slide {
     &__img {

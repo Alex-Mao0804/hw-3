@@ -46,7 +46,12 @@ const PreviewSwiper: React.FC<IPreviewSwiper> = ({ productData }) => {
       >
         {productData.images.map((image, idx) => (
           <SwiperSlide key={idx} className={styles.swiper__slide}>
-            <img className={styles.swiper__slide__img} src={image} alt={productData.title} />
+            <img
+              className={styles.swiper__slide__img}
+              src={image}
+              alt={productData.title}
+              loading="lazy"
+            />
           </SwiperSlide>
         ))}
         <button
