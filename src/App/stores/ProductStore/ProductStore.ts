@@ -5,8 +5,9 @@ import CategoryStore from "@stores/CategoryStore/CategoryStore";
 import { ProductEntity } from "@types";
 import { TFiltersApi } from "@api/type/directionProduct/list";
 import { getProducts } from "@api/handlers/directionProduct/list";
+import { ILocalStore } from "@utils/useLocalStore";
 
-class ProductStore {
+class ProductStore implements ILocalStore {
   private _products: ProductEntity[] = [];
   private _isLoading: boolean = false;
   private _totalPages: number = 1;
@@ -18,7 +19,7 @@ class ProductStore {
     makeAutoObservable(this);
     this._filters = new FilterStore(rootStore.query);
     this._category = new CategoryStore(this);
-
+    this._category.init();
     reaction(
       () => rootStore.query.getParams(),
       (newParams) => {
@@ -110,6 +111,10 @@ class ProductStore {
       this._totalPages = 1;
       this._totalProducts = 0;
     });
+
+
+  this._filters.destroy();
+  this._category.destroy();
   }
 }
 

@@ -77,6 +77,13 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     }
   }, [disabled]);
 
+  const selectedKeys = useMemo(() => {
+    if (isMulti && Array.isArray(value)) {
+      return new Set(value.map((item) => item.key));
+    }
+    return new Set([(value as OptionEntity)?.key]);
+  }, [value, isMulti]);
+
   return (
     <div className={clsx(styles.multi_dropdown, className)} ref={dropdownRef}>
       <Input
@@ -93,12 +100,10 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
             filteredOptions.map((option) => (
               <li
                 key={option.key}
-                className={clsx(styles.dropdown_option, {
-                  [styles.selected]: isMulti
-                    ? Array.isArray(value) &&
-                      value.some((item) => item.key === option.key)
-                    : (value as OptionEntity)?.key === option.key,
-                })}
+                className={clsx(
+                  styles.dropdown_option,
+                  selectedKeys.has(option.key) && styles.selected,
+                )}
                 onClick={() => handleSelect(option)}
               >
                 <Text tag="span" view="p-16" weight="normal" color="primary">

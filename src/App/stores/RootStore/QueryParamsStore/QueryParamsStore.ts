@@ -25,6 +25,10 @@ export default class QueryParamsStore {
     return this._params;
   }
 
+  getParam(key: string) {
+    return this._params[key];
+  }
+
   setParams(params: string) {
     this.setSearch(params);
   }

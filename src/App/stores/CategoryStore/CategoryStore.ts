@@ -1,9 +1,11 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { CategoryEntity, OptionEntity } from "@types";
 import ProductStore from "@stores/ProductStore";
 import { getCategories } from "@api/handlers/directionCategory/details";
+import { ILocalStore } from "@utils/useLocalStore";
+import rootStore from "@stores/RootStore";
 
-export default class CategoryStore {
+export default class CategoryStore implements ILocalStore {
   private _categoryMultiDropdownValue: OptionEntity | null = null;
   private _categoriesMultiDropdown: OptionEntity[] = [];
   private _categories: CategoryEntity[] = [];
@@ -13,12 +15,23 @@ export default class CategoryStore {
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
     this.productStore = productStore;
+
+    reaction(
+      () => this._categories,
+      (categories) => {
+        const categoryId = rootStore.query.getParam("categoryId");
+        if (categoryId && categories.length > 0) {
+          this.updateCategoryFromId(Number(categoryId));
+        }
+      }
+    );
+
   }
 
   private updateCategoryFromId(categoryId: number) {
     const categorySelected = this.categories.find(
       (cat) => cat.id === categoryId,
-    );
+    );    
     this._categoryMultiDropdownValue = categorySelected
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
@@ -80,6 +93,10 @@ export default class CategoryStore {
         this._isLoading = false;
       });
     }
+  }
+
+  init() {
+    this.fetchCategories();
   }
 
   destroy() {

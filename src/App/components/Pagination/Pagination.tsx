@@ -2,7 +2,8 @@ import styles from "./Pagination.module.scss";
 import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import clsx from "clsx";
 import Button from "@components/Button";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { MAX_VISIBLE_PAGES } from "@/App/utils/constants";
 
 type TPaginationProps = {
   currentPage: number;
@@ -19,27 +20,36 @@ const Pagination: React.FC<TPaginationProps> = ({
   goToPage,
 }) => {
   const paginationGroup = useMemo(() => {
-    if (totalPages <= 4)
+    if (totalPages <= MAX_VISIBLE_PAGES) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
-    if (currentPage <= VISIBLE_PAGES) return [1, 2, 3, ELLIPSIS, totalPages];
-    if (currentPage >= totalPages - (VISIBLE_PAGES - 1))
+    }
+  
+    if (currentPage <= VISIBLE_PAGES) {
+      return [1, 2, 3, ELLIPSIS, totalPages];
+    }
+  
+    if (currentPage >= totalPages - (VISIBLE_PAGES - 1)) {
       return [1, ELLIPSIS, totalPages - 2, totalPages - 1, totalPages];
+    }
+  
     return [
       1,
       ELLIPSIS,
-      Number(currentPage) - 1,
-      Number(currentPage),
-      Number(currentPage) + 1,
+      currentPage - 1,
+      currentPage,
+      currentPage + 1,
       ELLIPSIS,
       totalPages,
     ];
   }, [currentPage, totalPages]);
 
-  const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const changePage = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget;
     const pageNumber = Number(target.textContent);
-    if (!isNaN(pageNumber)) goToPage(pageNumber);
-  };
+    if (!isNaN(pageNumber)) {
+      goToPage(pageNumber);
+    }
+  }, [goToPage]);
 
   return (
     <div className={styles.pagination}>

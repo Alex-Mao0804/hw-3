@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction, toJS } from "mobx";
 import { initialFilters } from "@utils/constants";
 import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
 import QueryFilterConnector from "@stores/QueryFilterConnector";
@@ -17,18 +17,34 @@ export default class FilterStore {
 
     this._connector = new QueryFilterConnector(this.queryParamsStore);
 
+    // reaction(
+    //   () => this.queryParamsStore.getParams(),
+       
+    //   () => {
+    //     this.syncFiltersWithQueryParams();
+    //   }
+    // )
     this.syncFiltersWithQueryParams();
   }
 
   syncFiltersWithQueryParams() {
-    const { title, categoryId, price_min, price_max, page, limit } =
+        
+    const params =
       this.queryParamsStore.getParams();
+
+    const { title, categoryId, price_min, price_max, page, limit } = params;
+      console.log('dddd', this.queryParamsStore.getParams());
+      
+
     if (title) this.setTitle(String(title));
     if (categoryId) this.setCategoryId(Number(categoryId));
     if (price_min) this.setPriceRangeMin(Number(price_min));
     if (price_max) this.setPriceRangeMax(Number(price_max));
     if (page) this.setPage(Number(page));
     if (limit) this.setLimit(Number(limit));
+
+    // this.updateAndSync(params);
+    console.log("filtersState:", toJS(this.filtersState));
   }
 
   get connector() {

@@ -11,14 +11,14 @@ import CatalogPriceRange from "./components/CatalogPriceRange";
 import { OptionEntity } from "@types";
 import { extractOptionKey } from "@/App/utils/extractOptionKey";
 import Text from "@components/Text";
-import useProductStore from "@stores/RootStore/hooks/useProductStore";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { initialFilters } from "@utils/constants";
+import { useLocalStore } from "@utils/useLocalStore";
+import ProductStore from "@stores/ProductStore/ProductStore";
 
 const CatalogPage = observer(() => {
-  const productStore = useProductStore();
-  const filterStore = productStore.filters;
-  const categoryStore = productStore.category;
+  const productStore = useLocalStore(() => new ProductStore());
+  const { filters: filterStore, category: categoryStore } = productStore;
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
@@ -31,16 +31,6 @@ const CatalogPage = observer(() => {
   useEffect(() => {
     filterStore.setNavigate(navigate);
   }, [navigate, filterStore]);
-
-  useEffect(() => {
-    categoryStore.fetchCategories();
-
-    return () => {
-      categoryStore.destroy();
-      productStore.destroy();
-      filterStore.destroy();
-    };
-  }, [categoryStore, productStore, filterStore]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
