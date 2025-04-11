@@ -1,9 +1,10 @@
-import { makeAutoObservable, reaction, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { initialFilters } from "@utils/constants";
 import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
 import QueryFilterConnector from "@stores/QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
 import { TFiltersApi } from "@api/type/directionProduct/list";
+import rootStore from "../RootStore";
 
 export default class FilterStore {
   private _fieldTitle: string = "";
@@ -17,34 +18,19 @@ export default class FilterStore {
 
     this._connector = new QueryFilterConnector(this.queryParamsStore);
 
-    // reaction(
-    //   () => this.queryParamsStore.getParams(),
-       
-    //   () => {
-    //     this.syncFiltersWithQueryParams();
-    //   }
-    // )
     this.syncFiltersWithQueryParams();
   }
 
   syncFiltersWithQueryParams() {
-        
     const params =
-      this.queryParamsStore.getParams();
-
-    const { title, categoryId, price_min, price_max, page, limit } = params;
-      console.log('dddd', this.queryParamsStore.getParams());
-      
-
+      rootStore.query.getParams();
+      const { title, categoryId, price_min, price_max, page, limit } = params;
     if (title) this.setTitle(String(title));
     if (categoryId) this.setCategoryId(Number(categoryId));
     if (price_min) this.setPriceRangeMin(Number(price_min));
     if (price_max) this.setPriceRangeMax(Number(price_max));
     if (page) this.setPage(Number(page));
     if (limit) this.setLimit(Number(limit));
-
-    // this.updateAndSync(params);
-    console.log("filtersState:", toJS(this.filtersState));
   }
 
   get connector() {
@@ -85,25 +71,21 @@ export default class FilterStore {
 
   setTitle(title: string) {
     this._fieldTitle = title;
-    this._filtersState.page = 1;
   }
 
   setCategoryId(categoryId: number | null) {
     this._filtersState.categoryId = categoryId;
-    this._filtersState.page = 1;
   }
 
   setPriceRangeMin(priceRange_min: number | null) {
     this._filedPriceRangeMin = priceRange_min;
-    this._filtersState.page = 1;
   }
 
   setPriceRangeMax(priceRange_max: number | null) {
     this._filedPriceRangeMax = priceRange_max;
-    this._filtersState.page = 1;
   }
 
-  setPage(page: number) {
+  setPage(page: number) {    
     this._filtersState.page = page;
   }
 

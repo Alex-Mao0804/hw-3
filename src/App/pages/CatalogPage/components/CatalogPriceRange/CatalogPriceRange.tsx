@@ -20,6 +20,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
         filters.updateAndSync({
           price_min,
           price_max,
+          page: 1,
         });
       });
     };
@@ -31,6 +32,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
         filters.updateAndSync({
           price_min: 0,
           price_max: 0,
+          page: 1,
         });
       });
     };

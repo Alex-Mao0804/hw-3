@@ -9,4 +9,3 @@ export const initialFilters: TFiltersApi = {
   price_max: null,
 };
 
-export const MAX_VISIBLE_PAGES = 4;

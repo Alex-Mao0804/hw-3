@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, autorun, makeObservable, observable } from "mobx";
 import * as qs from "qs";
 
 type PrivateFields = "_params";
@@ -12,6 +12,10 @@ export default class QueryParamsStore {
       _params: observable.ref,
       setSearch: action,
     });
+
+    // autorun(() => {
+    //   this.setSearch(window.location.search);
+    // });
   }
 
   setSearch(search: string) {

@@ -3,7 +3,6 @@ import ArrowSideIcon from "@components/icons/ArrowSideIcon";
 import clsx from "clsx";
 import Button from "@components/Button";
 import { useCallback, useMemo } from "react";
-import { MAX_VISIBLE_PAGES } from "@/App/utils/constants";
 
 type TPaginationProps = {
   currentPage: number;
@@ -13,7 +12,7 @@ type TPaginationProps = {
 
 const ELLIPSIS = "...";
 const VISIBLE_PAGES = 3;
-
+const MAX_VISIBLE_PAGES = 4;
 const Pagination: React.FC<TPaginationProps> = ({
   currentPage,
   totalPages,
@@ -23,33 +22,36 @@ const Pagination: React.FC<TPaginationProps> = ({
     if (totalPages <= MAX_VISIBLE_PAGES) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-  
-    if (currentPage <= VISIBLE_PAGES) {
+
+    if (Number(currentPage) <= VISIBLE_PAGES) {
       return [1, 2, 3, ELLIPSIS, totalPages];
     }
-  
-    if (currentPage >= totalPages - (VISIBLE_PAGES - 1)) {
+
+    if (Number(currentPage) >= totalPages - (VISIBLE_PAGES - 1)) {
       return [1, ELLIPSIS, totalPages - 2, totalPages - 1, totalPages];
     }
-  
+
     return [
       1,
       ELLIPSIS,
-      currentPage - 1,
-      currentPage,
-      currentPage + 1,
+      Number(currentPage) - 1,
+      Number(currentPage),
+      Number(currentPage) + 1,
       ELLIPSIS,
       totalPages,
     ];
   }, [currentPage, totalPages]);
 
-  const changePage = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget;
-    const pageNumber = Number(target.textContent);
-    if (!isNaN(pageNumber)) {
-      goToPage(pageNumber);
-    }
-  }, [goToPage]);
+  const changePage = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const target = e.currentTarget;
+      const pageNumber = Number(target.textContent);
+      if (!isNaN(pageNumber)) {
+        goToPage(pageNumber);
+      }
+    },
+    [goToPage],
+  );
 
   return (
     <div className={styles.pagination}>
@@ -67,7 +69,8 @@ const Pagination: React.FC<TPaginationProps> = ({
             onClick={changePage}
             className={clsx(
               styles.pagination__button_group,
-              Number(currentPage) !== item && styles.pagination__button_noActive,
+              Number(currentPage) !== item &&
+                styles.pagination__button_noActive,
             )}
             disabled={item === ELLIPSIS}
           >

@@ -29,7 +29,7 @@ const CatalogPage = observer(() => {
   }, [productStore, params]);
 
   useEffect(() => {
-    filterStore.setNavigate(navigate);
+    filterStore.setNavigate(navigate);    
   }, [navigate, filterStore]);
 
   const handleSubmit = useCallback(
@@ -38,13 +38,14 @@ const CatalogPage = observer(() => {
       runInAction(() => {
         filterStore.updateAndSync({
           title: filterStore.fieldTitle,
+          page: 1,
         });
       });
     },
     [filterStore],
   );
   const handleChangePage = useCallback(
-    (page: number) => {
+    (page: number) => {      
       runInAction(() => {
         if (filterStore.filtersState.page !== page) {
           filterStore.updateAndSync({
@@ -63,10 +64,10 @@ const CatalogPage = observer(() => {
         if (selectedId === Number(filterStore.filtersState.categoryId)) {
           filterStore.setCategoryId(null);
           categoryStore.setCategoryMultiDropdownValue(null);
-          filterStore.updateAndSync({ categoryId: null });
+          filterStore.updateAndSync({ categoryId: null, page: 1 });
         } else {
           categoryStore.setCategoryMultiDropdownValue(value);
-          filterStore.updateAndSync({ categoryId: selectedId });
+          filterStore.updateAndSync({ categoryId: selectedId, page: 1 });
         }
       });
     },
