@@ -6,6 +6,7 @@ import { ProductEntity } from "@types";
 import { TFiltersApi } from "@api/type/directionProduct/list";
 import { getProducts } from "@api/handlers/directionProduct/list";
 import { ILocalStore } from "@utils/useLocalStore";
+import { initialFilters } from "@/App/utils/constants";
 
 class ProductStore implements ILocalStore {
   private _products: ProductEntity[] = [];
@@ -15,29 +16,39 @@ class ProductStore implements ILocalStore {
   private _filters: FilterStore;
   private _category: CategoryStore;
 
-  constructor() {
+  constructor(paramsUrl: URLSearchParams) {
     makeAutoObservable(this);
     this._filters = new FilterStore(rootStore.query);
     this._category = new CategoryStore(this);
-    this._category.init();
-    reaction(
-      () => rootStore.query.getParams(),
-      (newParams) => {
-        const filters = this._filters.filtersState;
 
-        if (newParams !== filters) {
-          this._filters.setFilters(newParams);
-          if (newParams.title) this._filters.setTitle(String(newParams.title));
-          if (newParams.price_max)
-            this._filters.setPriceRangeMax(Number(newParams.price_max));
-          if (newParams.price_min)
-            this._filters.setPriceRangeMin(Number(newParams.price_min));
+    if (paramsUrl.toString() === "") {
+      this.fetchProducts(initialFilters );
+    }
+
+    this.init();
+
+    reaction(
+        () => rootStore.query.getParams(),
+        (params) => {
+          if (paramsUrl.toString() === "") return;
+          this.setFiltersFromParams(params);
           this.fetchProducts(this._filters.filtersState);
         }
-      },
     );
   }
 
+
+  private setFiltersFromParams(params: TFiltersApi) {
+    this._filters.setFilters(params);
+    if (params.title) this._filters.setTitle(String(params.title));
+    if (params.price_max)
+      this._filters.setPriceRangeMax(Number(params.price_max));
+    if (params.price_min)
+      this._filters.setPriceRangeMin(Number(params.price_min));
+  }
+  init() {
+    this._category.fetchCategories();
+  }
   get fetchCatalog() {
     return rootStore.query.getParams();
   }
@@ -112,9 +123,8 @@ class ProductStore implements ILocalStore {
       this._totalProducts = 0;
     });
 
-
-  this._filters.destroy();
-  this._category.destroy();
+    this._filters.destroy();
+    this._category.destroy();
   }
 }
 

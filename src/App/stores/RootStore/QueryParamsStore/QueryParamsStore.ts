@@ -12,10 +12,6 @@ export default class QueryParamsStore {
       _params: observable.ref,
       setSearch: action,
     });
-
-    // autorun(() => {
-    //   this.setSearch(window.location.search);
-    // });
   }
 
   setSearch(search: string) {

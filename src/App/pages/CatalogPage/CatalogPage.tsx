@@ -12,21 +12,14 @@ import { OptionEntity } from "@types";
 import { extractOptionKey } from "@/App/utils/extractOptionKey";
 import Text from "@components/Text";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { initialFilters } from "@utils/constants";
 import { useLocalStore } from "@utils/useLocalStore";
 import ProductStore from "@stores/ProductStore/ProductStore";
 
 const CatalogPage = observer(() => {
-  const productStore = useLocalStore(() => new ProductStore());
-  const { filters: filterStore, category: categoryStore } = productStore;
   const navigate = useNavigate();
   const [params] = useSearchParams();
-
-  useEffect(() => {
-    if (params.toString() === "") {
-      productStore.fetchProducts(initialFilters);
-    }
-  }, [productStore, params]);
+  const productStore = useLocalStore(() => new ProductStore(params));
+  const { filters: filterStore, category: categoryStore } = productStore;
 
   useEffect(() => {
     filterStore.setNavigate(navigate);    
