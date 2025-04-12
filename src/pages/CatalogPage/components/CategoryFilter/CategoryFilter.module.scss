@@ -1,0 +1,8 @@
+@use "@variables" as vars;
+
+.categoryFilter {
+  &__dropdown {
+    width: 300px;
+    height: fit-content;
+  }
+}

@@ -19,16 +19,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@routes": ["src/App/utils/routes"],
-      "@components/*": ["src/App/components/*"],
-      "@pages/*": ["src/App/pages/*"],
-      "@api/*": ["src/App/api/*"],
-      "@types": ["src/App/utils/types"],
-      "@stores/*": ["src/App/stores/*"],
-      "@hooks/*": ["src/App/hooks/*"],
-      "@utils/*": ["src/App/utils/*"],
-      "@apiHandlers/*": ["src/App/api/handlers/*"],
-      "@apiTypes/*": ["src/App/api/types/*"]
+      "@routes": ["src/utils/routes"],
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"],
+      "@types": ["src/utils/types"],
+      "@stores/*": ["src/stores/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@apiHandlers/*": ["src/api/handlers/*"],
+      "@apiTypes/*": ["src/api/types/*"]
     },
 
     /* Linting */

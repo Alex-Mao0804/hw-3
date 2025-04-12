@@ -4,9 +4,9 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import "./config/configureMobX";
 createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
+  <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  // </StrictMode>,
+  </StrictMode>,
 );
