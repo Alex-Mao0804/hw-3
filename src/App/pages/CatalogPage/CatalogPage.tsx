@@ -22,7 +22,7 @@ const CatalogPage = observer(() => {
   const { filters: filterStore, category: categoryStore } = productStore;
 
   useEffect(() => {
-    filterStore.setNavigate(navigate);    
+    filterStore.setNavigate(navigate);
   }, [navigate, filterStore]);
 
   const handleSubmit = useCallback(
@@ -41,7 +41,7 @@ const CatalogPage = observer(() => {
     },
     [filterStore],
   );
-  
+
   const handleMultiDropdownChange = useCallback(
     (value: OptionEntity | OptionEntity[] | null) => {
       runInAction(() => {
@@ -84,7 +84,7 @@ const CatalogPage = observer(() => {
           <Input
             value={String(filterStore.fieldTitle)}
             onChange={(e) => {
-                filterStore.setTitle(e);
+              filterStore.setTitle(e);
             }}
             placeholder="Product name"
           />
@@ -98,8 +98,8 @@ const CatalogPage = observer(() => {
         <div className={styles.catalog_page__options__filters}>
           <MultiDropdown
             className={styles.catalog_page__options__dropdown}
-            options={toJS(categoryStore.categoriesMultiDropdown)}
-            value={toJS(categoryStore.categoryMultiDropdownValue)}
+            options={categoryStore.categoriesMultiDropdown}
+            value={categoryStore.categoryMultiDropdownValue}
             onChange={handleMultiDropdownChange}
             isMulti={false}
             getTitle={categoryStore.getTitleMultiDropdown}
@@ -108,15 +108,15 @@ const CatalogPage = observer(() => {
         </div>
       </div>
       <CatalogProducts
-        products={toJS(productStore.products)}
-        loading={toJS(productStore.isLoading)}
-        total={toJS(productStore.totalProducts)}
-        limit={toJS(filterStore.filtersState.limit)}
+        products={productStore.products}  
+        loading={productStore.isLoading}
+        total={productStore.totalProducts}
+        limit={filterStore.filtersState.limit}
       />
       {filterStore.filtersState.page && (
         <Pagination
-          totalPages={toJS(productStore.totalPages)}
-          currentPage={toJS(filterStore.filtersState.page)}
+          totalPages={productStore.totalPages}
+          currentPage={filterStore.filtersState.page}
           goToPage={handleChangePage}
         />
       )}

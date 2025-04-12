@@ -15,6 +15,8 @@ class ProductStore implements ILocalStore {
   private _totalProducts: number = 0;
   private _filters: FilterStore;
   private _category: CategoryStore;
+  private _disposeCategoryReaction: () => void;
+
 
   constructor(paramsUrl: URLSearchParams) {
     makeAutoObservable(this);
@@ -27,7 +29,7 @@ class ProductStore implements ILocalStore {
 
     this.init();
 
-    reaction(
+    this._disposeCategoryReaction = reaction(
         () => rootStore.query.getParams(),
         (params) => {
           if (Object.keys(params).length === 0) {
@@ -67,6 +69,7 @@ class ProductStore implements ILocalStore {
     return this._products;
   }
 
+
   get totalPages() {
     return this._totalPages;
   }
@@ -80,9 +83,7 @@ class ProductStore implements ILocalStore {
   }
 
   async fetchProducts(filters: TFiltersApi) {
-    runInAction(() => {
       this._isLoading = true;
-    });
 
     try {
       const { page, limit, ...otherParams } = filters;
@@ -92,10 +93,11 @@ class ProductStore implements ILocalStore {
       };
       const data = await getProducts({ ...paginationParams, ...otherParams });
       const dataWithoutPagination = await getProducts(otherParams);
-
-      this.setProducts(data);
-      this.setTotalProducts(dataWithoutPagination.length);
-      this.setTotalPages(dataWithoutPagination.length, limit);
+      runInAction(() => {
+        this.setProducts(data);
+        this.setTotalProducts(dataWithoutPagination.length);
+        this.setTotalPages(dataWithoutPagination.length, limit);
+      })
     } catch (error) {
       console.error("Ошибка загрузки товаров:", error);
     } finally {
@@ -119,15 +121,13 @@ class ProductStore implements ILocalStore {
     }
   }
   destroy() {
-    runInAction(() => {
+    this._disposeCategoryReaction?.();
+    this._category.destroy();
+    this._filters.destroy();
       this._products = [];
       this._isLoading = false;
       this._totalPages = 1;
       this._totalProducts = 0;
-    });
-
-    this._filters.destroy();
-    this._category.destroy();
   }
 }
 

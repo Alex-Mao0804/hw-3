@@ -3,6 +3,8 @@ import styles from "./ProductItem.module.scss";
 import { ProductEntity } from "@types";
 import Button from "@components/Button";
 import PreviewSwiper from "@components/PreviewSwiper/PreviewSwiper";
+import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
 
 type ProductItemProps = {
   product: ProductEntity;
@@ -42,4 +44,4 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   );
 };
 
-export default ProductItem;
+export default observer(ProductItem);

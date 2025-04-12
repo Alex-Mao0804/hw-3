@@ -7,6 +7,9 @@ import Loader from "@components/Loader";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
 import ROUTES from "@routes";
+import { observer } from "mobx-react-lite";
+import { initialFilters } from "@/App/utils/constants";
+import { runInAction } from "mobx";
 
 type CatalogProductsProps = {
   total: number;
@@ -23,8 +26,9 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleClickCard = (id: number) => {
-    navigate(ROUTES.PRODUCT(String(id)));
+  const count = products.length;
+  const handleProductClick = (productId: string) => {
+    navigate(ROUTES.PRODUCT(productId));
   };
 
   return (
@@ -41,7 +45,7 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
           {loading ? <Loader size="s" /> : total}
         </Text>
       </div>
-      {!loading && products?.length === 0 && (
+      {!loading && count === 0 && (
         <div className={styles.catalog_products__empty}>
           <Text tag="h2" view="title" weight="bold">
             No products
@@ -60,11 +64,13 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
       )}
       <ul className={styles.catalog_products__list}>
         {loading &&
-          Array.from({ length: limit ?? 9 }).map((_, index) => (
-            <li key={index}>
-              <SkeletonCard />
-            </li>
-          ))}
+          Array.from({ length: limit ?? Number(initialFilters.limit) }).map(
+            (_, index) => (
+              <li key={index}>
+                <SkeletonCard />
+              </li>
+            ),
+          )}
         {!loading &&
           products?.length > 0 &&
           products.map((product: ProductEntity) => (
@@ -74,7 +80,9 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
                 title={product.title}
                 subtitle={product.description}
                 captionSlot={product.category.name}
-                onClick={() => handleClickCard(product.id)}
+                onClick={() =>
+                  runInAction(() => handleProductClick(String(product.id)))
+                }
                 contentSlot={`$${product.price}`}
                 actionSlot={
                   <Button
@@ -96,4 +104,4 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
   );
 };
 
-export default CatalogProducts;
+export default observer(CatalogProducts);

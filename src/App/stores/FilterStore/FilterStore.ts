@@ -5,8 +5,9 @@ import QueryFilterConnector from "@stores/QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
 import { TFiltersApi } from "@api/type/directionProduct/list";
 import rootStore from "../RootStore";
+import { ILocalStore } from "@/App/utils/useLocalStore";
 
-export default class FilterStore {
+export default class FilterStore implements ILocalStore {
   private _fieldTitle: string = "";
   private _fieldPriceRangeMin: number | null = null;
   private _fieldPriceRangeMax: number | null = null;

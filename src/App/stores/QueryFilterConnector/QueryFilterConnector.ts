@@ -4,15 +4,14 @@ import { runInAction } from "mobx";
 import { NavigateFunction } from "react-router-dom";
 
 export default class QueryFilterConnector {
-  private queryParamsStore: QueryParamsStore;
-  private navigate: NavigateFunction | null = null;
+  private _queryParamsStore: QueryParamsStore;
+  private _navigate: NavigateFunction | null = null;
 
   constructor(queryParamsStore: QueryParamsStore) {
-    this.queryParamsStore = queryParamsStore;
+    this._queryParamsStore = queryParamsStore;
   }
 
   syncFiltersToQuery(filters: TFiltersApi) {
-    runInAction(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const params: Record<string, any> = {};
 
@@ -23,15 +22,14 @@ export default class QueryFilterConnector {
       if (filters.page) params.page = filters.page;
       if (filters.limit) params.limit = filters.limit;
 
-      this.queryParamsStore.setParams(new URLSearchParams(params).toString());
+      this._queryParamsStore.setParams(new URLSearchParams(params).toString());
 
-      if (this.navigate) {
-        this.navigate(`?${new URLSearchParams(params).toString()}`);
+      if (this._navigate) {
+        this._navigate(`?${new URLSearchParams(params).toString()}`);
       }
-    });
   }
 
   setNavigator(navigate: NavigateFunction) {
-    this.navigate = navigate;
+    this._navigate = navigate;
   }
 }

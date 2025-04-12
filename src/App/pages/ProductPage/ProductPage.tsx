@@ -7,13 +7,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { observer } from "mobx-react-lite";
-import { toJS } from "mobx";
-import useItemStore from "@stores/RootStore/hooks/useItemStore";
+import { useLocalStore } from "@/App/utils/useLocalStore";
+import ItemStore from "@/App/stores/ItemStore";
 
 const ProductPage = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const itemStore = useItemStore();
+  const itemStore = useLocalStore(()=> new ItemStore());
 
   const { fetchItemAndRelated, item, related } = itemStore;
 
@@ -23,13 +23,9 @@ const ProductPage = observer(() => {
     }
     fetchItemAndRelated(id);
 
-    return () => {
-      itemStore.destroy();
-    };
-  }, [id, fetchItemAndRelated, itemStore]);
+  }, [id, fetchItemAndRelated]);
 
-  const { product, loading: loadingItem } = item;
-  const { relatedProducts, loading: loadingRelatedItem } = related;
+  const { product, loading: loadingItem, error } = item;
 
   return (
     <div className={styles.product_page}>
@@ -45,14 +41,18 @@ const ProductPage = observer(() => {
         </button>
       </div>
       <div className={styles.content}>
-        {loadingItem || !product ? (
-          <SkeletonProductItem />
-        ) : (
-          <ProductItem product={toJS(product)} />
-        )}
+      {loadingItem ? (
+  <SkeletonProductItem />
+) : !product ? (
+  <Text view="p-20" weight="bold">
+    {error}
+  </Text>
+) : (
+  <ProductItem product={product} />
+)}
+        
         <RelatedItems
-          loading={toJS(loadingRelatedItem)}
-          relatedProducts={toJS(relatedProducts) || []}
+          related={related}
         />
         <div className={styles.content__related}></div>
       </div>

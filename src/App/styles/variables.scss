@@ -70,3 +70,5 @@ $card-height: 622px;
     background-position: 100% 0;
   }
 }
+
+$productImage-width: clamp(18.75rem, -9.375rem + 58.594vi, 37.5rem);

@@ -8,6 +8,7 @@ import clsx from "clsx";
 import styles from "./PreviewSwiper.module.scss";
 import ArrowSideIcon from "../icons/ArrowSideIcon";
 import { ProductEntity } from "@/App/utils/types";
+import { observer } from "mobx-react-lite";
 
 interface IPreviewSwiper {
   productData: ProductEntity;
@@ -73,4 +74,4 @@ const PreviewSwiper: React.FC<IPreviewSwiper> = ({ productData }) => {
   );
 };
 
-export default PreviewSwiper;
+export default observer(PreviewSwiper);

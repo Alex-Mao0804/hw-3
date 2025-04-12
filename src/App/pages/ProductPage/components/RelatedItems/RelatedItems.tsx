@@ -6,15 +6,18 @@ import Card from "@components/Card";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@components/Card/SkeletonCard";
 import ROUTES from "@routes";
+import { observer } from "mobx-react-lite";
+import { runInAction } from "mobx";
 
 type RelatedItemsProps = {
-  loading: boolean;
-  relatedProducts: ProductEntity[] | undefined;
+  related: {
+    relatedProducts: ProductEntity[] | null;
+    loading: boolean;
+  };
 };
 
 const RelatedItems: React.FC<RelatedItemsProps> = ({
-  relatedProducts,
-  loading,
+  related: { relatedProducts, loading },
 }) => {
   const navigate = useNavigate();
   if (!relatedProducts || loading) {
@@ -50,7 +53,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
               title={product.title}
               subtitle={product.description}
               captionSlot={product.category.name}
-              onClick={() => handleClickCard(product.id)}
+              onClick={() => runInAction(() => handleClickCard(product.id))}
               contentSlot={`$${product.price}`}
               actionSlot={
                 <Button
@@ -72,4 +75,4 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
   );
 };
 
-export default RelatedItems;
+export default observer(RelatedItems);

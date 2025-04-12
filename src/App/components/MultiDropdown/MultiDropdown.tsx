@@ -5,6 +5,7 @@ import ArrowDownIcon from "@components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import Text from "@components/Text";
 import { OptionEntity } from "@utils/types";
+import { observer } from "mobx-react-lite";
 
 type MultiDropdownProps = {
   className?: string;
@@ -120,4 +121,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default observer(MultiDropdown);

@@ -1,13 +1,18 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, computed, makeAutoObservable, observable, runInAction } from "mobx";
 import { ProductEntity } from "@types";
 import { getRelatedProducts } from "@api/handlers/directionProduct/related";
 import { getProduct } from "@api/handlers/directionProduct/item";
+import { ILocalStore } from "@/App/utils/useLocalStore";
 
-class ItemStore {
+
+type PrivateFields = '_item' | '_related';
+class ItemStore implements ILocalStore {
   private _item: {
+    error: string | null;
     product: ProductEntity | null;
     loading: boolean;
   } = {
+    error: null,
     product: null,
     loading: false,
   };
@@ -21,10 +26,22 @@ class ItemStore {
   };
 
   constructor() {
-    makeAutoObservable(this);
-    this.fetchItem = this.fetchItem.bind(this);
-    this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
-    this.fetchItemAndRelated = this.fetchItemAndRelated.bind(this);
+    makeAutoObservable<ItemStore, PrivateFields>(this, {
+      _item: observable,
+      _related: observable,
+      setItem: action,
+      setRelated: action,
+      item: computed,
+      fetchItem: action.bound,
+      fetchRelatedProducts: action.bound,
+      fetchItemAndRelated: action.bound,
+      
+    });
+    
+
+    // this.fetchItem = this.fetchItem.bind(this);
+    // this.fetchRelatedProducts = this.fetchRelatedProducts.bind(this);
+    // this.fetchItemAndRelated = this.fetchItemAndRelated.bind(this);
   }
 
   get item() {
@@ -48,9 +65,12 @@ class ItemStore {
 
     try {
       const product = await getProduct(id);
-      this.setItem(product);
+      runInAction(() => {
+        this.setItem(product);
+      });
+    
     } catch (error) {
-      console.error("Ошибка загрузки товара:", error);
+      this.setItemError("Ошибка загрузки товара:" + String(error));
     } finally {
       runInAction(() => {
         this._item.loading = false;
@@ -58,14 +78,20 @@ class ItemStore {
     }
   }
 
+  setItemError(error: string) {
+    this._item.error = error;
+  }
+
   async fetchRelatedProducts(id: string) {
     this._related.loading = true;
 
     try {
       const related = await getRelatedProducts(id);
-      this.setRelated(related);
+      runInAction(() => {
+        this.setRelated(related);
+      })
     } catch (error) {
-      console.error("Ошибка загрузки товаров:", error);
+      // console.error("Ошибка загрузки товаров:", error);
     } finally {
       runInAction(() => {
         this._related.loading = false;
@@ -79,8 +105,12 @@ class ItemStore {
   }
 
   destroy() {
-    this._item = { product: null, loading: false };
-    this._related = { relatedProducts: null, loading: false };
+    this._item.product = null;
+    this._item.loading = false;
+    this._item.error = null;
+  
+    this._related.relatedProducts = null;
+    this._related.loading = false;
   }
 }
 
