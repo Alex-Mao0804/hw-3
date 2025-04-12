@@ -1,0 +1,87 @@
+@use "@variables" as vars;
+
+.product_item {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: vars.$space-xxl;
+  width: 100%;
+
+  &__image {
+    width: vars.$productImage-width;
+    aspect-ratio: 1 / 1;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-xxl;
+    &__top,
+    &__bottom {
+      display: flex;
+      flex-direction: column;
+    }
+    &__top {
+      gap: vars.$space-xl;
+    }
+    &__bottom {
+      gap: vars.$space-xxl;
+      margin-top: 32px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    gap: vars.$space-xxl;
+
+    &__button {
+      padding: 16px 32px;
+      &:last-child {
+        border: 1px solid vars.$color-primary;
+        color: vars.$color-primary;
+        background: none;
+      }
+    }
+  }
+}
+
+.skeleton {
+  &__image {
+    aspect-ratio: 1 / 1;
+    @include vars.skeleton(100%, 100%);
+  }
+
+  &__title {
+    @include vars.skeleton(100%, 48px);
+  }
+
+  &__description {
+    @include vars.skeleton(100%, 144px);
+  }
+
+  &__price {
+    @include vars.skeleton(170px, 48px);
+  }
+
+  &__button {
+    @include vars.skeleton(135px, 52px);
+  }
+}
+
+@media screen and (max-width: vars.$breakpoint-tablet) {
+  .product_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__image {
+      width: 100%;
+    }
+  }
+}
