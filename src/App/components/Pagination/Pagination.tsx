@@ -53,6 +53,10 @@ const Pagination: React.FC<TPaginationProps> = ({
     [goToPage],
   );
 
+  if (totalPages === 0) {
+    return null;
+  }
+
   return (
     <div className={styles.pagination}>
       <button

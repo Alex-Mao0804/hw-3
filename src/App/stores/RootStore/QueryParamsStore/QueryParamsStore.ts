@@ -18,7 +18,7 @@ export default class QueryParamsStore {
     search = search.startsWith("?") ? search.slice(1) : search;
     if (this._search !== search) {
       this._search = search;
-      this._params = qs.parse(search);
+      this._params = qs.parse(search);      
     }
   }
   getParams() {
@@ -30,6 +30,6 @@ export default class QueryParamsStore {
   }
 
   setParams(params: string) {
-    this.setSearch(params);
+    this.setSearch(params);    
   }
 }

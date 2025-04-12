@@ -28,28 +28,20 @@ const CatalogPage = observer(() => {
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      runInAction(() => {
-        filterStore.updateAndSync({
-          title: filterStore.fieldTitle,
-          page: 1,
-        });
+      filterStore.updateAndSync({
+        title: filterStore.getFieldTitle(),
+        page: 1,
       });
     },
     [filterStore],
   );
   const handleChangePage = useCallback(
-    (page: number) => {      
-      runInAction(() => {
-        if (filterStore.filtersState.page !== page) {
-          filterStore.updateAndSync({
-            page: page,
-          });
-        }
-      });
+    (page: number) => {
+      filterStore.updateAndSync({ page });
     },
     [filterStore],
   );
-
+  
   const handleMultiDropdownChange = useCallback(
     (value: OptionEntity | OptionEntity[] | null) => {
       runInAction(() => {
@@ -92,9 +84,7 @@ const CatalogPage = observer(() => {
           <Input
             value={String(filterStore.fieldTitle)}
             onChange={(e) => {
-              runInAction(() => {
                 filterStore.setTitle(e);
-              });
             }}
             placeholder="Product name"
           />

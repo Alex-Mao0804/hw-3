@@ -41,6 +41,23 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
           {loading ? <Loader size="s" /> : total}
         </Text>
       </div>
+      {!loading && products?.length === 0 && (
+        <div className={styles.catalog_products__empty}>
+          <Text tag="h2" view="title" weight="bold">
+            No products
+          </Text>
+          <Button
+            className={styles.catalog_products__empty__button}
+            disabled={false}
+            loading={false}
+            onClick={() => {
+              navigate(ROUTES.CATALOG);
+            }}
+          >
+            Reset all filters
+          </Button>
+        </div>
+      )}
       <ul className={styles.catalog_products__list}>
         {loading &&
           Array.from({ length: limit ?? 9 }).map((_, index) => (

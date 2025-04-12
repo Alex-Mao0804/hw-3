@@ -8,8 +8,8 @@ import rootStore from "../RootStore";
 
 export default class FilterStore {
   private _fieldTitle: string = "";
-  private _filedPriceRangeMin: number | null = null;
-  private _filedPriceRangeMax: number | null = null;
+  private _fieldPriceRangeMin: number | null = null;
+  private _fieldPriceRangeMax: number | null = null;
   private _filtersState: TFiltersApi = initialFilters;
   private _connector: QueryFilterConnector;
 
@@ -41,12 +41,16 @@ export default class FilterStore {
     return this._fieldTitle;
   }
 
+  getFieldTitle() {
+    return this._fieldTitle;
+  }
+
   get fieldPriceRangeMin() {
-    return this._filedPriceRangeMin;
+    return this._fieldPriceRangeMin;
   }
 
   get fieldPriceRangeMax() {
-    return this._filedPriceRangeMax;
+    return this._fieldPriceRangeMax;
   }
 
   updateAndSync(filters: TFiltersApi) {
@@ -78,11 +82,11 @@ export default class FilterStore {
   }
 
   setPriceRangeMin(priceRange_min: number | null) {
-    this._filedPriceRangeMin = priceRange_min;
+    this._fieldPriceRangeMin = priceRange_min;
   }
 
   setPriceRangeMax(priceRange_max: number | null) {
-    this._filedPriceRangeMax = priceRange_max;
+    this._fieldPriceRangeMax = priceRange_max;
   }
 
   setPage(page: number) {    

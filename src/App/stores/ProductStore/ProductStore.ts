@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction, toJS } from "mobx";
 import rootStore from "@stores/RootStore";
 import FilterStore from "@stores/FilterStore/FilterStore";
 import CategoryStore from "@stores/CategoryStore/CategoryStore";
@@ -22,7 +22,7 @@ class ProductStore implements ILocalStore {
     this._category = new CategoryStore(this);
 
     if (paramsUrl.toString() === "") {
-      this.fetchProducts(initialFilters );
+      this.fetchProducts(initialFilters );      
     }
 
     this.init();
@@ -30,9 +30,12 @@ class ProductStore implements ILocalStore {
     reaction(
         () => rootStore.query.getParams(),
         (params) => {
-          if (paramsUrl.toString() === "") return;
-          this.setFiltersFromParams(params);
+          if (Object.keys(params).length === 0) {
+            this.setFiltersFromParams(initialFilters);
+          } else {
+          this.setFiltersFromParams(params);}
           this.fetchProducts(this._filters.filtersState);
+          
         }
     );
   }
