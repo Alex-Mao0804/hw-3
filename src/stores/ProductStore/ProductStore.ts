@@ -15,7 +15,7 @@ class ProductStore implements ILocalStore {
   private _totalProducts: number = 0;
   private _filters: FilterStore;
   private _category: CategoryStore;
-  private _disposeCategoryReaction: () => void;
+  private _disposeReaction: () => void = () => {};
 
   constructor(paramsUrl: URLSearchParams) {
     makeAutoObservable(this);
@@ -27,8 +27,12 @@ class ProductStore implements ILocalStore {
     }
 
     this.init();
+  }
 
-    this._disposeCategoryReaction = reaction(
+  init() {
+    this._category.fetchCategories();
+
+    this._disposeReaction = reaction(
       () => rootStore.query.getParams(),
       (params) => {
         if (Object.keys(params).length === 0) {
@@ -49,9 +53,7 @@ class ProductStore implements ILocalStore {
     if (params.price_min)
       this._filters.setPriceRangeMin(Number(params.price_min));
   }
-  init() {
-    this._category.fetchCategories();
-  }
+
   get fetchCatalog() {
     return rootStore.query.getParams();
   }
@@ -118,7 +120,7 @@ class ProductStore implements ILocalStore {
     }
   }
   destroy() {
-    this._disposeCategoryReaction?.();
+    this._disposeReaction(); // теперь это корректно отключает реакцию
     this._category.destroy();
     this._filters.destroy();
     this._products = [];

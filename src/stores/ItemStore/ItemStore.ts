@@ -7,8 +7,8 @@ import {
 } from "mobx";
 import { ProductEntity } from "@/utils/types";
 import { getRelatedProducts } from "@/api/handlers/directionProduct/related";
-import { getProduct } from "@/api/handlers/directionProduct/item";
-import { ILocalStore } from "@/utils/useLocalStore";
+import { getProduct } from "@api/handlers/directionProduct/item";
+import { ILocalStore } from "@utils/useLocalStore";
 
 type PrivateFields = "_item" | "_related";
 class ItemStore implements ILocalStore {
