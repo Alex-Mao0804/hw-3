@@ -20,6 +20,7 @@
     font-weight: vars.$font-weight-normal;
     font-size: vars.$font-size-p-16;
     line-height: 125%;
+    width: 100%;
   }
   &_field:disabled {
     background: none;

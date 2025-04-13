@@ -1,8 +1,11 @@
 @use "@variables" as vars;
 
 .header {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
   box-sizing: content-box;
-  height: 90px;
+  height: vars.$header-height;
   border-bottom: 2px solid #f3f3f3;
   background-color: vars.$color-bg;
 
@@ -19,7 +22,8 @@
 @media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
   .header {
     &__container {
-      padding: 0 30px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
   }
 }

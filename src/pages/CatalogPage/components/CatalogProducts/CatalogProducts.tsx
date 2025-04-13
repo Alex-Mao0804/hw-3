@@ -9,7 +9,8 @@ import SkeletonCard from "@/components/Card/SkeletonCard";
 import ROUTES from "@/utils/routes";
 import { observer } from "mobx-react-lite";
 import { initialFilters } from "@/utils/constants";
-import { runInAction } from "mobx";
+import { runInAction, toJS } from "mobx";
+import rootStore from "@/stores/RootStore/RootStore";
 
 type CatalogProductsProps = {
   total: number;
@@ -87,10 +88,11 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
                 actionSlot={
                   <Button
                     className={styles.catalog_products__card__button}
-                    disabled={false}
+                    disabled={rootStore.cart.checkProduct(product)}
                     loading={false}
-                    onClick={() => {
-                      console.log("Add to cart button clicked:", product);
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      rootStore.cart.addProduct(product)                                       
                     }}
                   >
                     Add to cart

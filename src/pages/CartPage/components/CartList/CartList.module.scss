@@ -1,0 +1,30 @@
+@use "@variables" as vars;
+
+.cart_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px; 
+
+  > li {
+    width: 100%;
+  }
+}
+
+.card {
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+
+  & img {
+    width: 250px;
+    height: auto;
+  }
+  &__actions {
+    width: 155px;
+    & input {
+      text-align: center;
+    }
+  }
+}

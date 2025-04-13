@@ -1,0 +1,35 @@
+@use "@variables" as vars;
+
+.cart_page {
+  display: flex;
+  flex-direction: column;
+  @include vars.center-container;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    &__title {
+      margin: auto;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
+  .cart_page {
+    padding-left: 30px;
+    padding-right: 30px;
+    }
+}

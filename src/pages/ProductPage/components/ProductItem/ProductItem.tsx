@@ -4,6 +4,7 @@ import { ProductEntity } from "@/utils/types";
 import Button from "@/components/Button";
 import PreviewSwiper from "@/components/PreviewSwiper/PreviewSwiper";
 import { observer } from "mobx-react-lite";
+import rootStore from "@/stores/RootStore";
 
 type ProductItemProps = {
   product: ProductEntity;
@@ -33,7 +34,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
             <Button className={styles.product_item__actions__button}>
               Buy Now
             </Button>
-            <Button className={styles.product_item__actions__button}>
+            <Button
+                                disabled={rootStore.cart.checkProduct(product)}
+
+             onClick={() => {
+              rootStore.cart.addProduct(product)
+            }} className={styles.product_item__actions__button}>
               Add to Cart
             </Button>
           </div>

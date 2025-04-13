@@ -50,27 +50,7 @@ const HeaderTabs = () => {
             )}
           </NavLink>
         </li>
-        <li className={styles.header__tabs__list__item}>
-          <NavLink
-            to={"ROUTES.ABOUT"}
-            className={({ isActive }) =>
-              clsx(
-                styles.header__tabs__list__item__navLink,
-                isActive && styles.active,
-              )
-            }
-          >
-            {({ isActive }) => (
-              <Text
-                view="p-18"
-                weight={isActive ? "bold" : "normal"}
-                color={isActive ? "accent" : "primary"}
-              >
-                About us
-              </Text>
-            )}
-          </NavLink>
-        </li>
+        
       </ul>
     </nav>
   );

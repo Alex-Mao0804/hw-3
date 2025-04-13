@@ -47,6 +47,12 @@
         border: 1px solid vars.$color-primary;
         color: vars.$color-primary;
         background: none;
+      }     
+      &:last-child:disabled {
+        border: 1px solid vars.$color-primary;
+        color: vars.$color-primary;
+        background: none;
+        opacity: 0.5;
       }
     }
   }

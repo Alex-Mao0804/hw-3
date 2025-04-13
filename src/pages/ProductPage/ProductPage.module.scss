@@ -7,33 +7,6 @@
   @include vars.center-container;
 }
 
-.navigation {
-  height: 48px;
-  margin-top: 60px;
-  margin-right: auto;
-  margin-bottom: 32px;
-  &__button {
-    display: flex;
-    align-items: center;
-    gap: vars.$space-xs;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-      gap: vars.$space-m;
-    }
-
-    &:active {
-      gap: vars.$space-xxs;
-    }
-  }
-
-  &__icon {
-    width: 32px;
-    height: 32px;
-    rotate: 180deg;
-  }
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -42,6 +15,7 @@
 
 @media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
   .product_page {
-    padding: 0 30px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }

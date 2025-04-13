@@ -24,8 +24,10 @@
     object-fit: cover;
   }
   &__content {
+    width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: vars.$space-xl vars.$space-xs;
     background: vars.$color-bg;
   }
@@ -42,10 +44,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: end;
+
   }
   &__footer__action {
-    margin-left: auto;
-    width: 155px;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    gap: 20px;
   }
 }
 

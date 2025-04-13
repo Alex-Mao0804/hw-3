@@ -71,6 +71,7 @@
 
 @media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
   .catalog_page {
-    padding: 0 30px;
-  }
+    padding-left: 30px;
+    padding-right: 30px;
+    }
 }

@@ -7,6 +7,7 @@ import ProductPage from "@/pages/ProductPage";
 import ROUTES from "@/utils/routes";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useQueryParamsStoreInit } from "@/stores/RootStore/hooks/useQueryParamsStoreInit";
+import CartPage from "./pages/CartPage";
 
 const App = () => {
   useQueryParamsStoreInit();
@@ -18,6 +19,8 @@ const App = () => {
       <Routes>
         <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
         <Route path={ROUTES.PRODUCT(":id")} element={<ProductPage />} />
+        <Route path="*" element={<h1>404</h1>} />
+        <Route path={ROUTES.CART} element={<CartPage />} />
       </Routes>
     </div>
   );

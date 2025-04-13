@@ -9,6 +9,8 @@ import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { observer } from "mobx-react-lite";
 import { useLocalStore } from "@/utils/useLocalStore";
 import ItemStore from "@/stores/ItemStore";
+import Button from "@/components/Button";
+import ButtonBack from "@/components/ButtonBack";
 
 const ProductPage = observer(() => {
   const navigate = useNavigate();
@@ -28,17 +30,7 @@ const ProductPage = observer(() => {
 
   return (
     <div className={styles.product_page}>
-      <div className={styles.navigation}>
-        <button
-          className={styles.navigation__button}
-          onClick={() => navigate(-1)}
-        >
-          <ArrowSideIcon className={styles.navigation__icon} />
-          <Text view="p-20" color="primary" weight="normal">
-            Назад
-          </Text>
-        </button>
-      </div>
+      <ButtonBack />
       <div className={styles.content}>
         {loadingItem ? (
           <SkeletonProductItem />
