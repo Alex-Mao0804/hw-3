@@ -4,17 +4,18 @@ import ProductStore from "@/stores/ProductStore";
 import { getCategories } from "@/api/handlers/directionCategory/details";
 import { ILocalStore } from "@/utils/useLocalStore";
 import rootStore from "@/stores/RootStore";
+import MultiDropdownStore from "@/stores/MultyDropdownStore";
 
 export default class CategoryStore implements ILocalStore {
-  private _categoryMultiDropdownValue: OptionEntity | null = null;
-  private _categoriesMultiDropdown: OptionEntity[] = [];
   private _categories: CategoryEntity[] = [];
   private _isLoading: boolean = false;
   private _productStore: ProductStore;
+  private _multiDropdownStore: MultiDropdownStore;
 
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
     this._productStore = productStore;
+    this._multiDropdownStore = new MultiDropdownStore();
 
     reaction(
       () => this._categories,
@@ -31,11 +32,15 @@ export default class CategoryStore implements ILocalStore {
     const categorySelected = this.categories.find(
       (cat) => cat.id === categoryId,
     );
-    this._categoryMultiDropdownValue = categorySelected
+    const value = categorySelected
       ? { key: String(categorySelected.id), value: categorySelected.name }
       : null;
+    this._multiDropdownStore.setValue(value);
   }
 
+  get multiDropdownStore() {
+    return this._multiDropdownStore;
+  }
   get isLoading() {
     return this._isLoading;
   }
@@ -44,39 +49,13 @@ export default class CategoryStore implements ILocalStore {
     return this._categories;
   }
 
-  get categoriesMultiDropdown() {
-    return this._categoriesMultiDropdown;
-  }
-
-  get categoryMultiDropdownValue() {
-    return this._categoryMultiDropdownValue;
-  }
-
-  getTitleMultiDropdown(value: OptionEntity | OptionEntity[] | null) {
-    if (Array.isArray(value)) {
-      return value.map((option) => option.value).join(", ");
-    } else if (value) {
-      return value.value;
-    } else {
-      return "Выберите категорию";
-    }
-  }
-
   resetCategoryMultiDropdownValue() {
     this._productStore.filters.filtersState.categoryId = null;
-    this._categoryMultiDropdownValue = null;
+    this._multiDropdownStore.resetValue();
     this._productStore.filters.updateAndSync({
       categoryId: null,
       page: 1,
     });
-  }
-
-  setCategoryMultiDropdownValue(value: OptionEntity | OptionEntity[] | null) {
-    if (Array.isArray(value)) {
-      this._categoryMultiDropdownValue = value[0] || null;
-    } else {
-      this._categoryMultiDropdownValue = value;
-    }
   }
 
   async fetchCategories() {
@@ -85,10 +64,11 @@ export default class CategoryStore implements ILocalStore {
       const data = await getCategories();
       runInAction(() => {
         this._categories = data;
-        this._categoriesMultiDropdown = data.map((category) => ({
+        const options = data.map((category) => ({
           key: String(category.id),
           value: category.name,
         }));
+        this._multiDropdownStore.setOptions(options);
         this.updateCategoryFromId(
           Number(this._productStore.filters.filtersState.categoryId),
         );
@@ -107,8 +87,7 @@ export default class CategoryStore implements ILocalStore {
   }
 
   destroy() {
-    this._categoryMultiDropdownValue = null;
-    this._categoriesMultiDropdown = [];
+    this._multiDropdownStore.destroy();
     this._categories = [];
     this._isLoading = false;
   }

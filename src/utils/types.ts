@@ -23,3 +23,10 @@ export type OptionEntity<K = string, V = string> = {
   value: K;
   key: V;
 };
+
+export const enum RequestStatus {
+	Idle = 'Idle',
+	Loading = 'Loading',
+	Success = 'Success',
+	Failed = 'Failed',
+}

@@ -1,14 +1,21 @@
+import { getProduct } from "@/api/handlers/directionProduct/item";
+import AddressStore from "@/stores/AddressStore";
 import { ProductEntity } from "@types";
-import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction } from "mobx";
+import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction, toJS } from "mobx";
 
 
 type PrivateFields = "_products";
+type TProductLocalStorage = {
+  id: number;
+  quantity: number;
+};
 type ProductEntityWithQuantity = ProductEntity & { quantity: number };
 export default class CartStore {
   private _products: ProductEntityWithQuantity[] = [];
   private _contactName: string = "";
   private _contactEmail: string = "";
   private _contactAddress: string = "";
+  private _addressStore: AddressStore;
 
   constructor() {
     makeAutoObservable <CartStore, PrivateFields>(this, {
@@ -18,12 +25,41 @@ export default class CartStore {
       addProduct: action,
       removeProduct: action,
     });
+
+    this.init();
+
+
+    this._addressStore = new AddressStore();
     reaction(
       () => this.totalProducts,
       total => {
+        this.saveItemIdToLocalStorage();
         console.log("Корзина изменилась, всего товаров:", total);
       }
     );
+
+    reaction(
+      () => this.addressStore.multiDropdownStore.value,
+      (search) => {
+        this._contactAddress = search?.value ?? "";        
+      }
+    );
+  }
+
+  init () {
+    this.loadFromLocalStorage();
+  }
+
+  get addressStore() {
+    return this._addressStore;
+  }
+
+  saveItemIdToLocalStorage() {
+    const itemsToSave: TProductLocalStorage[] = this._products.map((product) => ({
+      id: product.id,
+      quantity: product.quantity,
+    }));
+    localStorage.setItem("cart_items", JSON.stringify(itemsToSave));
   }
 
   submitOrder() {
@@ -47,6 +83,34 @@ export default class CartStore {
 
   get contactAddress() {
     return this._contactAddress;
+  }
+
+  async loadFromLocalStorage() {
+    const data = localStorage.getItem("cart_items");
+    if (!data) return;
+  
+    try {
+      const items: TProductLocalStorage[] = JSON.parse(data);
+      
+      const productPromises = items.map(async (item) => {
+        try {
+          const product = await getProduct(String(item.id));
+          return { ...product, quantity: item.quantity } as ProductEntityWithQuantity;
+        } catch (error) {
+          console.error("Ошибка загрузки товара из localStorage:", error);
+          return null;
+        }
+      });
+  
+      const products = (await Promise.all(productPromises)).filter(Boolean) as ProductEntityWithQuantity[];
+  
+      runInAction(() => {
+        this._products = products;
+      });
+  
+    } catch (e) {
+      console.error("Ошибка при загрузке товаров из localStorage:", e);
+    }
   }
 
   setContactName(value: string) {
@@ -83,6 +147,7 @@ export default class CartStore {
     );
     if (existingProduct) {
       existingProduct.quantity = quantity;
+      this.saveItemIdToLocalStorage(); 
     }
   };
 
@@ -109,4 +174,16 @@ export default class CartStore {
   resetCart() {
     this._products = [];
   }
+
+    async fetchItem(id: string) {
+  
+      try {
+        const product = await getProduct(id);
+        runInAction(() => {
+          this.addProduct(product);
+        });
+      } catch (error) {
+      } 
+      
+    }
 }

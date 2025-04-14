@@ -1,19 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import Input from "@/components/Input";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import Text from "@/components/Text";
 import { OptionEntity } from "@/utils/types";
+import { extractOptionValue } from "@/utils/extractOption";
 
 type MultiDropdownProps = {
   className?: string;
   options: OptionEntity[];
   value: OptionEntity | OptionEntity[] | null;
-  onChange: (value: OptionEntity | OptionEntity[]) => void;
+  onChange: (value: OptionEntity | OptionEntity[] | null) => void;
   disabled?: boolean;
   getTitle: (value: OptionEntity | OptionEntity[] | null) => string;
   isMulti?: boolean;
+  onSearchInput?: (value: string) => void;
+  searchable?: boolean;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -24,18 +27,19 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   disabled = false,
   getTitle,
   isMulti = false,
+  onSearchInput,
+  searchable = true,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredOptions = useMemo(
-    () =>
-      options.filter((option) =>
-        option.value.toLowerCase().includes(search.toLowerCase()),
-      ),
-    [options, search],
-  );
+  const filteredOptions = useMemo(() => {
+    if (!searchable) return options;
+    return options.filter((option) =>
+      option.value.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [options, search, searchable]);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -58,13 +62,20 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       if (isMulti) {
         const newValue = Array.isArray(value) ? [...value] : [];
         const exists = newValue.some((item) => item.key === option.key);
-        onChange(
-          exists
-            ? newValue.filter((item) => item.key !== option.key)
-            : [...newValue, option],
-        );
+        const updated = exists
+          ? newValue.filter((item) => item.key !== option.key)
+          : [...newValue, option];
+        onChange(updated);
+        setSearch("");
       } else {
-        onChange(option);
+        const alreadySelected = (value as OptionEntity)?.key === option.key;
+        if (alreadySelected) {
+          onChange(null); 
+          setSearch("");           
+        } else {
+          onChange(option);
+          setSearch(String(extractOptionValue(option)));           
+        }
         setIsOpen(false);
       }
     },
@@ -88,11 +99,14 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     <div className={clsx(styles.multi_dropdown, className)} ref={dropdownRef}>
       <Input
         value={isOpen || !value ? search : getTitle(value)}
-        onChange={setSearch}
+        onChange={(val) => {
+          setSearch(val);              
+          onSearchInput?.(val);       
+        }}
         placeholder={getTitle(value)}
         disabled={disabled}
         onFocus={() => setIsOpen(true)}
-        afterSlot={<ArrowDownIcon color="secondary" />}
+        afterSlot={<ArrowDownIcon className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />}
       />
       {isOpen && (
         <ul className={styles.dropdown_options}>
@@ -112,7 +126,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
               </li>
             ))
           ) : (
-            <li className={styles.dropdown_no_options}>Ничего не найдено</li>
+            <li key="no-options" className={styles.dropdown_no_options}>Ничего не найдено</li>
           )}
         </ul>
       )}

@@ -8,3 +8,13 @@ export const extractOptionKey = (
   }
   return value?.key ? Number(value.key) : undefined;
 };
+
+export const extractOptionValue = (
+  value: OptionEntity | OptionEntity[] | null,
+): String => {
+  if (Array.isArray(value)) {
+    return value.length > 0 ? value[0].value : '';
+  }
+  return value?.value ? value.value : '';
+};
+

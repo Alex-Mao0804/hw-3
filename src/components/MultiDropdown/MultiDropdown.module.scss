@@ -6,6 +6,7 @@
 }
 
 .dropdown {
+  transition: all 0.3s ease-in-out;
   &_options {
     position: absolute;
     top: 100%;
@@ -33,5 +34,9 @@
     padding: 8px 12px;
     color: #999;
     text-align: center;
+  }
+
+  &_arrow {
+    rotate: 180deg;
   }
 }

@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import MultiDropdown from "@/components/MultiDropdown";
+import CartMultiDropdown from "../CartMultiDropdown";
 
 const CartDetails = () => {
   const cartStore = rootStore.cart;
@@ -71,15 +72,7 @@ const CartDetails = () => {
               }}
               placeholder="Email"
             />
-{/* 
-<MultiDropdown
-        className={styles.categoryFilter__dropdown}
-        options={toJS(categoryStore.categoriesMultiDropdown)}
-        value={toJS(categoryStore.categoryMultiDropdownValue)}
-        onChange={handleMultiDropdownChange}
-        isMulti={false}
-        getTitle={categoryStore.getTitleMultiDropdown}
-      /> */}
+            <CartMultiDropdown addressStore={cartStore.addressStore} />
 
             <Button>Submit order</Button>
           </form>

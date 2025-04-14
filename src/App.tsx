@@ -7,11 +7,15 @@ import ProductPage from "@/pages/ProductPage";
 import ROUTES from "@/utils/routes";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useQueryParamsStoreInit } from "@/stores/RootStore/hooks/useQueryParamsStoreInit";
-import CartPage from "./pages/CartPage";
+import CartPage from "@pages/CartPage";
+import  useCartNotifications  from "@hooks/useCartNotifications";
+import rootStore from "./stores/RootStore";
+import { observer } from "mobx-react-lite";
 
 const App = () => {
+  const cartStore = rootStore.cart.products
   useQueryParamsStoreInit();
-
+  useCartNotifications(cartStore.length);
   return (
     <div className={styles.app}>
       <Header />
@@ -26,4 +30,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App);
