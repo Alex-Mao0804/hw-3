@@ -1,5 +1,6 @@
 import { getProduct } from "@/api/handlers/directionProduct/item";
 import AddressStore from "@/stores/AddressStore";
+import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import { ProductEntity } from "@types";
 import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction, toJS } from "mobx";
 
@@ -16,6 +17,8 @@ export default class CartStore {
   private _contactEmail: string = "";
   private _contactAddress: string = "";
   private _addressStore: AddressStore;
+  private _loading: boolean = false;
+
 
   constructor() {
     makeAutoObservable <CartStore, PrivateFields>(this, {
@@ -26,10 +29,16 @@ export default class CartStore {
       removeProduct: action,
     });
 
-    this.init();
-
-
     this._addressStore = new AddressStore();
+
+    this.init();
+    reaction(
+      () => [this._contactName, this._contactEmail, this._contactAddress],
+      () => {
+        this.saveContactsToLocalStorage();
+      }
+    );
+
     reaction(
       () => this.totalProducts,
       total => {
@@ -48,10 +57,24 @@ export default class CartStore {
 
   init () {
     this.loadFromLocalStorage();
+    this.loadContactsFromLocalStorage();
+  }
+
+  get loading() {
+    return this._loading;
   }
 
   get addressStore() {
     return this._addressStore;
+  }
+
+  saveContactsToLocalStorage() {
+    const contacts = {
+      name: this._contactName,
+      email: this._contactEmail,
+      address: this._contactAddress,
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEYS.CART_CONTACTS, JSON.stringify(contacts));
   }
 
   saveItemIdToLocalStorage() {
@@ -59,11 +82,34 @@ export default class CartStore {
       id: product.id,
       quantity: product.quantity,
     }));
-    localStorage.setItem("cart_items", JSON.stringify(itemsToSave));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.CART_ITEMS, JSON.stringify(itemsToSave));
   }
 
-  submitOrder() {
-    this.resetCart();
+  submitOrder(): Promise<void> {
+    this._loading = true;
+  
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        runInAction(() => {
+          this.resetCart(); 
+          this._loading = false;
+        });
+        resolve();
+      }, 2000);
+    });
+  }
+
+  submitQuickOrder(productId: number, quantity: number, discount: number): Promise<void> {
+    this._loading = true;
+  
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        runInAction(() => {
+          this._loading = false;
+        });
+        resolve();
+      }, 2000);
+    });
   }
   get products() {
     return this._products;
@@ -86,7 +132,7 @@ export default class CartStore {
   }
 
   async loadFromLocalStorage() {
-    const data = localStorage.getItem("cart_items");
+    const data = localStorage.getItem(LOCAL_STORAGE_KEYS.CART_ITEMS);
     if (!data) return;
   
     try {
@@ -110,6 +156,22 @@ export default class CartStore {
   
     } catch (e) {
       console.error("Ошибка при загрузке товаров из localStorage:", e);
+    }
+  }
+
+  loadContactsFromLocalStorage() {
+    const data = localStorage.getItem(LOCAL_STORAGE_KEYS.CART_CONTACTS);
+    if (!data) return;
+  
+    try {
+      const { name, email, address } = JSON.parse(data);
+      runInAction(() => {
+        this._contactName = name || "";
+        this._contactEmail = email || "";
+        this._addressStore.multiDropdownStore.setValueString(address || "")
+      });
+    } catch (e) {
+      console.error("Ошибка при загрузке контактов из localStorage:", e);
     }
   }
 

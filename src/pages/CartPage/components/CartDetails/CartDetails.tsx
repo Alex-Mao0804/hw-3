@@ -1,21 +1,27 @@
 import LogoIcon from "@/components/icons/LogoIcon";
 import styles from "./CartDetails.module.scss";
 import Text from "@components/Text";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
-import MultiDropdown from "@/components/MultiDropdown";
-import CartMultiDropdown from "../CartMultiDropdown";
+
+import Modal from "@/components/Modal";
+import { useState } from "react";
+import ContactForm from "@/components/ContactForm";
+import RatingChoice from "@/components/RatingChoice";
 
 const CartDetails = () => {
   const cartStore = rootStore.cart;
   const { totalPrice: total, totalProducts: count } = cartStore;
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
+  const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    cartStore.submitOrder();
+    await cartStore.submitOrder(); // дождаться завершения
+    setIsModalOpen(true); // открыть модалку после
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={styles.cart_details}>
       <div className={styles.cart_details__menu}>
@@ -50,34 +56,36 @@ const CartDetails = () => {
           <Text view="p-20" weight="bold" tag="h2">
             Form order
           </Text>
-          <form
-            onSubmit={handleSubmitOrder}
-            className={styles.cart_details__form}
-          >
-            <Input
-              required
-              type="text"
-              value={String(cartStore.contactName)}
-              onChange={(e) => {
-                cartStore.setContactName(e);
-              }}
-              placeholder="Name"
-            />
-            <Input
-              required
-              type="email"
-              value={String(cartStore.contactEmail)}
-              onChange={(e) => {
-                cartStore.setContactEmail(e);
-              }}
-              placeholder="Email"
-            />
-            <CartMultiDropdown addressStore={cartStore.addressStore} />
-
-            <Button>Submit order</Button>
-          </form>
+          <ContactForm handleSubmitOrder={handleSubmitOrder} />
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        contentSlot={
+          <>
+          <div className={styles.modal__content}>
+            <Text view="title" weight="bold">
+              Благодарим за заказ, {cartStore.contactName}
+            </Text>
+            <ul className={styles.modal__list}>
+              {cartStore.products.map((product) => (
+                <li key={product.id}>
+                  <Text view="p-20">
+                    {product.quantity} x {product.title}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+            <Text view="p-20">
+              Наши менеджеры свяжутся с вами в ближайшее время по электронной
+              почте {cartStore.contactEmail}
+            </Text>
+          </div>
+          <RatingChoice />
+          </>
+        }
+      />
     </div>
   );
 };

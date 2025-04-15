@@ -8,6 +8,7 @@ import SkeletonCard from "@/components/Card/SkeletonCard";
 import ROUTES from "@/utils/routes";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
+import rootStore from "@/stores/RootStore/RootStore";
 
 type RelatedItemsProps = {
   related: {
@@ -60,8 +61,9 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
                   className={styles.catalog_products__card__button}
                   disabled={false}
                   loading={false}
-                  onClick={() => {
-                    console.log("Add to cart button clicked:", product);
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    rootStore.cart.addProduct(product)                                       
                   }}
                 >
                   Add to cart

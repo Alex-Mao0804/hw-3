@@ -5,12 +5,23 @@ import Button from "@/components/Button";
 import PreviewSwiper from "@/components/PreviewSwiper/PreviewSwiper";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
+import Modal from "@/components/Modal";
+import { useState } from "react";
+import QuicklyOrder from "@/components/QuicklyOrder";
 
 type ProductItemProps = {
   product: ProductEntity;
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // await cartStore.submitOrder(); // дождаться завершения
+    setIsModalOpen(true); // открыть модалку после
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={styles.product_item}>
       <div className={styles.product_item__image}>
@@ -31,20 +42,30 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           </Text>
 
           <div className={styles.product_item__actions}>
-            <Button className={styles.product_item__actions__button}>
+            <Button onClick={handleSubmitOrder} className={styles.product_item__actions__button}>
               Buy Now
             </Button>
             <Button
-                                disabled={rootStore.cart.checkProduct(product)}
-
-             onClick={() => {
-              rootStore.cart.addProduct(product)
-            }} className={styles.product_item__actions__button}>
+              disabled={rootStore.cart.checkProduct(product)}
+              onClick={() => {
+                rootStore.cart.addProduct(product);
+              }}
+              className={styles.product_item__actions__button}
+            >
               Add to Cart
             </Button>
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        contentSlot={
+          <div className={styles.modal}>
+            <QuicklyOrder product={product} />
+          </div>
+        }
+      />
     </div>
   );
 };

@@ -8,3 +8,8 @@ export const initialFilters: TFiltersApi = {
   price_min: null,
   price_max: null,
 };
+
+export const LOCAL_STORAGE_KEYS = {
+  CART_ITEMS: "cartItems",
+  CART_CONTACTS: "cart_contacts",
+};

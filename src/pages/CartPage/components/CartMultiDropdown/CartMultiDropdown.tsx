@@ -34,11 +34,12 @@ const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
         value={toJS(multiDropdownStore.value)}
         onChange={handleMultiDropdownChange}
         isMulti={false}
-        getTitle={multiDropdownStore.getTitle}
+        getTitle={(value) => multiDropdownStore.getTitle(value, "Enter address")}
         onSearchInput={(text) => {
           multiDropdownStore.onSearchInput(text);
         }}
         searchable = {false}
+        loading={addressStore.isLoading}
       />
     );
   },

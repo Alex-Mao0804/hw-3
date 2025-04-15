@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ProductPage.module.scss";
 import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
 import Text from "@/components/Text";
@@ -11,6 +11,7 @@ import { useLocalStore } from "@/utils/useLocalStore";
 import ItemStore from "@/stores/ItemStore";
 import Button from "@/components/Button";
 import ButtonBack from "@/components/ButtonBack";
+import Modal from "@/components/Modal";
 
 const ProductPage = observer(() => {
   const navigate = useNavigate();

@@ -6,7 +6,6 @@ import { TSuggestionApi } from "@/api/type/directionProduct/list";
 import { getDadataAddressApi } from "@/api/handlers/dadata/details";
 
 export default class AddressStore implements ILocalStore {
-  private _addressList: TSuggestionApi = { suggestions: [] };
   private _isLoading: boolean = false;
   private _multiDropdownStore: MultiDropdownStore;
   private _searchTimeout: NodeJS.Timeout | null = null;
@@ -71,7 +70,6 @@ export default class AddressStore implements ILocalStore {
 
   destroy() {
     this._multiDropdownStore.destroy();
-    this._addressList = { suggestions: [] };
     this._isLoading = false;
   }
 }

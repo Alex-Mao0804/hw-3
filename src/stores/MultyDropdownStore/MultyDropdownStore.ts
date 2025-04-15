@@ -58,6 +58,10 @@ export default class MultyDropdownStore implements ILocalStore {
     this._value = null;
   }
 
+  setValueString(value: string) {
+    this.setValue({ key: value, value: value });
+  }
+
   setValue(value: OptionEntity | OptionEntity[] | null) {
     if (Array.isArray(value)) {
       this._value = value[0] || null;

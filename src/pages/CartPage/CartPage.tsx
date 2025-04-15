@@ -9,14 +9,17 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "@/utils/routes";
 import ButtonBack from "@/components/ButtonBack";
 const CartPage = () => {
-const cartStore = rootStore.cart
-const navigate = useNavigate();
+  const cartStore = rootStore.cart;
+  const navigate = useNavigate();
   return (
     <div className={styles.cart_page}>
-            
       <div className={styles.cart_page__header}>
-      <ButtonBack />
-        <Text className={styles.cart_page__header__title} view="title" weight="bold">
+        <ButtonBack />
+        <Text
+          className={styles.cart_page__header__title}
+          view="title"
+          weight="bold"
+        >
           Cart
         </Text>
       </div>
@@ -26,20 +29,25 @@ const navigate = useNavigate();
             <Text view="title" weight="bold">
               Cart is empty
             </Text>
-            <Button className={styles.cart_page__empty__button} onClick={() => navigate(ROUTES.CATALOG)}>Go to catalog</Button>
+            <Button
+              className={styles.cart_page__empty__button}
+              onClick={() => navigate(ROUTES.CATALOG)}
+            >
+              Go to catalog
+            </Button>
           </div>
         ) : (
-          <CartList products={cartStore.products} handleGetProductQuantity={cartStore.getProductQuantity} handleSetProductQuantity={cartStore.setProductQuantity} handleRemoveProduct={cartStore.removeProduct} />
+          <CartList
+            products={cartStore.products}
+            handleGetProductQuantity={cartStore.getProductQuantity}
+            handleSetProductQuantity={cartStore.setProductQuantity}
+            handleRemoveProduct={cartStore.removeProduct}
+          />
         )}
-                <CartDetails  />
-{/* 
-        <CartDetails total={cartStore.totalPrice} count={cartStore.products.length} contactName={cartStore.contactName} contactEmail={cartStore.contactEmail} contactAddress={cartStore.contactAddress} handleSetContactName={cartStore.setContactName} handleSetContactEmail={cartStore.setContactEmail} handleSetContactAddress={cartStore.setContactAddress} /> */}
+        <CartDetails />
       </div>
     </div>
   );
 };
 
 export default observer(CartPage);
-
-
-

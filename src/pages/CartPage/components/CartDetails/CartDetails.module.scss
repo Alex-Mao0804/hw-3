@@ -49,9 +49,18 @@
     height: 100%;
   }
 
-  &__form {
+
+}
+
+.modal {
+  &__content {
     display: flex;
     flex-direction: column;
     gap: vars.$space-m;
+    
+  }
+
+  &__list {
+    border-bottom: 1px solid vars.$color-accent;
   }
 }

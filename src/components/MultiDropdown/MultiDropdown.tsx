@@ -6,6 +6,7 @@ import styles from "./MultiDropdown.module.scss";
 import Text from "@/components/Text";
 import { OptionEntity } from "@/utils/types";
 import { extractOptionValue } from "@/utils/extractOption";
+import Loader from "../Loader";
 
 type MultiDropdownProps = {
   className?: string;
@@ -17,6 +18,7 @@ type MultiDropdownProps = {
   isMulti?: boolean;
   onSearchInput?: (value: string) => void;
   searchable?: boolean;
+  loading?: boolean;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -29,6 +31,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   isMulti = false,
   onSearchInput,
   searchable = true,
+  loading = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -106,7 +109,11 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         placeholder={getTitle(value)}
         disabled={disabled}
         onFocus={() => setIsOpen(true)}
-        afterSlot={<ArrowDownIcon className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />}
+        afterSlot={!loading ? 
+        <ArrowDownIcon className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />
+        :
+        <Loader size="s" />
+      }
       />
       {isOpen && (
         <ul className={styles.dropdown_options}>

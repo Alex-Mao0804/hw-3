@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
+    "@number-flow/react": "^0.5.9",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "mobx": "^6.13.7",
