@@ -1,7 +1,5 @@
 import styles from "./UserPage.module.scss";
 import { observer } from "mobx-react-lite";
-import ButtonBack from "@/components/ButtonBack";
-import Text from "@/components/Text";
 import UserInfo from "./components/UserInfo";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -11,6 +9,7 @@ import ROUTES from "@/utils/routes";
 import { useNavigate } from "react-router-dom";
 import UserSettings from "./components/UserSettings";
 import HeaderWithArrow from "@components/HeaderWithArrow";
+import UserHistory from "./components/UserHistory";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,7 +57,8 @@ const UserPage = () => {
     <div className={styles.user_page}>
       <div className={styles.content}>
         <CustomTabPanel value={value} index={1}>
-          <div>История покупок</div>
+        <HeaderWithArrow title="История покупок" />
+          <UserHistory />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <HeaderWithArrow title="Настройки" />

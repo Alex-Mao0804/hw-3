@@ -53,11 +53,10 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [count, setCount] = useState(1);
   const [discount, setDiscount] = useState(0);
-  const productId = product.id;
   const cartStore = rootStore.cart;
   const handleNext = async () => {
     if (activeStep === steps.length - 1) {
-      await   cartStore.submitQuickOrder(productId, count, 0);
+      await   cartStore.submitQuickOrder(product, count, discount);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };

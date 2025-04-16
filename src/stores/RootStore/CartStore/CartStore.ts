@@ -1,7 +1,8 @@
 import { getProduct } from "@/api/handlers/directionProduct/item";
+import { mockSendOrder } from "@/api/handlers/directionOrder/details";
 import AddressStore from "@/stores/AddressStore";
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
-import { ProductEntity } from "@types";
+import { ProductEntity, ProductEntityWithQuantity } from "@types";
 import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction, toJS } from "mobx";
 
 
@@ -10,7 +11,6 @@ type TProductLocalStorage = {
   id: number;
   quantity: number;
 };
-type ProductEntityWithQuantity = ProductEntity & { quantity: number };
 export default class CartStore {
   private _products: ProductEntityWithQuantity[] = [];
   private _contactName: string = "";
@@ -27,6 +27,7 @@ export default class CartStore {
       totalProducts: computed,
       addProduct: action,
       removeProduct: action,
+      addProductsWithQuantities: action.bound,
     });
 
     this._addressStore = new AddressStore();
@@ -43,7 +44,6 @@ export default class CartStore {
       () => this.totalProducts,
       total => {
         this.saveItemIdToLocalStorage();
-        console.log("Корзина изменилась, всего товаров:", total);
       }
     );
 
@@ -88,28 +88,50 @@ export default class CartStore {
   submitOrder(): Promise<void> {
     this._loading = true;
   
-    return new Promise((resolve) => {
-      setTimeout(() => {
+    const orderItems = this._products.map((product) => ({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      count: product.quantity,
+    }));
+  
+    return mockSendOrder(this._contactEmail, this._contactAddress, orderItems)
+      .then((order) => {
         runInAction(() => {
-          this.resetCart(); 
+          this.resetCart();
           this._loading = false;
         });
-        resolve();
-      }, 2000);
-    });
+      })
+      .catch((error) => {
+        runInAction(() => {
+          this._loading = false;
+        });
+      });
   }
 
-  submitQuickOrder(productId: number, quantity: number, discount: number): Promise<void> {
+
+  submitQuickOrder(product: ProductEntity, quantity: number, discount: number): Promise<void> {
     this._loading = true;
   
-    return new Promise((resolve) => {
-      setTimeout(() => {
+    const quickOrderItem = {
+      id: product.id,
+      name: product.title,
+      price: product.price * (1 - discount/100),
+      count: quantity,
+    };
+  
+    return mockSendOrder(this._contactEmail, this._contactAddress, [quickOrderItem])
+      .then((order) => {
         runInAction(() => {
           this._loading = false;
         });
-        resolve();
-      }, 2000);
-    });
+      })
+      .catch((error) => {
+        console.error("Ошибка отправки быстрого заказа:", error);
+        runInAction(() => {
+          this._loading = false;
+        });
+      });
   }
   get products() {
     return this._products;
@@ -169,10 +191,18 @@ export default class CartStore {
         this._contactName = name || "";
         this._contactEmail = email || "";
         this._addressStore.multiDropdownStore.setValueString(address || "")
+        this._contactAddress = address || ""; // <--- ДОБАВЬ ЭТО
+
       });
     } catch (e) {
       console.error("Ошибка при загрузке контактов из localStorage:", e);
     }
+  }
+
+  get totalQuantity() {
+    return this._products.reduce((acc, product) => {
+      return acc + product.quantity;
+    }, 0);
   }
 
   setContactName(value: string) {
@@ -212,6 +242,19 @@ export default class CartStore {
       this.saveItemIdToLocalStorage(); 
     }
   };
+
+  addProductsWithQuantities(items: ProductEntityWithQuantity[]) {    
+    items.forEach((item) => {
+      const existingProduct = this._products.find(
+        (product) => product.id === item.id
+      );
+      if (!existingProduct) {
+        this._products.push({ ...item });
+      } else {
+        existingProduct.quantity += item.quantity;
+      }
+    });
+  }
 
   checkProduct(item: ProductEntity) {
     const existingProduct = this._products.find(

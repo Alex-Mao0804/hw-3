@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-// import rootStore from "@/stores/RootStore/RootStore";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
 import CustomSnackbar from "@/components/CustomSnackbar/CustomSnackbar";
 import CartStore from "@/stores/RootStore/CartStore";
 const useCartNotifications = (cartProductsCount: CartStore["totalProducts"]) => {
-	// const cartProductsCount = rootStore.cart.products.length;
 	const [cartProductsCountState, setCartProductsCountState] = useState(cartProductsCount);
 
 	useEffect(() => {

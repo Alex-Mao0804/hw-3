@@ -16,9 +16,9 @@ import ProtectedRoute from "@components/protected-route/ProtectedRoute";
 import UserPage from "./pages/UserPage";
 
 const App = () => {
-  const { products} = rootStore.cart;
+  const { totalQuantity} = rootStore.cart;
   useQueryParamsStoreInit();
-  useCartNotifications(products.length);
+  useCartNotifications(totalQuantity);
   const location = useLocation();
   const background = location.state?.background;
   return (

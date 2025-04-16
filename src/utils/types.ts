@@ -19,6 +19,9 @@ export type CategoryEntity = {
   updatedAt: string;
 };
 
+export type ProductEntityWithQuantity = ProductEntity & { quantity: number };
+
+
 export type OptionEntity<K = string, V = string> = {
   value: K;
   key: V;

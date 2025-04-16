@@ -1,0 +1,50 @@
+import { autorun, makeAutoObservable, reaction, runInAction } from "mobx";
+import { ILocalStore } from "@/utils/useLocalStore";
+import { TOrderByEmailResponse, TOrderResponse } from "@/api/type/directionSendOrder/list";
+import rootStore from "../RootStore";
+import { mockGetOrdersByEmail } from "@/api/handlers/directionOrder/details";
+
+export default class HistoryOrderStore implements ILocalStore {
+  private _isLoading: boolean = false;
+  private _orders: TOrderByEmailResponse[] = [];
+
+
+  constructor () {
+    makeAutoObservable(this);
+
+    autorun(() => {
+      if (rootStore.user.isAuth) {
+        this.fetchOrders();
+      }
+    });
+  }
+  async fetchOrders() {
+    const email = rootStore.user.user?.email;
+    if (email) {
+      runInAction(() => {
+        this._isLoading = true;
+      });
+      const res = await mockGetOrdersByEmail(email);      
+      runInAction(() => {
+        this._orders = res.map(order => ({
+          ...order,
+          items: order.items.map(item => ({ ...item })),
+        }));
+        this._isLoading = false;
+      });
+    }
+  }
+
+  get orders() {
+    return this._orders;
+  }
+
+  get isLoading() {
+    return this._isLoading;
+  }
+
+  destroy(): void {
+    this._isLoading = false;
+  }
+
+}

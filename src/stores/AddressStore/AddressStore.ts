@@ -2,7 +2,6 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { getCategories } from "@/api/handlers/directionCategory/details";
 import { ILocalStore } from "@/utils/useLocalStore";
 import MultiDropdownStore from "@/stores/MultyDropdownStore";
-import { TSuggestionApi } from "@/api/type/directionProduct/list";
 import { getDadataAddressApi } from "@/api/handlers/dadata/details";
 
 export default class AddressStore implements ILocalStore {
@@ -23,14 +22,14 @@ export default class AddressStore implements ILocalStore {
 
         if (value.length < 3) {
           runInAction(() => {
-            this._multiDropdownStore.setOptions([]); // очищаем, если мало символов
+            this._multiDropdownStore.setOptions([]); 
           });
           return;
         }
 
         this._searchTimeout = setTimeout(() => {
           this.fetchAddressList();
-        }, 400); // задержка в 400 мс
+        }, 400); 
       },
     );   
   }
