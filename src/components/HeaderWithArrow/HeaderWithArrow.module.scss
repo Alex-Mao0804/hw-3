@@ -1,0 +1,9 @@
+@use '@variables' as vars;
+
+.header {
+  display: flex;
+  align-items: center;
+  &__title {
+    margin: auto;
+  }
+}

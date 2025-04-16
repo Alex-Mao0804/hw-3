@@ -110,7 +110,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         disabled={disabled}
         onFocus={() => setIsOpen(true)}
         afterSlot={!loading ? 
-        <ArrowDownIcon className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />
+        <ArrowDownIcon onClick={() => setIsOpen(!isOpen)} className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />
         :
         <Loader size="s" />
       }

@@ -8,21 +8,14 @@ import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "@/utils/routes";
 import ButtonBack from "@/components/ButtonBack";
+import HeaderWithArrow from "@/components/HeaderWithArrow";
 const CartPage = () => {
   const cartStore = rootStore.cart;
   const navigate = useNavigate();
   return (
     <div className={styles.cart_page}>
-      <div className={styles.cart_page__header}>
-        <ButtonBack />
-        <Text
-          className={styles.cart_page__header__title}
-          view="title"
-          weight="bold"
-        >
-          Cart
-        </Text>
-      </div>
+        <HeaderWithArrow title="Корзина" />
+
       <div className={styles.cart_page__content}>
         {cartStore.products.length === 0 ? (
           <div className={styles.cart_page__empty}>

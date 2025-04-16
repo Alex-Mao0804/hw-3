@@ -1,0 +1,31 @@
+@use "@variables" as vars;
+
+.user_page {
+  display: flex;
+  flex-direction: column;
+  @include vars.center-container;
+}
+
+.content {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: vars.$space-m;
+  &__menu {
+    width: 100%;
+    position: sticky;  
+    top: calc(vars.$header-height + 20px);
+    height: fit-content;
+  }
+}
+
+.tab_panel {
+  width: 100%;
+}
+
+@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
+  .user_page {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}

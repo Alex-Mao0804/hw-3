@@ -21,6 +21,11 @@
     }
 
     &_group {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &_ciffer {
       width: 38px;
       height: 42px;
       padding: 0;

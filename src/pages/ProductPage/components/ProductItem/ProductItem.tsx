@@ -16,8 +16,7 @@ type ProductItemProps = {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    // await cartStore.submitOrder(); // дождаться завершения
-    setIsModalOpen(true); // открыть модалку после
+    setIsModalOpen(true);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,14 +57,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         </div>
       </div>
       <Modal
+        className={styles.modal}
         open={isModalOpen}
-        setOpen={setIsModalOpen}
-        contentSlot={
-          <div className={styles.modal}>
+        setOpen={setIsModalOpen}>
+          <div className={styles.modal__content}>
             <QuicklyOrder product={product} />
           </div>
-        }
-      />
+        
+        </Modal>
     </div>
   );
 };

@@ -5,6 +5,10 @@
   align-items: center;
   gap: vars.$space-xl;
 
+  &__user {
+    cursor: pointer;
+  }
+
   &__cart {
     position: relative;
 

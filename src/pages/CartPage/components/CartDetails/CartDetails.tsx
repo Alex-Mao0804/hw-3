@@ -60,9 +60,10 @@ const CartDetails = () => {
         </div>
       </div>
       <Modal
+        className={styles.modal}
         open={isModalOpen}
         setOpen={setIsModalOpen}
-        contentSlot={
+        >
           <>
           <div className={styles.modal__content}>
             <Text view="title" weight="bold">
@@ -84,8 +85,8 @@ const CartDetails = () => {
           </div>
           <RatingChoice />
           </>
-        }
-      />
+        
+        </Modal>
     </div>
   );
 };

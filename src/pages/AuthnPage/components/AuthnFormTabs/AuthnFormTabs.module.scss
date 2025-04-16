@@ -1,0 +1,15 @@
+@use '@variables' as vars;
+
+.container {
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+
+  &__tabs {
+    margin: 30px 45px 38px;
+
+  }
+}
+
+.tabs {
+}
