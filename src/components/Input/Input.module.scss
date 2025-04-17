@@ -8,30 +8,30 @@
     box-sizing: border-box;
     width: 100%;
     border: 1px solid vars.$button-primary-text;
+    background: vars.$button-primary-text;
     @include vars.respond-to(tablet) {
-      padding: vars.$space-s vars.$space-s;
       height: vars.$input_button_height-tablet;
+      padding: vars.$space-s vars.$space-s;
     }
     @include vars.respond-to(desktop) {
-      padding: vars.$space-m vars.$space-xs;
       height: vars.$input_button_height;
+      padding: vars.$space-m vars.$space-xs;
     }
-    background: vars.$button-primary-text;
   }
   &_field {
     flex: 1;
+    width: 100%;
     border: none;
     outline: none;
     color: vars.$color-primary;
     font-weight: vars.$font-weight-normal;
+    line-height: 125%;
     @include vars.respond-to(tablet) {
       font-size: vars.$font-size-p-14;
     }
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-p-16;
     }
-    line-height: 125%;
-    width: 100%;
   }
   &_field:disabled {
     background: none;

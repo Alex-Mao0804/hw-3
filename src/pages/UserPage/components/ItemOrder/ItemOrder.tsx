@@ -70,4 +70,6 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
   );
 };
 
-export default observer(ItemOrder);
+const ItemOrderObserver = observer(ItemOrder);
+
+export default ItemOrderObserver;

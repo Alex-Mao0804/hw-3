@@ -91,4 +91,5 @@ const CartDetails = () => {
   );
 };
 
-export default observer(CartDetails);
+const ObserverCartDetails = observer(CartDetails);
+export default ObserverCartDetails;

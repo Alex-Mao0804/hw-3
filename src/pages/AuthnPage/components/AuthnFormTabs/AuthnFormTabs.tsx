@@ -73,7 +73,7 @@ const AuthnFormTabs=() => {
 			...prev,
 			[field]: value,
 		}))
-	}, [])
+	}, [resetError])
 	return (
 		<div className={clsx(styles.container)}>
 			<div className={clsx(styles.container__tabs)}>
@@ -116,4 +116,6 @@ const AuthnFormTabs=() => {
 	)
 }
 
-export default observer(AuthnFormTabs);
+const AuthnFormTabsObserver = observer(AuthnFormTabs)
+
+export default AuthnFormTabsObserver

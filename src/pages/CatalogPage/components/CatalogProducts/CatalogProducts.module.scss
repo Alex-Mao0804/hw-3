@@ -5,12 +5,12 @@
   flex-direction: column;
   justify-content: center;
   @include vars.respond-to(tablet) {
-    margin-top: vars.$space-xl;
     gap: vars.$space-xl;
+    margin-top: vars.$space-xl;
   }
   @include vars.respond-to(desktop) {
-    margin-top: vars.$space-xxl;
     gap: 35px;
+    margin-top: vars.$space-xxl;
   }
 
   &__title {
@@ -25,10 +25,10 @@
     }
 
     &__text {
+      line-height: 112%;
       @include vars.respond-to(desktop) {
         font-size: 32px;
       }
-      line-height: 112%;
     }
   }
 

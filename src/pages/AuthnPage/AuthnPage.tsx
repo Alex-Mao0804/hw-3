@@ -43,4 +43,6 @@ const AuthnPage = () => {
 	)
 }
 
-export default observer(AuthnPage)
+const 	AuthnPageWithObserver = observer(AuthnPage)
+
+export default AuthnPageWithObserver

@@ -11,47 +11,47 @@
   }
 
   &.title {
+    line-height: 109%;
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-title;
     }
-    line-height: 109%;
   }
 
   &.button {
+    line-height: 100%;
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-p-18;
     }
-    line-height: 100%;
   }
 
   &.p-20 {
+    line-height: 120%;
     @include vars.respond-to(tablet) {
       font-size: vars.$font-size-p-16;
     }
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-p-20;
     }
-    line-height: 120%;
   }
 
   &.p-18 {
+    line-height: 122%;
     @include vars.respond-to(tablet) {
       font-size: vars.$font-size-p-14;
     }
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-p-18;
     }
-    line-height: 122%;
   }
 
   &.p-16 {
+    line-height: 125%;
     @include vars.respond-to(tablet) {
       font-size: vars.$font-size-p-14;
     }
     @include vars.respond-to(desktop) {
       font-size: vars.$font-size-p-16;
     }
-    line-height: 125%;
   }
 
   &.p-14 {

@@ -70,4 +70,5 @@ const CartList = ({ products, handleSetProductQuantity, handleGetProductQuantity
   );
 };
 
-export default observer(CartList);
+const CartListWithObserver = observer(CartList);
+export default CartListWithObserver;

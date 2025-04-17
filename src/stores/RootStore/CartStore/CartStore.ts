@@ -319,6 +319,8 @@ export default class CartStore {
       runInAction(() => {
         this.addProduct(product);
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error("Ошибка загрузки товара:", error);
+    }
   }
 }

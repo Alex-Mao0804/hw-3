@@ -96,4 +96,5 @@ const UserPage = () => {
   );
 };
 
-export default observer(UserPage);
+const UserPageObserver = observer(UserPage);
+export default UserPageObserver;

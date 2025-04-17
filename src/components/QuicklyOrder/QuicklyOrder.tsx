@@ -152,4 +152,5 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
   );
 };
 
-export default observer(QuicklyOrder);
+const QuicklyOrderObserver = observer(QuicklyOrder);
+export default QuicklyOrderObserver

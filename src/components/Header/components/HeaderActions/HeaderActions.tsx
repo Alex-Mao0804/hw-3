@@ -50,4 +50,5 @@ const HeaderActions = () => {
   );
 };
 
-export default observer(HeaderActions);
+const HeaderActionsObserver = observer(HeaderActions);
+export default HeaderActionsObserver;

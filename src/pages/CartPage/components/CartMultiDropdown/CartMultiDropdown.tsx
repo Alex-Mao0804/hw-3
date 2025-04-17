@@ -22,7 +22,7 @@ const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
             multiDropdownStore.setValue(value);
         });
       },
-      [addressStore],
+      [ multiDropdownStore],
     );
 
     return (

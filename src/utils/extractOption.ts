@@ -11,7 +11,7 @@ export const extractOptionKey = (
 
 export const extractOptionValue = (
   value: OptionEntity | OptionEntity[] | null,
-): String => {
+): string => {
   if (Array.isArray(value)) {
     return value.length > 0 ? value[0].value : '';
   }

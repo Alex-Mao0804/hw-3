@@ -1,6 +1,6 @@
 import { TOrderByEmailResponse, TOrderItem, TOrderResponse } from "@/api/type/directionSendOrder/list";
 import { getProduct } from "@/api/handlers/directionProduct/item";
-import { ProductEntity, ProductEntityWithQuantity } from "@/utils/types";
+import { ProductEntityWithQuantity } from "@/utils/types";
 
 const LOCAL_STORAGE_KEY = 'mockOrders';
 

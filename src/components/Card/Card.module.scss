@@ -7,6 +7,8 @@
   overflow: hidden;
   font-family: "Roboto", sans-serif;
   background: vars.$color-card-bg;
+
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   @include vars.respond-to(tablet) {
     width: vars.$card-width-tablet;
@@ -16,8 +18,6 @@
     width: vars.$card-width;
     height: vars.$card-height;  
   }
-
-  transition: all 0.2s ease-in-out;
   &__subtitle {
 
     @include vars.respond-to(tablet) {
@@ -32,6 +32,7 @@
   }
 
   &__image {
+    object-fit: cover;
     @include vars.respond-to(tablet) {
       width: vars.$card-width-tablet;
       aspect-ratio: 1 / 1;
@@ -40,20 +41,19 @@
       width: vars.$card-width;
       aspect-ratio: 1 / 1;
     }
-    object-fit: cover;
   }
   &__content {
-    width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: -webkit-fill-available;
+    background: vars.$color-bg;
     @include vars.respond-to(tablet) {
       padding: vars.$space-l vars.$space-xxs;
     }
     @include vars.respond-to(desktop) {
       padding: vars.$space-xl vars.$space-xs;
     }
-    background: vars.$color-bg;
   }
   &__text {
     display: flex;
@@ -77,15 +77,15 @@
   &__footer {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: end;
+    align-items: center;
 
   }
   &__footer__action {
     display: flex;
     justify-content: end;
-    width: 100%;
     gap: 20px;
+    width: 100%;
   }
 }
 

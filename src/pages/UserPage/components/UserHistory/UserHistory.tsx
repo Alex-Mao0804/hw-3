@@ -61,4 +61,6 @@ const UserHistory = () => {
   );
 };
 
-export default observer(UserHistory);
+const ObservedUserHistory = observer(UserHistory);
+
+export default ObservedUserHistory;

@@ -42,4 +42,6 @@ const CartPage = () => {
   );
 };
 
-export default observer(CartPage);
+
+const ObservedCartPage = observer(CartPage);
+export default ObservedCartPage;

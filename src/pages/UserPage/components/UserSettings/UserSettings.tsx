@@ -25,7 +25,7 @@ const UserSettings = () => {
         ...prev,
         [field]: value,
       }))
-    }, [])
+    }, [resetError]);
 
 
   const [repeatPassword, setRepeatPassword] = useState<string>("");
@@ -43,9 +43,8 @@ const UserSettings = () => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const filteredForm = Object.fromEntries(
-      Object.entries(form).filter(([_, value]) => value.trim() !== '')
+      Object.entries(form).filter(([, value]) => value.trim() !== '')
     ) as Partial<TCreateUserRequestApi>;
     updateProfile(filteredForm);
   };
@@ -158,4 +157,6 @@ const UserSettings = () => {
   );
 };
 
-export default observer(UserSettings);
+const ObservedUserSettings = observer(UserSettings);
+
+export default ObservedUserSettings;

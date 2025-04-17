@@ -25,4 +25,6 @@ const ProtectedRoute = ({ onlyUnAuth = false, children }: ProtectedRouteProps) =
   return children;
 };
 
-export default observer(ProtectedRoute);
+const   ProtectedRouteObserver = observer(ProtectedRoute);
+
+export default ProtectedRouteObserver;

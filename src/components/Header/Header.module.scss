@@ -1,18 +1,18 @@
 @use "@variables" as vars;
 
 .header {
-  width: 100%;
   position: fixed;
   z-index: 10;
   box-sizing: content-box;
+  width: 100%;
+  border-bottom: 2px solid #f3f3f3;
+  background-color: vars.$color-bg;
   @include vars.respond-to(tablet) {
     height: vars.$header-height-mobile;
   }
   @include vars.respond-to(desktop) {
     height: vars.$header-height;
   }
-  border-bottom: 2px solid #f3f3f3;
-  background-color: vars.$color-bg;
 
   &__container {
     display: flex;
@@ -23,12 +23,12 @@
     margin: 0 auto;
 
     @include vars.respond-to(desktop-large) {
-      padding-left: vars.$space-xl2;
-      padding-right: vars.$space-xl2;  
+      padding-right: vars.$space-xl2;
+      padding-left: vars.$space-xl2;  
     }
     @include vars.respond-to(mobile) {
-      padding-left: vars.$space-m;
-      padding-right: vars.$space-m;  
+      padding-right: vars.$space-m;
+      padding-left: vars.$space-m;  
     }
   }
 }

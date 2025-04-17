@@ -8,7 +8,7 @@ import theme from "@/styles/theme";
 import { ThemeProvider } from "@mui/material/styles";
 
 createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
+  <StrictMode>
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <SnackbarProvider
@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </ThemeProvider>,
 
-  // </StrictMode>,
+</StrictMode>,
 );

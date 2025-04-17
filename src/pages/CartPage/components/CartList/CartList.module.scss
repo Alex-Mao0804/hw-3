@@ -6,10 +6,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   @include vars.respond-to(tablet) {
-    gap: vars.$space-m
+    gap: vars.$space-m;
   }
   @include vars.respond-to(desktop) {
-    gap: vars.$space-xl2 
+    gap: vars.$space-xl2; 
   }
 
 
@@ -24,6 +24,7 @@
   height: auto;
 
   & img {
+    height: auto;
     @include vars.respond-to(mobile) {
       display: none;
     }
@@ -33,7 +34,6 @@
     @include vars.respond-to(desktop) {
       width: 250px;
     }
-    height: auto;
   }
   &__actions {
     width: 100px;

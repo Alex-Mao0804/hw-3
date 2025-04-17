@@ -50,4 +50,5 @@ const ContactForm = ({ handleSubmitOrder }: ContactFormProps) => {
   );
 };
 
-export default observer(ContactForm);
+const ContactFormObserver = observer(ContactForm);
+export default ContactFormObserver;

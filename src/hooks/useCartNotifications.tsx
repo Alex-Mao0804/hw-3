@@ -39,7 +39,7 @@ const useCartNotifications = (cartProductsCount: CartStore["totalProducts"]) => 
 		}
 
 		setCartProductsCountState(cartProductsCount);
-	}, [cartProductsCount]);
+	}, [cartProductsCount, cartProductsCountState]);
 };
 
 export default useCartNotifications;

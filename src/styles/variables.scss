@@ -45,11 +45,17 @@ $input_button_height: 52px;
 $input_button_height-tablet: 40px;
 
 @mixin center-container {
-  display: flex;
-  justify-content: center;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding-top: $header-height;
+  & {
+    display: flex;
+    justify-content: center;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: $header-height;
+  }
+
+  @media (max-width: calc($breakpoint-desktop + 40px)) {
+    @content;
+  }
 }
 
 $card-width: 360px;
@@ -104,4 +110,3 @@ $header-height-mobile: 65px;
 }
 
 $productImage-width: clamp(18.75rem, -9.375rem + 58.594vi, 37.5rem);
-// $productImage-width: 100%;

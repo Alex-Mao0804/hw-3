@@ -34,7 +34,8 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
       });
       setShowMessage(true);
     }
-  }, [user]);
+  }, [user, form, error]);  
+  
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -45,8 +46,7 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
     });
     setShowMessage(false);
   
-  }, [form.avatar, form.email, form.name]);
-
+  }, [form.avatar, form.email, form.name, form.password, repeatPassword]); 
   useEffect(() => {
     if (error) {
       setMessage({
@@ -95,4 +95,6 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
   );
 };
 
-export default observer(AlertMessage);
+const ObserveredAlertMessage = observer(AlertMessage);
+
+export default ObserveredAlertMessage;

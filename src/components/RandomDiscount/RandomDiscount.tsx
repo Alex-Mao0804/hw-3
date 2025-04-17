@@ -22,11 +22,11 @@ const RandomDiscount = ({ product,  count, discount, setDiscount }: RandomDiscou
   const MIN_DISCOUNT = 5;
   const MAX_DISCOUNT = 50;
   
-    let totalCost = (product.price * count) - product.price * count * discount / 100;
+    const totalCost = (product.price * count) - product.price * count * discount / 100;
   
     useEffect(() => {
       setDiscount(getRandomDiscount(MIN_DISCOUNT, MAX_DISCOUNT));
-    }, []);
+    }, [setDiscount]);
   
 
   return (
@@ -61,4 +61,6 @@ const RandomDiscount = ({ product,  count, discount, setDiscount }: RandomDiscou
   );
 };
 
-export default observer(RandomDiscount);
+const   RandomDiscountObserver = observer(RandomDiscount);
+
+export default RandomDiscountObserver

@@ -85,6 +85,7 @@ export default class UserStore {
       });
 
       await this.fetchProfile();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
         this._isAuthChecked = true;
@@ -109,6 +110,7 @@ export default class UserStore {
         this._requestStatus = RequestStatus.Success;
       });
       await this.login(email, password);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
         this._error = err?.response?.data?.message || "Registration failed";
@@ -149,6 +151,7 @@ export default class UserStore {
         this._user = user;
         this._isAuthenticated = true;
       });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       this._isAuthenticated = false;
       if (err?.response?.status === 401) {
@@ -181,6 +184,7 @@ export default class UserStore {
         this._user = user;
         this._requestStatus = RequestStatus.Success;
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
         this._error = err?.response?.data?.message || "Update failed";

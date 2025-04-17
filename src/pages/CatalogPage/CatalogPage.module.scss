@@ -1,17 +1,17 @@
 @use "@variables" as vars;
 
 .catalog_page {
-
-  @include vars.respond-to(desktop-large) {
-    padding-left: vars.$space-xl2;
-    padding-right: vars.$space-xl2;  
-  }
-  @include vars.respond-to(mobile) {
-    padding-left: vars.$space-m;
-    padding-right: vars.$space-m;  
-  }
   display: flex;
   flex-direction: column;
+
+  @include vars.respond-to(desktop-large) {
+    padding-right: vars.$space-xl2;
+    padding-left: vars.$space-xl2;  
+  }
+  @include vars.respond-to(mobile) {
+    padding-right: vars.$space-m;
+    padding-left: vars.$space-m;  
+  }
   @include vars.center-container;
   &__header {
     display: flex;
@@ -60,24 +60,24 @@
 
     &__filters {
       display: flex;
-      flex-direction: row;
+      flex-direction: row;      flex-wrap: wrap;
       justify-content: space-between;
       @include vars.respond-to(tablet) {
         gap: vars.$space-m;
       }
       @include vars.respond-to(desktop) {
         gap: vars.$space-xl;  
-      }      flex-wrap: wrap;
+      }
     }
 
     &__filters &__dropdown {
+      height: fit-content;
       @include vars.respond-to(tablet) {
         gap: vars.$space-m;
       }
       @include vars.respond-to(desktop) {
         width: 300px;
       }
-      height: fit-content;
     }
   
   }

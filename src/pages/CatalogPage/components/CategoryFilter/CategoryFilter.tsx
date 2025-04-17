@@ -30,7 +30,7 @@ const CategoryFilter: React.FC<ICategoryFilter> = observer(
           }
         });
       },
-      [filterStore, categoryStore],
+      [filterStore, categoryStore, multiDropdownStore],
     );
 
     return (
