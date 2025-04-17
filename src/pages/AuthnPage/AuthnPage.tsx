@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 import AuthnFormTabs from '@pages/AuthnPage/components/AuthnFormTabs/AuthnFormTabs'
 import { useLocation, useNavigate } from 'react-router'

@@ -2,7 +2,7 @@ import styles from "./UserPage.module.scss";
 import { observer } from "mobx-react-lite";
 import UserInfo from "./components/UserInfo";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import rootStore from "@/stores/RootStore";
 import ROUTES from "@/utils/routes";

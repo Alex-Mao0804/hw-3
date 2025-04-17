@@ -9,7 +9,7 @@ import SkeletonCard from "@/components/Card/SkeletonCard";
 import ROUTES from "@/utils/routes";
 import { observer } from "mobx-react-lite";
 import { initialFilters } from "@/utils/constants";
-import { runInAction, toJS } from "mobx";
+import { runInAction } from "mobx";
 import rootStore from "@/stores/RootStore/RootStore";
 
 type CatalogProductsProps = {

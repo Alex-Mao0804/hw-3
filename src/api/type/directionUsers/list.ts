@@ -1,4 +1,4 @@
-import { TProfileApi } from "../directionAuth/list";
+import { TProfileApi } from "@/api/type/directionAuth/list";
 
 export type TCreateUserRequestApi = Omit <TProfileApi, 'id' | 'role'>
 

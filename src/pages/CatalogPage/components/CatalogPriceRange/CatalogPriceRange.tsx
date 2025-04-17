@@ -24,7 +24,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           page: 1,
         });
       },
-      [filters, price_min, price_max], // зависимости, которые изменяются
+      [filters, price_min, price_max], 
     );
 
     const isDisabled =

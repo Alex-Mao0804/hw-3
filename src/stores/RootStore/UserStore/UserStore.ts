@@ -10,7 +10,6 @@ import { RequestStatus } from "@/utils/types";
 import { action, makeAutoObservable, runInAction } from "mobx";
 import Cookies from "js-cookie";
 import { COOKIE_KEYS } from "@/utils/constants";
-import { RootStore } from "../RootStore";
 
 
 export default class UserStore {

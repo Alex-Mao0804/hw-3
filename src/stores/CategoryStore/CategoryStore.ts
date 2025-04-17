@@ -1,5 +1,5 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
-import { CategoryEntity, OptionEntity } from "@/utils/types";
+import { CategoryEntity } from "@/utils/types";
 import ProductStore from "@/stores/ProductStore";
 import { getCategories } from "@/api/handlers/directionCategory/details";
 import { ILocalStore } from "@/utils/useLocalStore";

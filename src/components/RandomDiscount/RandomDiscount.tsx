@@ -1,7 +1,7 @@
 import NumberFlow from "@number-flow/react";
 import styles from "./RandomDiscount.module.scss";
 import Text from "@components/Text";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { ProductEntity } from "@/utils/types";
 

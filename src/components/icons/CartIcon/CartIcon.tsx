@@ -1,4 +1,4 @@
-import Icon, { IconProps } from "../Icon/Icon";
+import Icon, { IconProps } from "@/components/icons/Icon/Icon";
 
 const CartIcon = (props: IconProps) => {
   return (

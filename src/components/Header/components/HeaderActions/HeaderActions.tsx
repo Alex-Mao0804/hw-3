@@ -1,5 +1,5 @@
 import styles from "./HeaderActions.module.scss";
-import { To, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import UserIcon from "@/components/icons/UserIcon";
 import CartIcon from "@/components/icons/CartIcon";
 import ROUTES from "@routes";

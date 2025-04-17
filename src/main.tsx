@@ -5,20 +5,21 @@ import { BrowserRouter } from "react-router-dom";
 import "./config/configureMobX";
 import { SnackbarProvider } from "notistack";
 import theme from "@/styles/theme";
-import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from "@mui/material/styles";
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <ThemeProvider theme={theme}>
-
     <BrowserRouter>
-
-    					<SnackbarProvider maxSnack={3} anchorOrigin={{ vertical:  'bottom', horizontal: 'left' }} autoHideDuration={3000} >
-
-      <App />
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        autoHideDuration={3000}
+      >
+        <App />
       </SnackbarProvider>
     </BrowserRouter>
-    </ThemeProvider>
+  </ThemeProvider>,
 
   // </StrictMode>,
 );

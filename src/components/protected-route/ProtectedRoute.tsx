@@ -6,21 +6,19 @@ import { observer } from 'mobx-react-lite';
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
-  onlyUnAuth?: boolean; // если true — доступно только для неавторизованных
+  onlyUnAuth?: boolean; 
 };
 
 const ProtectedRoute = ({ onlyUnAuth = false, children }: ProtectedRouteProps) => {
   const location = useLocation();
-  const { isAuth, loading, isAuthChecked } = rootStore.user;
+  const { isAuth } = rootStore.user;
 
 
   if (isAuth && onlyUnAuth) {
-    // Пользователь авторизован, но страница только для неавторизованных (например, /login)
     return <Navigate to={ROUTES.USER} replace />;
   }
 
   if (!isAuth && !onlyUnAuth) {
-    // Пользователь не авторизован, но страница защищённая
     return <Navigate to={ROUTES.AUTHN} state={{ from: location }} replace />;
   }
 

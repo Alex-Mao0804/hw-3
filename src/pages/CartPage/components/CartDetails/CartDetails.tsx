@@ -16,8 +16,8 @@ const CartDetails = () => {
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    await cartStore.submitOrder(); // дождаться завершения
-    setIsModalOpen(true); // открыть модалку после
+    await cartStore.submitOrder(); 
+    setIsModalOpen(true); 
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);

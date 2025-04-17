@@ -1,4 +1,3 @@
-import { RequestStatus } from "@types";
 
 export type TFiltersApi = Partial<{
   title: string;

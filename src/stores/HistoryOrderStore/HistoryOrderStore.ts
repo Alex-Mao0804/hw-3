@@ -1,7 +1,7 @@
-import { autorun, makeAutoObservable, reaction, runInAction } from "mobx";
+import { autorun, makeAutoObservable, runInAction } from "mobx";
 import { ILocalStore } from "@/utils/useLocalStore";
-import { TOrderByEmailResponse, TOrderResponse } from "@/api/type/directionSendOrder/list";
-import rootStore from "../RootStore";
+import { TOrderByEmailResponse } from "@/api/type/directionSendOrder/list";
+import rootStore from "@stores/RootStore";
 import { mockGetOrdersByEmail } from "@/api/handlers/directionOrder/details";
 
 export default class HistoryOrderStore implements ILocalStore {

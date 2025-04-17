@@ -1,12 +1,11 @@
 import { observer } from "mobx-react-lite";
-import MultiDropdown from "@/components/MultiDropdown"; // твой компонент
+import MultiDropdown from "@/components/MultiDropdown"; 
 import { OptionEntity } from "@/utils/types";
 import styles from "./CartMultiDropdown.module.scss";
 
 import { runInAction, toJS } from "mobx";
 import { useCallback } from "react";
 import AddressStore from "@/stores/AddressStore";
-import { extractOptionValue } from "@/utils/extractOption";
 
 type ICartMultiDropdown = {
   addressStore: AddressStore;
@@ -20,7 +19,6 @@ const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
     const handleMultiDropdownChange = useCallback(
       (value: OptionEntity | OptionEntity[] | null) => {        
         runInAction(() => {
-            const search = extractOptionValue(value);
             multiDropdownStore.setValue(value);
         });
       },

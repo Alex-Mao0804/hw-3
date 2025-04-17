@@ -1,5 +1,5 @@
-import LogoIcon from "../LogoIcon";
-import NameIcon from "../NameIcon";
+import LogoIcon from "@components/icons/LogoIcon";
+import NameIcon from "@components/icons/NameIcon";
 import styles from "./HeaderLogoIcon.module.scss";
 
 const HeaderLogoIcon = () => {

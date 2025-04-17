@@ -1,14 +1,14 @@
 import styles from "./UserSettings.module.scss";
 import Text from "@/components/Text";
 import Input from "@/components/Input";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
 import Button from "@/components/Button";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "@/pages/UserPage/components/AlertMessage";
 
 const UserSettings = () => {
   const { user, loading, resetError, updateProfile } = rootStore.user;

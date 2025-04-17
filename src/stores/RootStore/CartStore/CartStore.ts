@@ -1,10 +1,17 @@
-import { getProduct } from "@/api/handlers/directionProduct/item";
-import { mockSendOrder } from "@/api/handlers/directionOrder/details";
-import AddressStore from "@/stores/AddressStore";
-import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
+import { getProduct } from "@api/handlers/directionProduct/item";
+import { mockSendOrder } from "@api/handlers/directionOrder/details";
+import AddressStore from "@stores/AddressStore";
+import { LOCAL_STORAGE_KEYS } from "@utils/constants";
 import { ProductEntity, ProductEntityWithQuantity } from "@types";
-import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction, toJS } from "mobx";
-import { RootStore } from "../RootStore";
+import {
+  action,
+  computed,
+  makeAutoObservable,
+  observable,
+  reaction,
+  runInAction,
+} from "mobx";
+import { RootStore } from "@stores/RootStore/RootStore";
 
 type PrivateFields = "_products";
 type TProductLocalStorage = {
@@ -19,10 +26,8 @@ export default class CartStore {
   private _addressStore: AddressStore;
   private _loading: boolean = false;
 
-
-
   constructor(rootStore: RootStore) {
-    makeAutoObservable <CartStore, PrivateFields>(this, {
+    makeAutoObservable<CartStore, PrivateFields>(this, {
       _products: observable,
       products: computed,
       totalProducts: computed,
@@ -30,7 +35,7 @@ export default class CartStore {
       removeProduct: action,
       addProductsWithQuantities: action.bound,
     });
-    
+
     this._addressStore = new AddressStore();
 
     this.init();
@@ -38,21 +43,21 @@ export default class CartStore {
       () => [this._contactName, this._contactEmail, this._contactAddress],
       () => {
         this.saveContactsToLocalStorage();
-      }
+      },
     );
 
     reaction(
       () => this.totalProducts,
-      total => {
+      () => {
         this.saveItemIdToLocalStorage();
-      }
+      },
     );
 
     reaction(
       () => this.addressStore.multiDropdownStore.value,
       (search) => {
-        this._contactAddress = search?.value ?? "";        
-      }
+        this._contactAddress = search?.value ?? "";
+      },
     );
 
     reaction(
@@ -64,11 +69,11 @@ export default class CartStore {
             this._contactEmail = rootStore.user.user?.email || "";
           });
         }
-      }
+      },
     );
   }
 
-  init () {
+  init() {
     this.loadFromLocalStorage();
     this.loadContactsFromLocalStorage();
   }
@@ -87,54 +92,67 @@ export default class CartStore {
       email: this._contactEmail,
       address: this._contactAddress,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEYS.CART_CONTACTS, JSON.stringify(contacts));
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.CART_CONTACTS,
+      JSON.stringify(contacts),
+    );
   }
 
   saveItemIdToLocalStorage() {
-    const itemsToSave: TProductLocalStorage[] = this._products.map((product) => ({
-      id: product.id,
-      quantity: product.quantity,
-    }));
-    localStorage.setItem(LOCAL_STORAGE_KEYS.CART_ITEMS, JSON.stringify(itemsToSave));
+    const itemsToSave: TProductLocalStorage[] = this._products.map(
+      (product) => ({
+        id: product.id,
+        quantity: product.quantity,
+      }),
+    );
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.CART_ITEMS,
+      JSON.stringify(itemsToSave),
+    );
   }
 
   submitOrder(): Promise<void> {
     this._loading = true;
-  
+
     const orderItems = this._products.map((product) => ({
       id: product.id,
       name: product.title,
       price: product.price,
       count: product.quantity,
     }));
-  
+
     return mockSendOrder(this._contactEmail, this._contactAddress, orderItems)
-      .then((order) => {
+      .then(() => {
         runInAction(() => {
           this.resetCart();
           this._loading = false;
         });
       })
-      .catch((error) => {
+      .catch(() => {
         runInAction(() => {
           this._loading = false;
         });
       });
   }
 
-
-  submitQuickOrder(product: ProductEntity, quantity: number, discount: number): Promise<void> {
+  submitQuickOrder(
+    product: ProductEntity,
+    quantity: number,
+    discount: number,
+  ): Promise<void> {
     this._loading = true;
-  
+
     const quickOrderItem = {
       id: product.id,
       name: product.title,
-      price: product.price * (1 - discount/100),
+      price: product.price * (1 - discount / 100),
       count: quantity,
     };
-  
-    return mockSendOrder(this._contactEmail, this._contactAddress, [quickOrderItem])
-      .then((order) => {
+
+    return mockSendOrder(this._contactEmail, this._contactAddress, [
+      quickOrderItem,
+    ])
+      .then(() => {
         runInAction(() => {
           this._loading = false;
         });
@@ -169,26 +187,30 @@ export default class CartStore {
   async loadFromLocalStorage() {
     const data = localStorage.getItem(LOCAL_STORAGE_KEYS.CART_ITEMS);
     if (!data) return;
-  
+
     try {
       const items: TProductLocalStorage[] = JSON.parse(data);
-      
+
       const productPromises = items.map(async (item) => {
         try {
           const product = await getProduct(String(item.id));
-          return { ...product, quantity: item.quantity } as ProductEntityWithQuantity;
+          return {
+            ...product,
+            quantity: item.quantity,
+          } as ProductEntityWithQuantity;
         } catch (error) {
           console.error("Ошибка загрузки товара из localStorage:", error);
           return null;
         }
       });
-  
-      const products = (await Promise.all(productPromises)).filter(Boolean) as ProductEntityWithQuantity[];
-  
+
+      const products = (await Promise.all(productPromises)).filter(
+        Boolean,
+      ) as ProductEntityWithQuantity[];
+
       runInAction(() => {
         this._products = products;
       });
-  
     } catch (e) {
       console.error("Ошибка при загрузке товаров из localStorage:", e);
     }
@@ -197,15 +219,14 @@ export default class CartStore {
   loadContactsFromLocalStorage() {
     const data = localStorage.getItem(LOCAL_STORAGE_KEYS.CART_CONTACTS);
     if (!data) return;
-  
+
     try {
       const { name, email, address } = JSON.parse(data);
       runInAction(() => {
         this._contactName = name || "";
         this._contactEmail = email || "";
-        this._addressStore.multiDropdownStore.setValueString(address || "")
-        this._contactAddress = address || ""; // <--- ДОБАВЬ ЭТО
-
+        this._addressStore.multiDropdownStore.setValueString(address || "");
+        this._contactAddress = address || "";
       });
     } catch (e) {
       console.error("Ошибка при загрузке контактов из localStorage:", e);
@@ -232,7 +253,7 @@ export default class CartStore {
 
   addProduct(item: ProductEntity) {
     const existingProduct = this._products.find(
-      (product) => product.id === item.id
+      (product) => product.id === item.id,
     );
     if (!existingProduct) {
       this._products.push({ ...item, quantity: 1 });
@@ -241,25 +262,25 @@ export default class CartStore {
 
   getProductQuantity = (itemId: number) => {
     const existingProduct = this._products.find(
-      (product) => product.id === itemId
+      (product) => product.id === itemId,
     );
     return existingProduct ? existingProduct.quantity : 0;
   };
 
   setProductQuantity = (itemId: number, quantity: number) => {
     const existingProduct = this._products.find(
-      (product) => product.id === itemId
+      (product) => product.id === itemId,
     );
     if (existingProduct) {
       existingProduct.quantity = quantity;
-      this.saveItemIdToLocalStorage(); 
+      this.saveItemIdToLocalStorage();
     }
   };
 
-  addProductsWithQuantities(items: ProductEntityWithQuantity[]) {    
+  addProductsWithQuantities(items: ProductEntityWithQuantity[]) {
     items.forEach((item) => {
       const existingProduct = this._products.find(
-        (product) => product.id === item.id
+        (product) => product.id === item.id,
       );
       if (!existingProduct) {
         this._products.push({ ...item });
@@ -271,18 +292,17 @@ export default class CartStore {
 
   checkProduct(item: ProductEntity) {
     const existingProduct = this._products.find(
-      (product) => product.id === item.id
+      (product) => product.id === item.id,
     );
     if (!existingProduct) {
       return false;
     }
     return true;
   }
-  
 
   removeProduct = (id: number) => {
     this._products = this._products.filter((product) => product.id !== id);
-  }
+  };
   get totalPrice() {
     return this._products.reduce((acc, product) => {
       return acc + product.price * product.quantity;
@@ -293,15 +313,12 @@ export default class CartStore {
     this._products = [];
   }
 
-    async fetchItem(id: string) {
-  
-      try {
-        const product = await getProduct(id);
-        runInAction(() => {
-          this.addProduct(product);
-        });
-      } catch (error) {
-      } 
-      
-    }
+  async fetchItem(id: string) {
+    try {
+      const product = await getProduct(id);
+      runInAction(() => {
+        this.addProduct(product);
+      });
+    } catch (error) {}
+  }
 }

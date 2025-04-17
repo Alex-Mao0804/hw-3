@@ -1,7 +1,7 @@
 import { ProductEntity } from "@/utils/types";
 import { API_ROUTES } from "@/api/config/apiRoutes";
 import api from "@/api/config/axiosInstance";
-import { TFiltersApi } from "../../type/directionProduct/list";
+import { TFiltersApi } from "@/api/type/directionProduct/list";
 
 export const getProducts = async (
   filters: TFiltersApi,

@@ -1,6 +1,6 @@
-import CartStore from "./CartStore";
-import QueryParamsStore from "./QueryParamsStore";
-import UserStore from "./UserStore";
+import CartStore from "@stores/RootStore/CartStore";
+import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
+import UserStore from "@stores/RootStore/UserStore";
 
 class RootStore {
   readonly query: QueryParamsStore;

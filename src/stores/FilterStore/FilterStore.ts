@@ -4,7 +4,7 @@ import QueryParamsStore from "@/stores/RootStore/QueryParamsStore";
 import QueryFilterConnector from "@/stores/QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
 import { TFiltersApi } from "@/api/type/directionProduct/list";
-import rootStore from "../RootStore";
+import rootStore from "@/stores/RootStore";
 import { ILocalStore } from "@/utils/useLocalStore";
 
 export default class FilterStore implements ILocalStore {

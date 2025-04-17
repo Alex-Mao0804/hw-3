@@ -6,7 +6,7 @@ import "swiper/css/scrollbar";
 import { Mousewheel } from "swiper/modules";
 import clsx from "clsx";
 import styles from "./PreviewSwiper.module.scss";
-import ArrowSideIcon from "../icons/ArrowSideIcon";
+import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
 import { ProductEntity } from "@/utils/types";
 import { observer } from "mobx-react-lite";
 

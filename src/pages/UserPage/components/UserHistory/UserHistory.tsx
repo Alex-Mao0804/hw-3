@@ -2,13 +2,13 @@ import { observer } from "mobx-react-lite";
 import styles from "./UserHistory.module.scss";
 import HistoryOrderStore from "@/stores/HistoryOrderStore";
 import { useLocalStore } from "@/utils/useLocalStore";
-import ItemOrder from "../ItemOrder";
+import ItemOrder from "@pages/UserPage/components/ItemOrder";
 import Text from "@/components/Text";
 import Loader from "@/components/Loader";
-import SkeletonItemOrder from "../ItemOrder/SkeletonItemOrder";
+import SkeletonItemOrder from "@pages/UserPage/components/ItemOrder/SkeletonItemOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
-import ROUTES from "@/utils/routes";
+import ROUTES from "@routes";
 const UserHistory = () => {
   const historyOrderStore = useLocalStore(() => new HistoryOrderStore());
   const navigate = useNavigate();

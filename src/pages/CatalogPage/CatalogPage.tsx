@@ -10,7 +10,7 @@ import Text from "@components/Text";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocalStore } from "@utils/useLocalStore";
 import ProductStore from "@stores/ProductStore/ProductStore";
-import CategoryFilter from "./components/CategoryFilter";
+import CategoryFilter from "@pages/CatalogPage/components/CategoryFilter";
 
 const CatalogPage = observer(() => {
   const navigate = useNavigate();
