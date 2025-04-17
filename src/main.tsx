@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")!).render(
 
     <BrowserRouter>
 
-    					<SnackbarProvider maxSnack={3} anchorOrigin={{ vertical:  window.innerWidth < 1021 ? 'top' : 'bottom', horizontal: 'left' }} autoHideDuration={3000} >
+    					<SnackbarProvider maxSnack={3} anchorOrigin={{ vertical:  'bottom', horizontal: 'left' }} autoHideDuration={3000} >
 
       <App />
       </SnackbarProvider>

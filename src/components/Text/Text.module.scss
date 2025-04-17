@@ -11,27 +11,46 @@
   }
 
   &.title {
-    font-size: vars.$font-size-title;
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-title;
+    }
     line-height: 109%;
   }
 
   &.button {
-    font-size: vars.$font-size-p-18;
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-p-18;
+    }
     line-height: 100%;
   }
 
   &.p-20 {
-    font-size: vars.$font-size-p-20;
+    @include vars.respond-to(tablet) {
+      font-size: vars.$font-size-p-16;
+    }
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-p-20;
+    }
     line-height: 120%;
   }
 
   &.p-18 {
-    font-size: vars.$font-size-p-18;
+    @include vars.respond-to(tablet) {
+      font-size: vars.$font-size-p-14;
+    }
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-p-18;
+    }
     line-height: 122%;
   }
 
   &.p-16 {
-    font-size: vars.$font-size-p-16;
+    @include vars.respond-to(tablet) {
+      font-size: vars.$font-size-p-14;
+    }
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-p-16;
+    }
     line-height: 125%;
   }
 

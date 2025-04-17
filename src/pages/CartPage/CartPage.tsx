@@ -7,7 +7,6 @@ import rootStore from "@/stores/RootStore/RootStore";
 import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "@/utils/routes";
-import ButtonBack from "@/components/ButtonBack";
 import HeaderWithArrow from "@/components/HeaderWithArrow";
 const CartPage = () => {
   const cartStore = rootStore.cart;

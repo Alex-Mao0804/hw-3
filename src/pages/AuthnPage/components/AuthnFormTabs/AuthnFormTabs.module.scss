@@ -7,9 +7,9 @@
 
   &__tabs {
     margin: 30px 45px 38px;
+    @include vars.respond-to(mobile) {
+      margin: 25px 35px;
+    }
 
   }
-}
-
-.tabs {
 }

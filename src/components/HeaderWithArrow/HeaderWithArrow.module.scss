@@ -1,6 +1,9 @@
 @use '@variables' as vars;
 
 .header {
+  @include vars.respond-to(tablet) {
+    margin-bottom: vars.$space-m;
+  }
   display: flex;
   align-items: center;
   gap: vars.$space-m;

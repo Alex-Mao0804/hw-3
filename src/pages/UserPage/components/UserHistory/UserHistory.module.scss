@@ -22,4 +22,10 @@
     }
   }
 
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: vars.$space-l;
+  }
 }

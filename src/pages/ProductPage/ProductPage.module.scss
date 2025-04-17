@@ -5,17 +5,26 @@
   flex-direction: column;
   padding-bottom: 128px;
   @include vars.center-container;
+  @include vars.respond-to(desktop-large) {
+    padding-left: vars.$space-xl2;
+    padding-right: vars.$space-xl2;  
+  }
+  @include vars.respond-to(mobile) {
+    padding-left: vars.$space-m;
+    padding-right: vars.$space-m;  
+    padding-bottom: vars.$space-xl2;
+  }
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: vars.$space-xxl;
-}
+  @include vars.respond-to(tablet) {
+      margin-top: vars.$space-l;
 
-@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
-  .product_page {
-    padding-left: 30px;
-    padding-right: 30px;
+    gap: vars.$space-m;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xxl;
   }
 }

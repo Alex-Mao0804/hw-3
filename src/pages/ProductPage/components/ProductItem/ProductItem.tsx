@@ -8,6 +8,7 @@ import rootStore from "@/stores/RootStore";
 import Modal from "@/components/Modal";
 import { useState } from "react";
 import QuicklyOrder from "@/components/QuicklyOrder";
+import clsx from "clsx";
 
 type ProductItemProps = {
   product: ProductEntity;
@@ -57,7 +58,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         </div>
       </div>
       <Modal
-        className={styles.modal}
+        className={clsx(styles.modal, styles.modal__quicklyOrder)}
         open={isModalOpen}
         setOpen={setIsModalOpen}>
           <div className={styles.modal__content}>

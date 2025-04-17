@@ -5,13 +5,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
+  @include vars.respond-to(tablet) {
+    height: vars.$input_button_height-tablet;
+    padding: 0 vars.$space-s;
+    font-size: vars.$font-size-p-14;
+  }
+  @include vars.respond-to(desktop) {
+    height: vars.$input_button_height;
+    padding: 0 vars.$space-l;
+    font-size: vars.$font-size-p-18;
+  }
   border: none;
-  padding: 0 vars.$space-l;
   color: vars.$button-primary-text;
   font-family: "Roboto", sans-serif;
   font-weight: vars.$font-weight-normal;
-  font-size: vars.$font-size-p-18;
   line-height: 100%;
   background-color: vars.$button-primary-bg;
   cursor: pointer;

@@ -66,30 +66,30 @@
 .skeleton {
 
   &__section_16 {
-    @include vars.skeleton(150px, vars.$font-size-p-16);
+    @include vars.skeleton(30%, vars.$font-size-p-16);
 
   }
 
   &__items {
-    @include vars.skeleton(300px, vars.$font-size-p-16);
+    @include vars.skeleton(60%, vars.$font-size-p-16);
   }
 
   &__price {
-    @include vars.skeleton(35px, vars.$font-size-p-16);
+    @include vars.skeleton(5%, vars.$font-size-p-16);
   }
 
   &__datetime {
-    @include vars.skeleton(150px, vars.$font-size-p-16);
+    @include vars.skeleton(30%, vars.$font-size-p-16);
 
   }
 
 
   &__address {
-    @include vars.skeleton(270px, vars.$font-size-p-16);
+    @include vars.skeleton(50%, vars.$font-size-p-16);
   }
 
   &__total {
-    @include vars.skeleton(75px, vars.$font-size-p-16);
+    @include vars.skeleton(10%, vars.$font-size-p-16);
   }
   
 }

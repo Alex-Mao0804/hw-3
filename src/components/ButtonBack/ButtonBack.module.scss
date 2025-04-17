@@ -1,9 +1,12 @@
 @use '@variables' as vars;
 
 .navigation {
-  height: 48px;
-  margin-top: 60px;
-  margin-bottom: 32px;
+  @include vars.respond-to(desktop) {
+    height: 48px;
+    margin-top: 60px;
+    margin-bottom: 32px;
+  }
+
   &__button {
     display: flex;
     align-items: center;

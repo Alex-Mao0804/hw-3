@@ -5,7 +5,12 @@
   position: fixed;
   z-index: 10;
   box-sizing: content-box;
-  height: vars.$header-height;
+  @include vars.respond-to(tablet) {
+    height: vars.$header-height-mobile;
+  }
+  @include vars.respond-to(desktop) {
+    height: vars.$header-height;
+  }
   border-bottom: 2px solid #f3f3f3;
   background-color: vars.$color-bg;
 
@@ -16,14 +21,15 @@
     max-width: 1240px;
     height: 100%;
     margin: 0 auto;
-  }
-}
 
-@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
-  .header {
-    &__container {
-      padding-left: 30px;
-      padding-right: 30px;
+    @include vars.respond-to(desktop-large) {
+      padding-left: vars.$space-xl2;
+      padding-right: vars.$space-xl2;  
+    }
+    @include vars.respond-to(mobile) {
+      padding-left: vars.$space-m;
+      padding-right: vars.$space-m;  
     }
   }
 }
+

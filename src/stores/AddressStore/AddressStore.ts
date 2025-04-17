@@ -1,5 +1,4 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
-import { getCategories } from "@/api/handlers/directionCategory/details";
 import { ILocalStore } from "@/utils/useLocalStore";
 import MultiDropdownStore from "@/stores/MultyDropdownStore";
 import { getDadataAddressApi } from "@/api/handlers/dadata/details";

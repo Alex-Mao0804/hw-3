@@ -55,17 +55,19 @@ const UserPage = () => {
   };
   return (
     <div className={styles.user_page}>
+          <HeaderWithArrow className={styles.header} title='' />
       <div className={styles.content}>
         <CustomTabPanel value={value} index={1}>
-        <HeaderWithArrow title="История покупок" />
+        <HeaderWithArrow className={styles.content__header} title="История покупок" />
           <UserHistory />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <HeaderWithArrow title="Настройки" />
+          <HeaderWithArrow className={styles.content__header} title="Настройки" />
           <UserSettings />
         </CustomTabPanel>
 
         <Tabs
+        centered
           orientation="vertical"
           className={clsx(styles.content__menu)}
           value={value}

@@ -5,7 +5,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 30px; 
+  @include vars.respond-to(tablet) {
+    gap: vars.$space-m
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xl2 
+  }
+
 
   > li {
     width: 100%;
@@ -18,11 +24,19 @@
   height: auto;
 
   & img {
-    width: 250px;
+    @include vars.respond-to(mobile) {
+      display: none;
+    }
+    @include vars.respond-to(tablet) {
+      width: 220px;
+    }
+    @include vars.respond-to(desktop) {
+      width: 250px;
+    }
     height: auto;
   }
   &__actions {
-    width: 155px;
+    width: 100px;
     & input {
       text-align: center;
     }

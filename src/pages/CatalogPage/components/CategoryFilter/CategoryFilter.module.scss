@@ -2,7 +2,11 @@
 
 .categoryFilter {
   &__dropdown {
-    width: 300px;
+    @include vars.respond-to(tablet) {
+    }
+    @include vars.respond-to(desktop) {
+      width: 300px;
+    }
     height: fit-content;
   }
 }

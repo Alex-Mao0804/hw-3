@@ -4,7 +4,7 @@ import AddressStore from "@/stores/AddressStore";
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import { ProductEntity, ProductEntityWithQuantity } from "@types";
 import { action, computed, makeAutoObservable, makeObservable, observable, reaction, runInAction, toJS } from "mobx";
-
+import { RootStore } from "../RootStore";
 
 type PrivateFields = "_products";
 type TProductLocalStorage = {
@@ -20,7 +20,8 @@ export default class CartStore {
   private _loading: boolean = false;
 
 
-  constructor() {
+
+  constructor(rootStore: RootStore) {
     makeAutoObservable <CartStore, PrivateFields>(this, {
       _products: observable,
       products: computed,
@@ -29,7 +30,7 @@ export default class CartStore {
       removeProduct: action,
       addProductsWithQuantities: action.bound,
     });
-
+    
     this._addressStore = new AddressStore();
 
     this.init();
@@ -51,6 +52,18 @@ export default class CartStore {
       () => this.addressStore.multiDropdownStore.value,
       (search) => {
         this._contactAddress = search?.value ?? "";        
+      }
+    );
+
+    reaction(
+      () => rootStore.user.isAuth,
+      (isAuth) => {
+        if (isAuth) {
+          runInAction(() => {
+            this._contactName = rootStore.user.user?.name || "";
+            this._contactEmail = rootStore.user.user?.email || "";
+          });
+        }
       }
     );
   }

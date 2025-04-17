@@ -4,17 +4,30 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 35px;
-  margin-top: 48px;
+  @include vars.respond-to(tablet) {
+    margin-top: vars.$space-xl;
+    gap: vars.$space-xl;
+  }
+  @include vars.respond-to(desktop) {
+    margin-top: vars.$space-xxl;
+    gap: 35px;
+  }
 
   &__title {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: vars.$space-xl;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+    }
 
     &__text {
-      font-size: 32px;
+      @include vars.respond-to(desktop) {
+        font-size: 32px;
+      }
       line-height: 112%;
     }
   }
@@ -24,13 +37,16 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 30px;
+
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-xl;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl2;
+    }
   }
 
   &__card {
-    width: 360px;
-    height: 618px;
-
     &__button {
       width: 155px;
     }
@@ -40,7 +56,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-l;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+    }
   }
 }
 

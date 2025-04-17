@@ -6,6 +6,7 @@ import ROUTES from "@/utils/routes";
 import { useNavigate } from "react-router-dom";
 import ReplayIcon from "@mui/icons-material/Replay";
 import rootStore from "@/stores/RootStore/RootStore";
+import { runInAction } from "mobx";
 
 type ItemOrderProps = {
   order: TOrderByEmailResponse;
@@ -44,7 +45,7 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
         {order.items.map((item, index) => (
           <li key={index}>
             <article
-              onClick={() => handleProductClick(String(item.id))}
+              onClick={() => runInAction(() => handleProductClick(String(item.id)))}
               role="button"
               className={styles.item_order__product}
             >
