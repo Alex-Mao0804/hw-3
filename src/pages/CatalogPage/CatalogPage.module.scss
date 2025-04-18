@@ -58,6 +58,16 @@
     }
 
     &__filters {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xl;
+      }
       &__top {
         display: flex;
         flex-direction: row;
@@ -68,16 +78,6 @@
         @include vars.respond-to(desktop) {
           gap: vars.$space-xl;
         }
-      }
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      @include vars.respond-to(tablet) {
-        gap: vars.$space-m;
-      }
-      @include vars.respond-to(desktop) {
-        gap: vars.$space-xl;
       }
     }
 
