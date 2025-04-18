@@ -1,4 +1,9 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import {
+  IReactionDisposer,
+  makeAutoObservable,
+  reaction,
+  runInAction,
+} from "mobx";
 import { CategoryEntity } from "@/utils/types";
 import ProductStore from "@/stores/ProductStore";
 import { getCategories } from "@/api/handlers/directionCategory/details";
@@ -11,13 +16,14 @@ export default class CategoryStore implements ILocalStore {
   private _isLoading: boolean = false;
   private _productStore: ProductStore;
   private _multiDropdownStore: MultiDropdownStore;
+  private _disposer?: IReactionDisposer;
 
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
     this._productStore = productStore;
     this._multiDropdownStore = new MultiDropdownStore();
 
-    reaction(
+    this._disposer = reaction(
       () => this._categories,
       (categories) => {
         const categoryId = rootStore.query.getParam("categoryId");
@@ -88,6 +94,7 @@ export default class CategoryStore implements ILocalStore {
 
   destroy() {
     this._multiDropdownStore.destroy();
+    this._disposer?.();
     this._categories = [];
     this._isLoading = false;
   }

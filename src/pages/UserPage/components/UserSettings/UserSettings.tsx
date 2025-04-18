@@ -19,20 +19,20 @@ const UserSettings = () => {
     avatar: "",
   });
 
-    const setFormData = useCallback((field: keyof typeof form, value: string) => {
+  const setFormData = useCallback(
+    (field: keyof typeof form, value: string) => {
       resetError();
-      setForm(prev => ({
+      setForm((prev) => ({
         ...prev,
         [field]: value,
-      }))
-    }, [resetError]);
-
+      }));
+    },
+    [resetError],
+  );
 
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-
-
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -44,22 +44,24 @@ const UserSettings = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const filteredForm = Object.fromEntries(
-      Object.entries(form).filter(([, value]) => value.trim() !== '')
+      Object.entries(form).filter(([, value]) => value.trim() !== ""),
     ) as Partial<TCreateUserRequestApi>;
     updateProfile(filteredForm);
   };
-  
 
-  const someFieldFilled = form.email !== '' || form.name !== '' || form.avatar !== '' || form.password !== ''
-  const passwordsMatch = form.password === repeatPassword
-  const passwordValid = form.password === '' || passwordsMatch
-  
-  const disabled = !someFieldFilled || !passwordValid
+  const someFieldFilled =
+    form.email !== "" ||
+    form.name !== "" ||
+    form.avatar !== "" ||
+    form.password !== "";
+  const passwordsMatch = form.password === repeatPassword;
+  const passwordValid = form.password === "" || passwordsMatch;
 
+  const disabled = !someFieldFilled || !passwordValid;
 
   return (
     <form onSubmit={handleSubmit} className={styles.user_settings}>
-        <AlertMessage form={form} repeatPassword={repeatPassword} />
+      <AlertMessage form={form} repeatPassword={repeatPassword} />
       <div className={styles.user_settings__avatar}>
         <Text view="p-14" weight="bold">
           Введите ссылку на аватар
@@ -67,8 +69,7 @@ const UserSettings = () => {
         <Input
           value={form.avatar}
           name="avatar"
-          onChange={(e) => setFormData('avatar', e)
-          }
+          onChange={(e) => setFormData("avatar", e)}
           type="url"
           placeholder={user?.avatar || "Введите ссылку на аватар"}
         />
@@ -81,8 +82,7 @@ const UserSettings = () => {
         <Input
           value={form.email}
           name="email"
-          onChange={(e) => setFormData('email', e)
-          }
+          onChange={(e) => setFormData("email", e)}
           type="email"
           placeholder={user?.email || "Введите email"}
         />
@@ -94,8 +94,7 @@ const UserSettings = () => {
         <Input
           value={form.name}
           name="name"
-            onChange={(e) => setFormData('name', e)
-          }
+          onChange={(e) => setFormData("name", e)}
           type="name"
           placeholder={user?.name || "Введите имя"}
         />
@@ -106,20 +105,23 @@ const UserSettings = () => {
       <div className={styles.user_settings__password}>
         <Input
           value={form.password}
-          onChange={(e) => setFormData('password', e)
-          }
+          onChange={(e) => setFormData("password", e)}
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Введите пароль"
           afterSlot={
             !showPassword ? (
               <VisibilityIcon
+                role="button"
+                aria-label="Показать пароль"
                 className={styles.user_settings__icon}
                 color="disabled"
                 onClick={handleClickShowPassword}
               />
             ) : (
               <VisibilityOffIcon
+                role="button"
+                aria-label="Скрыть пароль"
                 className={styles.user_settings__icon}
                 onClick={handleClickShowPassword}
               />
@@ -136,12 +138,16 @@ const UserSettings = () => {
           afterSlot={
             !showRepeatPassword ? (
               <VisibilityIcon
+                role="button"
+                aria-label="Показать пароль"
                 className={styles.user_settings__icon}
                 color="disabled"
                 onClick={handleClickShowRepeatPassword}
               />
             ) : (
               <VisibilityOffIcon
+                role="button"
+                aria-label="Скрыть пароль"
                 className={styles.user_settings__icon}
                 onClick={handleClickShowRepeatPassword}
               />

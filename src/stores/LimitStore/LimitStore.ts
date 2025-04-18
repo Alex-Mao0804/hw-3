@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from "mobx";
+import { IReactionDisposer, makeAutoObservable, reaction } from "mobx";
 import ProductStore from "@/stores/ProductStore";
 import { ILocalStore } from "@/utils/useLocalStore";
 import rootStore from "@/stores/RootStore";
@@ -10,30 +10,14 @@ export default class LimitStore implements ILocalStore {
   private _limitValues: OptionEntity[] = LIMIT;
   private _productStore: ProductStore;
   private _multiDropdownStore: MultiDropdownStore;
+  private _disposers: IReactionDisposer[] = [];
 
   constructor(productStore: ProductStore) {
     makeAutoObservable(this);
     this._productStore = productStore;
     this._multiDropdownStore = new MultiDropdownStore();
     this.init();
-
-    reaction(
-      () => rootStore.query.getParams(),
-      (params) => {
-        if (Object.keys(params).length === 0) {
-          this.updateLimit(this._limitValues[0].value);
-        }
-      },
-    );
-
-    reaction(
-      () => rootStore.query.getParam("limit"),
-      (lim) => {
-        if (lim) {
-          this.updateLimit(lim.toString());
-        }
-      },
-    );
+    this.setupReactions();
   }
 
   init() {
@@ -42,6 +26,26 @@ export default class LimitStore implements ILocalStore {
     if (!limit) {
       this.updateLimit(this._limitValues[0].value);
     }
+  }
+  private setupReactions() {
+    this._disposers.push(
+      reaction(
+        () => rootStore.query.getParams(),
+        (params) => {
+          if (Object.keys(params).length === 0) {
+            this.updateLimit(this._limitValues[0].value);
+          }
+        },
+      ),
+      reaction(
+        () => rootStore.query.getParam("limit"),
+        (lim) => {
+          if (lim) {
+            this.updateLimit(lim.toString());
+          }
+        },
+      ),
+    );
   }
 
   private updateLimit(lim: string) {
@@ -69,6 +73,7 @@ export default class LimitStore implements ILocalStore {
   }
 
   destroy() {
+    this._disposers.forEach((dispose) => dispose());
     this._multiDropdownStore.destroy();
   }
 }

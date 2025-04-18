@@ -24,7 +24,7 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           page: 1,
         });
       },
-      [filters, price_min, price_max], 
+      [filters, price_min, price_max],
     );
 
     const isDisabled =
@@ -67,7 +67,11 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           Filter by price
         </Button>
 
-        <Button onClick={handleReset} className={styles.price_range__button}>
+        <Button
+          type="button"
+          onClick={handleReset}
+          className={styles.price_range__button}
+        >
           Reset
         </Button>
       </form>

@@ -61,7 +61,7 @@ class ItemStore implements ILocalStore {
 
   async fetchItem(id: string) {
     this._item.loading = true;
-
+    this._item.error = null;
     try {
       const product = await getProduct(id);
       runInAction(() => {

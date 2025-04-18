@@ -49,7 +49,6 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
         {relatedProducts.map((product: ProductEntity) => (
           <li key={product.id}>
             <Card
-              className={styles.catalog_products__card}
               image={product.images[0]}
               title={product.title}
               subtitle={product.description}
@@ -58,12 +57,11 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
               contentSlot={`$${product.price}`}
               actionSlot={
                 <Button
-                  className={styles.catalog_products__card__button}
                   disabled={false}
                   loading={false}
                   onClick={(e) => {
                     e.stopPropagation();
-                    rootStore.cart.addProduct(product)                                       
+                    rootStore.cart.addProduct(product);
                   }}
                 >
                   Add to cart

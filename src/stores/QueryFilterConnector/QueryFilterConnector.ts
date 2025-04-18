@@ -21,10 +21,11 @@ export default class QueryFilterConnector {
     if (filters.page) params.page = filters.page;
     if (filters.limit) params.limit = filters.limit;
 
-    this._queryParamsStore.setParams(new URLSearchParams(params).toString());
+    const queryString = new URLSearchParams(params).toString();
+    this._queryParamsStore.setParams(queryString);
 
     if (this._navigate) {
-      this._navigate(`?${new URLSearchParams(params).toString()}`);
+      this._navigate(`?${queryString}`);
     }
   }
 

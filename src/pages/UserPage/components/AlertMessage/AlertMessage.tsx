@@ -1,5 +1,5 @@
 import styles from "./AlertMessage.module.scss";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
@@ -9,7 +9,7 @@ import clsx from "clsx";
 type AlertMessageProps = {
   form: TCreateUserRequestApi;
   repeatPassword: string;
-}
+};
 
 const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
   const { error, user } = rootStore.user;
@@ -24,9 +24,10 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
 
   useEffect(() => {
     if (!user) return;
-  
-    const someFieldFilled = form.email || form.name || form.avatar || form.password;
-  
+
+    const someFieldFilled =
+      form.email || form.name || form.avatar || form.password;
+
     if (someFieldFilled && !error) {
       setMessage({
         status: "success",
@@ -34,8 +35,16 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
       });
       setShowMessage(true);
     }
-  }, [user, form, error]);  
-  
+
+    if (error) {
+      setMessage({
+        status: "error",
+        text: error,
+      });
+      setShowMessage(true);
+    }
+  }, [user, form, error]);
+
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -45,17 +54,7 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
       text: "",
     });
     setShowMessage(false);
-  
-  }, [form.avatar, form.email, form.name, form.password, repeatPassword]); 
-  useEffect(() => {
-    if (error) {
-      setMessage({
-        status: "error",
-        text: error,
-      });
-      setShowMessage(true);
-    }
-  }, [error]);
+  }, [form.avatar, form.email, form.name, form.password, repeatPassword]);
 
   useEffect(() => {
     if (repeatPassword !== form.password) {
@@ -80,17 +79,17 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
         showMessage && styles.alert_message__show,
       )}
     >
-    <>      {message.text !== "" && (
-        <Alert
-          onClose={() => setShowMessage(false)}
-          severity={message.status as AlertColor}
-        >
-          {message.text}
-        </Alert>
-      )}
-
-</>
-
+      <>
+        {" "}
+        {message.text !== "" && (
+          <Alert
+            onClose={() => setShowMessage(false)}
+            severity={message.status as AlertColor}
+          >
+            {message.text}
+          </Alert>
+        )}
+      </>
     </div>
   );
 };

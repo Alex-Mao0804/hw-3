@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import { initialFilters } from "@/utils/constants";
 import { runInAction } from "mobx";
 import rootStore from "@/stores/RootStore/RootStore";
+import { useCallback } from "react";
 
 type CatalogProductsProps = {
   total: number;
@@ -28,9 +29,15 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
   const navigate = useNavigate();
 
   const count = products.length;
-  const handleProductClick = (productId: string) => {
-    navigate(ROUTES.PRODUCT(productId));
-  };
+  const handleProductClick = useCallback(
+    (productId: string) => {
+      navigate(ROUTES.PRODUCT(productId));
+    },
+    [navigate],
+  );
+  const handleResetFilters = useCallback(() => {
+    navigate(ROUTES.CATALOG);
+  }, [navigate]);
 
   return (
     <div className={styles.catalog_products}>
@@ -55,9 +62,7 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
             className={styles.catalog_products__empty__button}
             disabled={false}
             loading={false}
-            onClick={() => {
-              navigate(ROUTES.CATALOG);
-            }}
+            onClick={handleResetFilters}
           >
             Reset all filters
           </Button>
@@ -92,7 +97,7 @@ const CatalogProducts: React.FC<CatalogProductsProps> = ({
                     loading={false}
                     onClick={(e) => {
                       e.stopPropagation();
-                      rootStore.cart.addProduct(product)                                       
+                      rootStore.cart.addProduct(product);
                     }}
                   >
                     Add to cart

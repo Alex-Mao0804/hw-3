@@ -3,21 +3,24 @@ import {
   postLoginApi,
   postRefreshApi,
 } from "@/api/handlers/directionAuth/details";
-import { postCreateUserApi, postUpdateUserApi } from "@/api/handlers/directionUsers/details";
+import {
+  postCreateUserApi,
+  postUpdateUserApi,
+} from "@/api/handlers/directionUsers/details";
 import { TProfileApi } from "@/api/type/directionAuth/list";
-import { TCreateUserRequestApi, TUpdateUserRequestApi } from "@/api/type/directionUsers/list";
-import { RequestStatus } from "@/utils/types";
+import {
+  TCreateUserRequestApi,
+  TUpdateUserRequestApi,
+} from "@/api/type/directionUsers/list";
 import { action, makeAutoObservable, runInAction } from "mobx";
 import Cookies from "js-cookie";
 import { COOKIE_KEYS } from "@/utils/constants";
-
 
 export default class UserStore {
   private _token: string | null = null;
   private _refreshToken: string | null = null;
   private _user: TProfileApi | null = null;
-  private _requestStatus = RequestStatus.Idle;
-  private _isAuthChecked: boolean = false;
+  private _loading: boolean = false;
   private _isAuthenticated: boolean = false;
   private _error: string | null = null;
 
@@ -52,15 +55,11 @@ export default class UserStore {
   }
 
   get loading() {
-    return this._requestStatus === RequestStatus.Loading;
+    return this._loading;
   }
 
   get error() {
     return this._error;
-  }
-
-  get isAuthChecked() {
-    return this._isAuthChecked;
   }
 
   resetError() {
@@ -68,19 +67,20 @@ export default class UserStore {
   }
 
   async login(email: string, password: string) {
-    this._requestStatus = RequestStatus.Loading;
+    this._loading = true;
     this._error = null;
-    this._isAuthChecked = false;
     try {
-      const { access_token, refresh_token } = await postLoginApi({ email, password });
+      const { access_token, refresh_token } = await postLoginApi({
+        email,
+        password,
+      });
 
       runInAction(() => {
         this._token = access_token;
         this._refreshToken = refresh_token;
         Cookies.set(COOKIE_KEYS.ACCESS_TOKEN, access_token);
         Cookies.set(COOKIE_KEYS.REFRESH_TOKEN, refresh_token);
-        this._requestStatus = RequestStatus.Success;
-        this._isAuthChecked = true;
+        this._loading = false;
         this._isAuthenticated = true;
       });
 
@@ -88,37 +88,27 @@ export default class UserStore {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
-        this._isAuthChecked = true;
         this._error = err?.response?.data?.message || "Login failed";
-        this._requestStatus = RequestStatus.Failed;
-      });
-    } finally {
-      runInAction(() => {
-        this._requestStatus = RequestStatus.Idle;
+        this._loading = false;
       });
     }
   }
 
   async registration({ email, password, name, avatar }: TCreateUserRequestApi) {
-    this._requestStatus = RequestStatus.Loading;
+    this._loading = true;
     this._error = null;
-    this._isAuthChecked = false;
     try {
       const user = await postCreateUserApi({ email, password, name, avatar });
       runInAction(() => {
         this._user = user;
-        this._requestStatus = RequestStatus.Success;
+        this._loading = false;
       });
       await this.login(email, password);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
         this._error = err?.response?.data?.message || "Registration failed";
-        this._requestStatus = RequestStatus.Failed;
-      });
-    } finally {
-      runInAction(() => {
-        this._requestStatus = RequestStatus.Idle;
+        this._loading = false;
       });
     }
   }
@@ -151,7 +141,7 @@ export default class UserStore {
         this._user = user;
         this._isAuthenticated = true;
       });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       this._isAuthenticated = false;
       if (err?.response?.status === 401) {
@@ -171,28 +161,23 @@ export default class UserStore {
     Cookies.remove(COOKIE_KEYS.ACCESS_TOKEN);
     Cookies.remove(COOKIE_KEYS.REFRESH_TOKEN);
     this._isAuthenticated = false;
-    this._isAuthChecked = false;
   }
 
   async updateProfile(data: TUpdateUserRequestApi) {
     if (!this._user) return;
-    this._requestStatus = RequestStatus.Loading;
+    this._loading = true;
     this._error = null;
     try {
       const user = await postUpdateUserApi(this._user.id, data);
       runInAction(() => {
         this._user = user;
-        this._requestStatus = RequestStatus.Success;
+        this._loading = false;
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       runInAction(() => {
         this._error = err?.response?.data?.message || "Update failed";
-        this._requestStatus = RequestStatus.Failed;
-      });
-    } finally {
-      runInAction(() => {
-        this._requestStatus = RequestStatus.Idle;
+        this._loading = false;
       });
     }
   }

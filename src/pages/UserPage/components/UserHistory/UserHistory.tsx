@@ -12,7 +12,7 @@ import ROUTES from "@routes";
 const UserHistory = () => {
   const historyOrderStore = useLocalStore(() => new HistoryOrderStore());
   const navigate = useNavigate();
-  
+
   const loading = historyOrderStore.isLoading;
   const total = historyOrderStore.orders.length;
 
@@ -37,22 +37,18 @@ const UserHistory = () => {
           ))
         ) : (
           <>
-          {historyOrderStore.orders.length === 0 && (
-            <div className={styles.user_history__empty}>
-              <Text view="title" weight="bold">
-                No orders
-              </Text>
-              <Button
-              onClick={() => navigate(ROUTES.CATALOG)}
-            >
-              Go to catalog
-            </Button>
-            </div>
-          )}
-            {historyOrderStore.orders.map((order) => (
-              <div key={order.id}>
-                <ItemOrder order={order} />
+            {historyOrderStore.orders.length === 0 && (
+              <div className={styles.user_history__empty}>
+                <Text view="title" weight="bold">
+                  No orders
+                </Text>
+                <Button onClick={() => navigate(ROUTES.CATALOG)}>
+                  Go to catalog
+                </Button>
               </div>
+            )}
+            {historyOrderStore.orders.map((order) => (
+              <ItemOrder key={order.id} order={order} />
             ))}
           </>
         )}

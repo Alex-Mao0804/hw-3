@@ -7,12 +7,12 @@ import { mockGetOrdersByEmail } from "@/api/handlers/directionOrder/details";
 export default class HistoryOrderStore implements ILocalStore {
   private _isLoading: boolean = false;
   private _orders: TOrderByEmailResponse[] = [];
+  private _dispose: (() => void) | null = null;
 
-
-  constructor () {
+  constructor() {
     makeAutoObservable(this);
 
-    autorun(() => {
+    this._dispose = autorun(() => {
       if (rootStore.user.isAuth) {
         this.fetchOrders();
       }
@@ -24,11 +24,11 @@ export default class HistoryOrderStore implements ILocalStore {
       runInAction(() => {
         this._isLoading = true;
       });
-      const res = await mockGetOrdersByEmail(email);      
+      const res = await mockGetOrdersByEmail(email);
       runInAction(() => {
-        this._orders = res.map(order => ({
+        this._orders = res.map((order) => ({
           ...order,
-          items: order.items.map(item => ({ ...item })),
+          items: order.items.map((item) => ({ ...item })),
         }));
         this._isLoading = false;
       });
@@ -44,7 +44,8 @@ export default class HistoryOrderStore implements ILocalStore {
   }
 
   destroy(): void {
+    this._dispose?.();
     this._isLoading = false;
+    this._orders = [];
   }
-
 }
