@@ -47,7 +47,7 @@ const AuthnFormTabs = () => {
   } = rootStore.user;
   const errorText = String(error || "");
   const [value, setValue] = React.useState(1);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

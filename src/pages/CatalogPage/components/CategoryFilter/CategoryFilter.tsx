@@ -15,7 +15,6 @@ type ICategoryFilter = {
 
 const CategoryFilter: React.FC<ICategoryFilter> = observer(
   ({ categoryStore, filterStore }) => {
-
     const { multiDropdownStore } = categoryStore;
 
     const handleMultiDropdownChange = useCallback(
@@ -26,7 +25,7 @@ const CategoryFilter: React.FC<ICategoryFilter> = observer(
             categoryStore.resetCategoryMultiDropdownValue();
           } else {
             multiDropdownStore.setValue(value);
-            filterStore.updateAndSync({ categoryId: selectedId });
+            filterStore.updateAndSync({ categoryId: selectedId, page: 1 });
           }
         });
       },

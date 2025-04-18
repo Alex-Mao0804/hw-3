@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/hw-3/",
   resolve: {
     alias: {
       "@": path.join(__dirname, "src"),

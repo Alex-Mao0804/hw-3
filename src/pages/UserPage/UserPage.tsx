@@ -2,7 +2,7 @@ import styles from "./UserPage.module.scss";
 import { observer } from "mobx-react-lite";
 import UserInfo from "./components/UserInfo";
 import clsx from "clsx";
-import {  useState } from "react";
+import { useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import rootStore from "@/stores/RootStore";
 import ROUTES from "@/utils/routes";
@@ -45,7 +45,7 @@ const UserPage = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState(1);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     if (newValue === 3) {
       logout();
       navigate(ROUTES.CATALOG);
@@ -55,19 +55,25 @@ const UserPage = () => {
   };
   return (
     <div className={styles.user_page}>
-          <HeaderWithArrow className={styles.header} title='' />
+      <HeaderWithArrow className={styles.header} title="" />
       <div className={styles.content}>
         <CustomTabPanel value={value} index={1}>
-        <HeaderWithArrow className={styles.content__header} title="История покупок" />
+          <HeaderWithArrow
+            className={styles.content__header}
+            title="История покупок"
+          />
           <UserHistory />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <HeaderWithArrow className={styles.content__header} title="Настройки" />
+          <HeaderWithArrow
+            className={styles.content__header}
+            title="Настройки"
+          />
           <UserSettings />
         </CustomTabPanel>
 
         <Tabs
-        centered
+          centered
           orientation="vertical"
           className={clsx(styles.content__menu)}
           value={value}
