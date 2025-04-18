@@ -36,7 +36,7 @@ const ContactForm = ({ handleSubmitOrder }: ContactFormProps) => {
       {handleSubmitOrder && (
         <Button
           loading={cartStore.loading}
-          disabled={!cartStore.checkFields()}
+          disabled={!cartStore.checkFields() || cartStore.products.length === 0}
           type="submit"
         >
           Submit order
