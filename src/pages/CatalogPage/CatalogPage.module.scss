@@ -6,11 +6,11 @@
 
   @include vars.respond-to(desktop-large) {
     padding-right: vars.$space-xl2;
-    padding-left: vars.$space-xl2;  
+    padding-left: vars.$space-xl2;
   }
   @include vars.respond-to(mobile) {
     padding-right: vars.$space-m;
-    padding-left: vars.$space-m;  
+    padding-left: vars.$space-m;
   }
   @include vars.center-container;
   &__header {
@@ -18,15 +18,14 @@
     flex-direction: column;
     align-items: center;
     @include vars.respond-to(tablet) {
-      gap: vars.$space-m;    
+      gap: vars.$space-m;
       margin-bottom: vars.$space-m;
     }
     @include vars.respond-to(desktop) {
       gap: vars.$space-xl;
       width: 653px;
-      margin: 100px auto 50px;    
+      margin: 100px auto 50px;
     }
-
 
     &__description {
       text-align: center;
@@ -40,7 +39,7 @@
       gap: vars.$space-m;
     }
     @include vars.respond-to(desktop) {
-      gap: vars.$space-xl;  
+      gap: vars.$space-xl;
     }
 
     &__button {
@@ -54,19 +53,31 @@
         gap: vars.$space-m;
       }
       @include vars.respond-to(desktop) {
-        gap: vars.$space-xl;  
+        gap: vars.$space-xl;
       }
-        }
+    }
 
     &__filters {
+      &__top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        @include vars.respond-to(tablet) {
+          gap: vars.$space-m;
+        }
+        @include vars.respond-to(desktop) {
+          gap: vars.$space-xl;
+        }
+      }
       display: flex;
-      flex-direction: row;      flex-wrap: wrap;
+      flex-direction: column;
+      flex-wrap: wrap;
       justify-content: space-between;
       @include vars.respond-to(tablet) {
         gap: vars.$space-m;
       }
       @include vars.respond-to(desktop) {
-        gap: vars.$space-xl;  
+        gap: vars.$space-xl;
       }
     }
 
@@ -79,7 +90,5 @@
         width: 300px;
       }
     }
-  
   }
 }
-

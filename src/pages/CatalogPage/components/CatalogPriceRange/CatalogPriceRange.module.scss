@@ -3,6 +3,7 @@
 .price_range {
   display: flex;
   flex-direction: row;
+  width: fit-content;
   @include vars.respond-to(tablet) {
     gap: vars.$space-xxs;
   }
@@ -10,9 +11,7 @@
     gap: vars.$space-xl;
   }
   &__button {
-      width: 100%;
+    width: 100%;
     text-wrap: nowrap;
   }
 }
-
-

@@ -11,12 +11,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocalStore } from "@utils/useLocalStore";
 import ProductStore from "@stores/ProductStore/ProductStore";
 import CategoryFilter from "@pages/CatalogPage/components/CategoryFilter";
+import LimitFilter from "./components/LimitFilter";
 
 const CatalogPage = observer(() => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const productStore = useLocalStore(() => new ProductStore(params));
-  const { filters: filterStore, category: categoryStore } = productStore;
+  const {
+    filters: filterStore,
+    category: categoryStore,
+    limitStore,
+  } = productStore;
 
   useEffect(() => {
     filterStore.setNavigate(navigate);
@@ -76,10 +81,13 @@ const CatalogPage = observer(() => {
           </Button>
         </form>
         <div className={styles.catalog_page__options__filters}>
-          <CategoryFilter
-            categoryStore={categoryStore}
-            filterStore={filterStore}
-          />
+          <div className={styles.catalog_page__options__filters__top}>
+            <CategoryFilter
+              categoryStore={categoryStore}
+              filterStore={filterStore}
+            />
+            <LimitFilter limitStore={limitStore} filterStore={filterStore} />
+          </div>
           <CatalogPriceRange productStore={productStore} />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import MultiDropdown from "@/components/MultiDropdown"; 
+import MultiDropdown from "@/components/MultiDropdown";
 import { OptionEntity } from "@/utils/types";
 import styles from "./CartMultiDropdown.module.scss";
 
@@ -13,16 +13,15 @@ type ICartMultiDropdown = {
 
 const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
   ({ addressStore }) => {
-
     const { multiDropdownStore } = addressStore;
 
     const handleMultiDropdownChange = useCallback(
-      (value: OptionEntity | OptionEntity[] | null) => {        
+      (value: OptionEntity | OptionEntity[] | null) => {
         runInAction(() => {
-            multiDropdownStore.setValue(value);
+          multiDropdownStore.setValue(value);
         });
       },
-      [ multiDropdownStore],
+      [multiDropdownStore],
     );
 
     return (
@@ -32,12 +31,15 @@ const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
         value={toJS(multiDropdownStore.value)}
         onChange={handleMultiDropdownChange}
         isMulti={false}
-        getTitle={(value) => multiDropdownStore.getTitle(value, "Enter address")}
+        getTitle={(value) =>
+          multiDropdownStore.getTitle(value, "Enter address")
+        }
         onSearchInput={(text) => {
           multiDropdownStore.onSearchInput(text);
         }}
-        searchable = {false}
+        searchable={false}
         loading={addressStore.isLoading}
+        withMemory
       />
     );
   },

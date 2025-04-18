@@ -1,4 +1,4 @@
-import {  useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import Input from "@/components/Input";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
@@ -19,6 +19,7 @@ type MultiDropdownProps = {
   onSearchInput?: (value: string) => void;
   searchable?: boolean;
   loading?: boolean;
+  withMemory?: boolean;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -32,6 +33,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   onSearchInput,
   searchable = true,
   loading = false,
+  withMemory = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -73,16 +75,18 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       } else {
         const alreadySelected = (value as OptionEntity)?.key === option.key;
         if (alreadySelected) {
-          onChange(null); 
-          setSearch("");           
+          onChange(null);
+          setSearch("");
         } else {
           onChange(option);
-          setSearch(String(extractOptionValue(option)));           
+          if (withMemory) {
+            setSearch(String(extractOptionValue(option)));
+          }
         }
         setIsOpen(false);
       }
     },
-    [onChange, value, isMulti],
+    [onChange, value, isMulti, withMemory],
   );
 
   useEffect(() => {
@@ -103,17 +107,23 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       <Input
         value={isOpen || !value ? search : getTitle(value)}
         onChange={(val) => {
-          setSearch(val);              
-          onSearchInput?.(val);       
+          setSearch(val);
+          onSearchInput?.(val);
         }}
         placeholder={getTitle(value)}
         disabled={disabled}
         onFocus={() => setIsOpen(true)}
-        afterSlot={!loading ? 
-        <ArrowDownIcon onClick={() => setIsOpen(!isOpen)} className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)} color="secondary" />
-        :
-        <Loader size="s" />
-      }
+        afterSlot={
+          !loading ? (
+            <ArrowDownIcon
+              onClick={() => setIsOpen(!isOpen)}
+              className={clsx(styles.dropdown, isOpen && styles.dropdown_arrow)}
+              color="secondary"
+            />
+          ) : (
+            <Loader size="s" />
+          )
+        }
       />
       {isOpen && (
         <ul className={styles.dropdown_options}>
@@ -133,7 +143,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
               </li>
             ))
           ) : (
-            <li key="no-options" className={styles.dropdown_no_options}>Ничего не найдено</li>
+            <li key="no-options" className={styles.dropdown_no_options}>
+              Ничего не найдено
+            </li>
           )}
         </ul>
       )}

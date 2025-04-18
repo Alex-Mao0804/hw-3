@@ -1,4 +1,5 @@
 import { TFiltersApi } from "@/api/type/directionProduct/list";
+import { OptionEntity } from "./types";
 
 export const initialFilters: TFiltersApi = {
   title: "",
@@ -19,5 +20,19 @@ export const COOKIE_KEYS = {
   REFRESH_TOKEN: "refresh_token",
 };
 
-
-export const INITIAL_USER_AVATAR = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+export const LIMIT: OptionEntity[] = [
+  {
+    key: "9",
+    value: "9",
+  },
+  {
+    key: "18",
+    value: "18",
+  },
+  {
+    key: "27",
+    value: "27",
+  },
+];
+export const INITIAL_USER_AVATAR =
+  "https://cdn-icons-png.flaticon.com/512/149/149071.png";
