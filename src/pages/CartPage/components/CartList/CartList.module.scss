@@ -1,0 +1,44 @@
+@use "@variables" as vars;
+
+.cart_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  @include vars.respond-to(tablet) {
+    gap: vars.$space-m;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xl2; 
+  }
+
+
+  > li {
+    width: 100%;
+  }
+}
+
+.card {
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+
+  & img {
+    height: auto;
+    @include vars.respond-to(mobile) {
+      display: none;
+    }
+    @include vars.respond-to(tablet) {
+      width: 220px;
+    }
+    @include vars.respond-to(desktop) {
+      width: 250px;
+    }
+  }
+  &__actions {
+    width: 100px;
+    & input {
+      text-align: center;
+    }
+  }
+}

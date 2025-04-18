@@ -1,0 +1,10 @@
+@use "@variables" as vars;
+
+.categoryFilter {
+  &__dropdown {
+    height: fit-content;
+    @include vars.respond-to(desktop) {
+      width: 300px;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@use "@variables" as vars;
+
+.multi_dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  &_options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    max-height: 144px;
+    margin-block-start: vars.$space-xxs;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    background: vars.$color-bg;
+  }
+  &_option {
+    padding: vars.$space-s vars.$space-xs;
+    cursor: pointer;
+    &:hover span {
+      color: vars.$color-secondary;
+    }
+    &.selected span {
+      color: vars.$color-accent;
+    }
+  }
+  &_no_options {
+    padding: 8px 12px;
+    color: #999;
+    text-align: center;
+  }
+
+  &_arrow {
+    rotate: 180deg;
+  }
+}

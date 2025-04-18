@@ -1,0 +1,47 @@
+@use '@variables' as vars;
+
+.customSnackbar {
+	padding: 15px 12px;
+	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+	background: vars.$color-bg;
+	border-radius: 10px;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 12px;
+  }
+	&__messageClose {
+		display: flex;
+		flex-direction: row;
+    justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+
+
+    &__close {
+      font-size:24px ;
+      cursor: pointer ;
+      opacity: 0.3;
+      color: #333;
+      transition: opacity 0.2s ease-in-out;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+	}
+
+  &__extraMessage {
+    max-width: 300px;
+  }
+
+	&__content {
+    width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 7px;
+	}
+}

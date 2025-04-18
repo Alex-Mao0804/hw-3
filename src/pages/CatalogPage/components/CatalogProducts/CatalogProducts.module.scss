@@ -1,0 +1,66 @@
+@use "@variables" as vars;
+
+.catalog_products {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include vars.respond-to(tablet) {
+    gap: vars.$space-xl;
+    margin-top: vars.$space-xl;
+  }
+  @include vars.respond-to(desktop) {
+    gap: 35px;
+    margin-top: vars.$space-xxl;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+    }
+
+    &__text {
+      line-height: 112%;
+      @include vars.respond-to(desktop) {
+        font-size: 32px;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-xl;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl2;
+    }
+  }
+
+  &__card {
+    &__button {
+      width: 155px;
+    }
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-l;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+    }
+  }
+}

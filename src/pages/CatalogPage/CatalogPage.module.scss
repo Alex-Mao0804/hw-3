@@ -1,0 +1,85 @@
+@use "@variables" as vars;
+
+.catalog_page {
+  display: flex;
+  flex-direction: column;
+
+  @include vars.respond-to(desktop-large) {
+    padding-right: vars.$space-xl2;
+    padding-left: vars.$space-xl2;  
+  }
+  @include vars.respond-to(mobile) {
+    padding-right: vars.$space-m;
+    padding-left: vars.$space-m;  
+  }
+  @include vars.center-container;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;    
+      margin-bottom: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+      width: 653px;
+      margin: 100px auto 50px;    
+    }
+
+
+    &__description {
+      text-align: center;
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;  
+    }
+
+    &__button {
+      text-wrap: nowrap;
+    }
+
+    &__search {
+      display: flex;
+      flex-direction: row;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xl;  
+      }
+        }
+
+    &__filters {
+      display: flex;
+      flex-direction: row;      flex-wrap: wrap;
+      justify-content: space-between;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xl;  
+      }
+    }
+
+    &__filters &__dropdown {
+      height: fit-content;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        width: 300px;
+      }
+    }
+  
+  }
+}
+

@@ -1,0 +1,46 @@
+@use "@variables" as vars;
+
+.input {
+  &_container {
+    display: flex;
+    align-items: center;
+    gap: vars.$space-xxs;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid vars.$button-primary-text;
+    background: vars.$button-primary-text;
+    @include vars.respond-to(tablet) {
+      height: vars.$input_button_height-tablet;
+      padding: vars.$space-s vars.$space-s;
+    }
+    @include vars.respond-to(desktop) {
+      height: vars.$input_button_height;
+      padding: vars.$space-m vars.$space-xs;
+    }
+  }
+  &_field {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: vars.$color-primary;
+    font-weight: vars.$font-weight-normal;
+    line-height: 125%;
+    @include vars.respond-to(tablet) {
+      font-size: vars.$font-size-p-14;
+    }
+    @include vars.respond-to(desktop) {
+      font-size: vars.$font-size-p-16;
+    }
+  }
+  &_field:disabled {
+    background: none;
+  }
+  &_container:focus-within {
+    border: 1px solid vars.$color-accent;
+  }
+  &_after_slot {
+    display: flex;
+    align-items: center;
+  }
+}

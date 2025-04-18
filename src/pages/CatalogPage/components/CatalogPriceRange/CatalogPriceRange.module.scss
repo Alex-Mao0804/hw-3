@@ -1,0 +1,18 @@
+@use "@variables" as vars;
+
+.price_range {
+  display: flex;
+  flex-direction: row;
+  @include vars.respond-to(tablet) {
+    gap: vars.$space-xxs;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xl;
+  }
+  &__button {
+      width: 100%;
+    text-wrap: nowrap;
+  }
+}
+
+

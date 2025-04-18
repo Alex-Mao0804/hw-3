@@ -1,0 +1,35 @@
+@use "@variables" as vars;
+
+.header {
+  position: fixed;
+  z-index: 10;
+  box-sizing: content-box;
+  width: 100%;
+  border-bottom: 2px solid #f3f3f3;
+  background-color: vars.$color-bg;
+  @include vars.respond-to(tablet) {
+    height: vars.$header-height-mobile;
+  }
+  @include vars.respond-to(desktop) {
+    height: vars.$header-height;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1240px;
+    height: 100%;
+    margin: 0 auto;
+
+    @include vars.respond-to(desktop-large) {
+      padding-right: vars.$space-xl2;
+      padding-left: vars.$space-xl2;  
+    }
+    @include vars.respond-to(mobile) {
+      padding-right: vars.$space-m;
+      padding-left: vars.$space-m;  
+    }
+  }
+}
+

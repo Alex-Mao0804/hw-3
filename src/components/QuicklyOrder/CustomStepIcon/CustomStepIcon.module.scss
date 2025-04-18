@@ -1,0 +1,12 @@
+@use '@variables' as vars;  
+.stepIcon {
+  color: vars.$color-secondary; 
+}
+
+.stepIconActive {
+  color: vars.$color-primary-active;
+}
+
+.stepIconCompleted {
+  color: vars.$color-accent;
+}

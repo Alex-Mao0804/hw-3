@@ -1,0 +1,49 @@
+@use "@variables" as vars;
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  @include vars.respond-to(tablet) {
+    margin: vars.$space-xl auto;
+  }
+  @include vars.respond-to(desktop) {
+    margin: 69px auto 115px;
+  }
+
+  &__button {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    cursor: pointer;
+    &:first-child {
+      rotate: 180deg;
+    }
+    svg {
+      width: 35px;
+      height: 35px;
+    }
+
+    &_group {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &_ciffer {
+      width: 38px;
+      height: 42px;
+      padding: 0;
+      color: vars.$color-bg;
+
+      &:disabled {
+        background: none;
+      }
+    }
+
+    &_noActive {
+      color: vars.$color-primary;
+      background-color: unset;
+    }
+  }
+}

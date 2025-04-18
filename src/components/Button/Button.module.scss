@@ -1,0 +1,52 @@
+@use "@variables" as vars;
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: vars.$button-primary-text;
+  font-family: "Roboto", sans-serif;
+  font-weight: vars.$font-weight-normal;
+  line-height: 100%;
+  background-color: vars.$button-primary-bg;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  @include vars.respond-to(tablet) {
+    height: vars.$input_button_height-tablet;
+    padding: 0 vars.$space-s;
+    font-size: vars.$font-size-p-14;
+  }
+  @include vars.respond-to(desktop) {
+    height: vars.$input_button_height;
+    padding: 0 vars.$space-l;
+    font-size: vars.$font-size-p-18;
+  }
+  &:hover {
+    background-color: vars.$button-hover-bg;
+  }
+  &:active {
+    background-color: vars.$button-active-bg;
+  }
+  &:disabled {
+    background-color: vars.$button-disabled-bg;
+    cursor: not-allowed;
+  }
+  &__loader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: vars.$space-xxs;
+  }
+}
+
+.button.button__disabled {
+  background-color: vars.$button-primary-bg;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.loader_color_white path {
+  fill: vars.$color-bg;
+}

@@ -1,0 +1,29 @@
+@use '@variables' as vars;
+
+.navigation {
+  @include vars.respond-to(desktop) {
+    height: 48px;
+    margin-top: 60px;
+    margin-bottom: 32px;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: vars.$space-xs;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      gap: vars.$space-m;
+    }
+
+    &:active {
+      gap: vars.$space-xxs;
+    }
+  }
+  &__icon {
+    width: 32px;
+    height: 32px;
+    rotate: 180deg;
+  }
+}

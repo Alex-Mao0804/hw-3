@@ -1,0 +1,23 @@
+@use "@variables" as vars;
+
+.ratingChoice {
+
+  &__rating{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  &__rate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    &__icon {
+      font-size: 100px;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@use "@variables" as vars;
+
+.product_page {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 128px;
+  @include vars.center-container;
+  @include vars.respond-to(desktop-large) {
+    padding-left: vars.$space-xl2;
+    padding-right: vars.$space-xl2;  
+  }
+  @include vars.respond-to(mobile) {
+    padding-left: vars.$space-m;
+    padding-right: vars.$space-m;  
+    padding-bottom: vars.$space-xl2;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  @include vars.respond-to(tablet) {
+      margin-top: vars.$space-l;
+
+    gap: vars.$space-m;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xxl;
+  }
+}

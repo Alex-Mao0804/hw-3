@@ -1,0 +1,95 @@
+@use "@variables" as vars;
+
+.item_order {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$space-s;
+  border: 1px solid vars.$color-accent;
+  padding: vars.$space-s;
+
+  &__products {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-xxs;
+  }
+
+  &__product {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    gap: vars.$space-s;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: vars.$color-accent;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+    }
+  
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+
+
+  &__section {
+    display: flex;    
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__repeatOrder {
+    cursor: pointer;
+    color: vars.$color-secondary;
+    transition: all 0.5s ease;
+
+    &:hover {
+      color: vars.$color-primary-hover;
+    }
+
+    &:active {
+      color: vars.$color-primary-active;
+      rotate: -180deg;
+    }
+  }
+}
+
+.skeleton {
+
+  &__section_16 {
+    @include vars.skeleton(30%, vars.$font-size-p-16);
+
+  }
+
+  &__items {
+    @include vars.skeleton(60%, vars.$font-size-p-16);
+  }
+
+  &__price {
+    @include vars.skeleton(5%, vars.$font-size-p-16);
+  }
+
+  &__datetime {
+    @include vars.skeleton(30%, vars.$font-size-p-16);
+
+  }
+
+
+  &__address {
+    @include vars.skeleton(50%, vars.$font-size-p-16);
+  }
+
+  &__total {
+    @include vars.skeleton(10%, vars.$font-size-p-16);
+  }
+  
+}
