@@ -239,6 +239,14 @@ export default class CartStore {
     }, 0);
   }
 
+  checkFields() {
+    return (
+      this._contactName.length > 0 &&
+      this._contactEmail.length > 0 &&
+      this._contactAddress.length > 0
+    );
+  }
+
   setContactName(value: string) {
     this._contactName = value;
   }
