@@ -1,0 +1,18 @@
+@use "@variables" as vars;
+
+.price_range {
+  display: flex;
+  flex-direction: row;
+  gap: vars.$space-xl;
+  &__button {
+    padding: 16px 32px;
+    text-wrap: nowrap;
+  }
+}
+
+@media screen and (max-width: calc(vars.$breakpoint-tablet)) {
+  .price_range {
+    flex-direction: column;
+    gap: vars.$space-m;
+  }
+}

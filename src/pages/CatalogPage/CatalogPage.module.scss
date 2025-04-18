@@ -1,0 +1,76 @@
+@use "@variables" as vars;
+
+.catalog_page {
+  display: flex;
+  flex-direction: column;
+  @include vars.center-container;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: vars.$space-xl;
+    width: 653px;
+    margin: 100px auto 50px;
+
+    &__description {
+      text-align: center;
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-xl;
+
+    &__button {
+      padding: 16px 32px;
+      text-wrap: nowrap;
+    }
+
+    &__search {
+      display: flex;
+      flex-direction: row;
+      gap: vars.$space-xl;
+    }
+
+    &__filters {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: vars.$space-xl;
+      flex-wrap: wrap;
+    }
+
+    &__filters &__dropdown {
+      width: 300px;
+      height: fit-content;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 69px auto 115px;
+
+    &__button {
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      cursor: pointer;
+      &:first-child {
+        rotate: 180deg;
+      }
+      svg {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
+  .catalog_page {
+    padding: 0 30px;
+  }
+}
