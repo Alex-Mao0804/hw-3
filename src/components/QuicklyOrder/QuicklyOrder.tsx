@@ -1,7 +1,7 @@
 import { ProductEntity } from "@/utils/types";
 import styles from "./QuicklyOrder.module.scss";
 import { observer } from "mobx-react-lite";
-import {  useState } from "react";
+import { useState } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -19,7 +19,8 @@ type ActionsButtonProps = {
   handleBack: () => void;
   steps: string[];
   activeStep: number;
-  disabled: boolean;
+  disabledBack?: boolean;
+  disabledForward?: boolean;
   loading?: boolean;
 };
 
@@ -28,16 +29,17 @@ const ActionsButton = ({
   handleBack,
   steps,
   activeStep,
-  disabled,
+  disabledBack = false,
+  disabledForward = false,
   loading,
 }: ActionsButtonProps) => {
   return (
     <div className={styles.quicklyOrder__actions}>
-      <Button color="inherit" disabled={disabled} onClick={handleBack}>
+      <Button color="inherit" disabled={disabledBack} onClick={handleBack}>
         Назад
       </Button>
 
-      <Button loading={loading} onClick={handleNext}>
+      <Button disabled={disabledForward} loading={loading} onClick={handleNext}>
         {activeStep === steps.length - 1 ? "Отправить заказ" : "Далее"}
       </Button>
     </div>
@@ -54,9 +56,10 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
   const [count, setCount] = useState(1);
   const [discount, setDiscount] = useState(0);
   const cartStore = rootStore.cart;
+
   const handleNext = async () => {
     if (activeStep === steps.length - 1) {
-      await   cartStore.submitQuickOrder(product, count, discount);
+      await cartStore.submitQuickOrder(product, count, discount);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -108,7 +111,7 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
             handleBack={handleBack}
             steps={steps}
             activeStep={activeStep}
-            disabled={activeStep === 0}
+            disabledBack={activeStep === 0}
           />
         </>
       )}
@@ -123,21 +126,27 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
             handleBack={handleBack}
             steps={steps}
             activeStep={activeStep}
-            disabled={activeStep !== 1}
+            disabledBack={activeStep !== 1}
+            disabledForward={!cartStore.checkFields()}
           />
         </>
       )}
       {activeStep === 2 && (
         <>
           <div className={styles.quicklyOrder__content}>
-            <RandomDiscount product={product} count={count} discount={discount} setDiscount={setDiscount} />
+            <RandomDiscount
+              product={product}
+              count={count}
+              discount={discount}
+              setDiscount={setDiscount}
+            />
           </div>
           <ActionsButton
             handleNext={handleNext}
             handleBack={handleBack}
             steps={steps}
             activeStep={activeStep}
-            disabled={activeStep !== 2}
+            disabledBack={activeStep !== 2}
             loading={cartStore.loading}
           />
         </>
@@ -153,4 +162,4 @@ const QuicklyOrder = ({ product }: QuicklyOrderProps) => {
 };
 
 const QuicklyOrderObserver = observer(QuicklyOrder);
-export default QuicklyOrderObserver
+export default QuicklyOrderObserver;

@@ -10,10 +10,6 @@ type ContactFormProps = {
 };
 const ContactForm = ({ handleSubmitOrder }: ContactFormProps) => {
   const cartStore = rootStore.cart;
-  const disableButton =
-    !cartStore.totalProducts ||
-    !cartStore.contactName.trim() ||
-    !cartStore.contactEmail.trim();
 
   return (
     <form onSubmit={handleSubmitOrder} className={styles.contactForm}>
@@ -40,7 +36,7 @@ const ContactForm = ({ handleSubmitOrder }: ContactFormProps) => {
       {handleSubmitOrder && (
         <Button
           loading={cartStore.loading}
-          disabled={disableButton}
+          disabled={!cartStore.checkFields()}
           type="submit"
         >
           Submit order
