@@ -9,6 +9,7 @@ type InputPasswordProps = {
   onChange: (value: string) => void;
   placeholder: string;
   name: string;
+  required?: boolean;
 };
 
 const InputPassword = ({
@@ -16,6 +17,7 @@ const InputPassword = ({
   onChange,
   placeholder,
   name,
+  required = false,
 }: InputPasswordProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -28,7 +30,7 @@ const InputPassword = ({
       onChange={onChange}
       type={showPassword ? "text" : "password"}
       name={name}
-      required
+      required={required}
       placeholder={placeholder}
       afterSlot={
         !showPassword ? (

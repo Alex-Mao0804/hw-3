@@ -64,6 +64,7 @@ const AuthFormUI: React.FC<TAuthFormUI> = ({
           onChange={(e) => setFormData("password", e)}
           placeholder="Password"
           name="password"
+          required
         />
         <Button
           type="submit"
