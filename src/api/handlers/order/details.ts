@@ -2,7 +2,7 @@ import {
   TOrderByEmailResponse,
   TOrderItem,
   TOrderResponse,
-} from "@/api/type/directionSendOrder/list";
+} from "@/api/type/sendOrder/list";
 import { getProduct } from "@/api/handlers/product/item";
 import { ProductEntityWithQuantity } from "@/utils/types";
 

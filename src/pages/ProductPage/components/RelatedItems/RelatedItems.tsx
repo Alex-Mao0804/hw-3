@@ -1,14 +1,12 @@
-import Text from "@/components/Text";
 import styles from "./RelatedItems.module.scss";
 import { ProductEntity } from "@/utils/types";
-import Button from "@/components/Button";
-import Card from "@/components/Card";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@/components/Card/SkeletonCard";
 import ROUTES from "@routes";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
 import rootStore from "@/stores/RootStore/RootStore";
+import { Text, Button, Card } from "@components";
 
 type RelatedItemsProps = {
   related: {

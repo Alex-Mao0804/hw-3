@@ -23,7 +23,7 @@
     align-items: center;
     cursor: pointer;
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -2px;
       left: 50%;
@@ -33,16 +33,14 @@
       transition: all 0.5s ease;
       transform: translateX(-50%);
     }
-  
+
     &:hover::after {
       width: 100%;
     }
   }
 
-
-
   &__section {
-    display: flex;    
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -64,10 +62,8 @@
 }
 
 .skeleton {
-
   &__section_16 {
     @include vars.skeleton(30%, vars.$font-size-p-16);
-
   }
 
   &__items {
@@ -80,9 +76,7 @@
 
   &__datetime {
     @include vars.skeleton(30%, vars.$font-size-p-16);
-
   }
-
 
   &__address {
     @include vars.skeleton(50%, vars.$font-size-p-16);
@@ -91,5 +85,4 @@
   &__total {
     @include vars.skeleton(10%, vars.$font-size-p-16);
   }
-  
 }

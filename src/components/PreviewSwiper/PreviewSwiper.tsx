@@ -5,7 +5,6 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { Mousewheel } from "swiper/modules";
 import clsx from "@libs/clsx";
-
 import styles from "./PreviewSwiper.module.scss";
 import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
 import { ProductEntity } from "@/utils/types";

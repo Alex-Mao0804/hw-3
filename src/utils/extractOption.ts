@@ -13,8 +13,7 @@ export const extractOptionValue = (
   value: OptionEntity | OptionEntity[] | null,
 ): string => {
   if (Array.isArray(value)) {
-    return value.length > 0 ? value[0].value : '';
+    return value.length > 0 ? value[0].value : "";
   }
-  return value?.value ? value.value : '';
+  return value?.value ? value.value : "";
 };
-

@@ -1,13 +1,10 @@
 import styles from "./UserSettings.module.scss";
-import Text from "@/components/Text";
-import Input from "@/components/Input";
+import { Text, Input, Button, InputPassword } from "@components";
 import { useCallback, useState } from "react";
-import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
-import Button from "@/components/Button";
+import { TCreateUserRequestApi } from "@/api/type/users/list";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import AlertMessage from "@/pages/UserPage/components/AlertMessage";
-import InputPassword from "@/components/InputPassword";
 
 const UserSettings = observer(() => {
   const { user, loading, resetError, updateProfile } = rootStore.user;

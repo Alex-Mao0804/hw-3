@@ -1,4 +1,4 @@
-import { TOrderByEmailResponse } from "@/api/type/directionSendOrder/list";
+import { TOrderByEmailResponse } from "@/api/type/sendOrder/list";
 import styles from "./ItemOrder.module.scss";
 import Text from "@/components/Text";
 import { observer } from "mobx-react-lite";

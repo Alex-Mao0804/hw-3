@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import CartDetails from "./components/CartDetails";
 import CartList from "./components/CartList";
 import rootStore from "@/stores/RootStore/RootStore";
-import HeaderWithArrow from "@/components/HeaderWithArrow";
-import EmptyList from "@/components/EmptyList";
+import { EmptyList, HeaderWithArrow } from "@components";
+
 const CartPage = observer(() => {
   const cartStore = rootStore.cart;
   return (

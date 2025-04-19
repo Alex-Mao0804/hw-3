@@ -9,9 +9,8 @@
     gap: vars.$space-m;
   }
   @include vars.respond-to(desktop) {
-    gap: vars.$space-xl2; 
+    gap: vars.$space-xl2;
   }
-
 
   > li {
     width: 100%;

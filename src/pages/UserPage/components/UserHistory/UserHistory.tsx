@@ -3,10 +3,8 @@ import styles from "./UserHistory.module.scss";
 import HistoryOrderStore from "@/stores/HistoryOrderStore";
 import { useLocalStore } from "@/utils/useLocalStore";
 import ItemOrder from "@pages/UserPage/components/ItemOrder";
-import Text from "@/components/Text";
-import Loader from "@/components/Loader";
+import { Text, Loader, EmptyList } from "@components";
 import SkeletonItemOrder from "@pages/UserPage/components/ItemOrder/SkeletonItemOrder";
-import EmptyList from "@/components/EmptyList";
 
 const UserHistory = observer(() => {
   const historyOrderStore = useLocalStore(() => new HistoryOrderStore());

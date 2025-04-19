@@ -6,12 +6,10 @@
   align-items: center;
 }
 
-
 @media screen and (max-width: calc(vars.$breakpoint-tablet)) {
   .header__logo {
     &__name {
       display: none;
-
     }
   }
 }

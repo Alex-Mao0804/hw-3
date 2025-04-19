@@ -46,7 +46,6 @@
       }
       @include vars.respond-to(desktop) {
         gap: vars.$space-xxl;
-
       }
     }
   }
@@ -62,7 +61,7 @@
         border: 1px solid vars.$color-primary;
         color: vars.$color-primary;
         background: none;
-      }     
+      }
       &:last-child:disabled {
         border: 1px solid vars.$color-primary;
         opacity: 0.5;
@@ -72,8 +71,6 @@
     }
   }
 }
-
-
 
 .skeleton {
   &__image {
@@ -118,6 +115,5 @@
 @media screen and (min-width: 1025px) {
   .product_item {
     gap: vars.$space-xxl;
- 
   }
 }

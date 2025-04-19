@@ -12,14 +12,13 @@
   cursor: pointer;
   @include vars.respond-to(tablet) {
     width: vars.$card-width-tablet;
-    height: vars.$card-height-tablet;  
+    height: vars.$card-height-tablet;
   }
   @include vars.respond-to(desktop) {
     width: vars.$card-width;
-    height: vars.$card-height;  
+    height: vars.$card-height;
   }
   &__subtitle {
-
     @include vars.respond-to(tablet) {
       height: 52px;
     }
@@ -79,7 +78,6 @@
     flex-direction: row;
     justify-content: end;
     align-items: center;
-
   }
   &__footer__action {
     display: flex;

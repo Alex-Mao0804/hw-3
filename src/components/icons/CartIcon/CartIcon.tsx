@@ -2,7 +2,7 @@ import Icon, { IconProps } from "@/components/icons/Icon/Icon";
 
 const CartIcon = (props: IconProps) => {
   return (
-<Icon {...props} viewBox="0 0 30 30">
+    <Icon {...props} viewBox="0 0 30 30">
       <path
         d="M9.375 9.58751V8.37501C9.375 5.56251 11.6375 2.80001 14.45 2.53751C17.8 2.21251 20.625 4.85001 20.625 8.13751V9.86251"
         stroke="currentColor"

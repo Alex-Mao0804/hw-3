@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
-import MultiDropdown from "@/components/MultiDropdown"; // твой компонент
 import { OptionEntity } from "@/utils/types";
 import { extractOptionKey } from "@/utils/extractOption";
 import styles from "./LimitFilter.module.scss";
-import FilterStore from "@/stores/FilterStore";
 import { toJS } from "mobx";
 import { useCallback } from "react";
-import LimitStore from "@/stores/LimitStore";
-import Text from "@/components/Text";
+import { Text, MultiDropdown } from "@components";
+import { LimitStore, FilterStore } from "@stores";
+
 type LimitFilterProps = {
   limitStore: LimitStore;
   filterStore: FilterStore;

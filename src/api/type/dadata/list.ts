@@ -7,17 +7,17 @@ export type TDadataApi<T> = {
 };
 
 export type TSuggestionApi = {
-	suggestions: TAddressApi[]
-}
+  suggestions: TAddressApi[];
+};
 
 export type TAddressApi = {
-	id: string
-	value: string 
-	unrestricted_value?: string
-	data: {
-		postal_code: string
-		city: string
-		geo_lat: string
-		geo_lon: string
-	}
-}
+  id: string;
+  value: string;
+  unrestricted_value?: string;
+  data: {
+    postal_code: string;
+    city: string;
+    geo_lat: string;
+    geo_lon: string;
+  };
+};

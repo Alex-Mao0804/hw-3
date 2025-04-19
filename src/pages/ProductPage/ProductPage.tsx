@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import styles from "./ProductPage.module.scss";
-import Text from "@/components/Text";
 import ProductItem from "./components/ProductItem";
 import { useParams } from "react-router-dom";
 import RelatedItems from "./components/RelatedItems";
@@ -8,7 +7,7 @@ import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { observer } from "mobx-react-lite";
 import { useLocalStore } from "@/utils/useLocalStore";
 import ItemStore from "@/stores/ItemStore";
-import ButtonBack from "@/components/ButtonBack";
+import { Text, ButtonBack } from "@components";
 
 const ProductPage = observer(() => {
   const { id } = useParams();

@@ -1,5 +1,5 @@
-import { TFiltersApi } from "@/api/type/directionProduct/list";
-import { OptionEntity } from "./types";
+import { TFiltersApi } from "@/api/type/product/list";
+import { OptionEntity } from "@types";
 
 export const initialFilters: TFiltersApi = {
   title: "",

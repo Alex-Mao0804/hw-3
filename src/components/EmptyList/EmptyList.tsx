@@ -1,9 +1,8 @@
 import styles from "./EmptyList.module.scss";
-import Button from "@components/Button";
-import Text from "@components/Text";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "@utils/routes";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import { Text, Button } from "@components";
 
 type EmptyListProps = {
   text: string;

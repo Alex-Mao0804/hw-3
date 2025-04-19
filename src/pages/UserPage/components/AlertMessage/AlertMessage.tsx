@@ -1,6 +1,6 @@
 import styles from "./AlertMessage.module.scss";
 import { useEffect, useState } from "react";
-import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
+import { TCreateUserRequestApi } from "@/api/type/users/list";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import { Alert, AlertColor } from "@mui/material";

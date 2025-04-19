@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import clsx from "@libs/clsx";
-
-import Input from "@/components/Input";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
-import Text from "@/components/Text";
 import { OptionEntity } from "@/utils/types";
 import { extractOptionValue } from "@/utils/extractOption";
-import Loader from "../Loader";
+import { Text, Input, Loader } from "@components";
 
 type MultiDropdownProps = {
   className?: string;

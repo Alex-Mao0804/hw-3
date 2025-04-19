@@ -8,31 +8,30 @@ export default class AddressStore implements ILocalStore {
   private _multiDropdownStore: MultiDropdownStore;
   private _searchTimeout: NodeJS.Timeout | null = null;
 
-  constructor () {
+  constructor() {
     makeAutoObservable(this);
     this._multiDropdownStore = new MultiDropdownStore();
 
     reaction(
       () => this._multiDropdownStore.search,
-      (value) => {     
+      (value) => {
         if (this._searchTimeout) {
           clearTimeout(this._searchTimeout);
         }
 
         if (value.length < 3) {
           runInAction(() => {
-            this._multiDropdownStore.setOptions([]); 
+            this._multiDropdownStore.setOptions([]);
           });
           return;
         }
 
         this._searchTimeout = setTimeout(() => {
           this.fetchAddressList();
-        }, 400); 
+        }, 400);
       },
-    );   
+    );
   }
-
 
   get multiDropdownStore() {
     return this._multiDropdownStore;
@@ -64,7 +63,6 @@ export default class AddressStore implements ILocalStore {
       });
     }
   }
-
 
   destroy() {
     this._multiDropdownStore.destroy();

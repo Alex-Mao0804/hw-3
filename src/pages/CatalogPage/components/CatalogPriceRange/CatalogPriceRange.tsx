@@ -1,10 +1,8 @@
 import styles from "./CatalogPriceRange.module.scss";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
 import { observer } from "mobx-react-lite";
 import ProductStore from "@/stores/ProductStore/ProductStore";
 import { useCallback } from "react";
-import Text from "@/components/Text";
+import { Text, Input, Button } from "@components";
 
 type TPriceRange = {
   productStore: ProductStore;

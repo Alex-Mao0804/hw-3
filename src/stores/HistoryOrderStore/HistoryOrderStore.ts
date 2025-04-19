@@ -1,6 +1,6 @@
 import { autorun, makeAutoObservable, runInAction } from "mobx";
 import { ILocalStore } from "@/utils/useLocalStore";
-import { TOrderByEmailResponse } from "@/api/type/directionSendOrder/list";
+import { TOrderByEmailResponse } from "@/api/type/sendOrder/list";
 import rootStore from "@stores/RootStore";
 import { mockGetOrdersByEmail } from "@/api/handlers/order/details";
 

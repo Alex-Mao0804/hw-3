@@ -5,6 +5,7 @@ import CartIcon from "@/components/icons/CartIcon";
 import ROUTES from "@routes";
 import rootStore from "@/stores/RootStore/RootStore";
 import { observer } from "mobx-react-lite";
+
 const HeaderActions = () => {
   const count = rootStore.cart.totalProducts;
   const login = rootStore.user.user;

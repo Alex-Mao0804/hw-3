@@ -1,19 +1,14 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import styles from "./App.module.scss";
 import "@styles/main.scss";
-import CatalogPage from "@pages/CatalogPage";
-import Header from "@components/Header";
-import ProductPage from "@pages/ProductPage";
+import { CatalogPage, ProductPage, CartPage, AuthPage, UserPage } from "@pages";
+import { Header } from "@/components/shared";
 import ROUTES from "@routes";
-import ScrollToTop from "@components/ScrollToTop";
 import { useQueryParamsStoreInit } from "@stores/RootStore/hooks/useQueryParamsStoreInit";
-import CartPage from "@pages/CartPage";
 import useCartNotifications from "@hooks/useCartNotifications";
 import rootStore from "@stores/RootStore";
 import { observer } from "mobx-react-lite";
-import AuthPage from "@pages/AuthPage";
-import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
-import UserPage from "@pages/UserPage";
+import { ProtectedRoute, ScrollToTop } from "@components";
 
 const App = () => {
   const { totalQuantity } = rootStore.cart;

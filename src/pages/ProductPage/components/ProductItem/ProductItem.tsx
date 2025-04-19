@@ -1,14 +1,12 @@
-import Text from "@/components/Text";
 import styles from "./ProductItem.module.scss";
 import { ProductEntity } from "@/utils/types";
-import Button from "@/components/Button";
 import PreviewSwiper from "@/components/PreviewSwiper/PreviewSwiper";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
-import Modal from "@/components/Modal";
 import { useState } from "react";
 import QuicklyOrder from "@/pages/ProductPage/components/QuicklyOrder";
 import clsx from "@libs/clsx";
+import { Text, Modal, Button } from "@components";
 
 type ProductItemProps = {
   product: ProductEntity;

@@ -5,11 +5,10 @@ import {
   runInAction,
 } from "mobx";
 import { CategoryEntity } from "@/utils/types";
-import ProductStore from "@/stores/ProductStore";
+import { ProductStore, MultiDropdownStore } from "@stores";
 import { getCategories } from "@/api/handlers/category/details";
 import { ILocalStore } from "@/utils/useLocalStore";
 import rootStore from "@/stores/RootStore";
-import MultiDropdownStore from "@/stores/MultyDropdownStore";
 
 export default class CategoryStore implements ILocalStore {
   private _categories: CategoryEntity[] = [];

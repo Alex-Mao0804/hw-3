@@ -7,11 +7,11 @@ import {
   postCreateUserApi,
   postUpdateUserApi,
 } from "@/api/handlers/users/details";
-import { TProfileApi } from "@/api/type/directionAuth/list";
+import { TProfileApi } from "@/api/type/auth/list";
 import {
   TCreateUserRequestApi,
   TUpdateUserRequestApi,
-} from "@/api/type/directionUsers/list";
+} from "@/api/type/users/list";
 import { action, makeAutoObservable, runInAction } from "mobx";
 import Cookies from "js-cookie";
 import { COOKIE_KEYS } from "@/utils/constants";

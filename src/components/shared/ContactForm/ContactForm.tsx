@@ -1,9 +1,8 @@
 import CartMultiDropdown from "@pages/CartPage/components/CartMultiDropdown";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
 import rootStore from "@/stores/RootStore";
 import { observer } from "mobx-react-lite";
 import styles from "./ContactForm.module.scss";
+import { Button, Input } from "@components";
 
 type ContactFormProps = {
   handleSubmitOrder?: (e: React.FormEvent<HTMLFormElement>) => void;

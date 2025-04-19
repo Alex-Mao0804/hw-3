@@ -15,7 +15,6 @@ export type TOrderResponse = {
   items: TOrderItem[];
 };
 
-
 export type TOrderByEmailResponse = {
   id: string;
   email: string;

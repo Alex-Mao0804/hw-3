@@ -21,15 +21,18 @@
       "@/*": ["src/*"],
       "@routes": ["src/utils/routes"],
       "@components/*": ["src/components/*"],
+      "@components": ["src/components"],
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/api/*"],
       "@types": ["src/utils/types"],
       "@stores/*": ["src/stores/*"],
+      "@stores": ["src/stores"],
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@apiHandlers/*": ["src/api/handlers/*"],
       "@apiTypes/*": ["src/api/types/*"],
-      "@libs/*": ["src/components/libs/*"]
+      "@libs/*": ["src/components/libs/*"],
+      "@pages": ["src/pages"]
     },
 
     /* Linting */

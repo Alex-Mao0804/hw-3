@@ -7,13 +7,7 @@ import CheckIcon from "@/components/icons/CheckIcon";
 
 interface CustomSnackbarProps {
   message: string;
-  variant:
-    | "success"
-    | "remove"
-    | "error"
-    | "info"
-    | "favoriteAdd"
-    | "favoriteRemove";
+  variant: "success" | "remove" | "error" | "info";
   onClose?: () => void;
   extraMessage?: string;
 }

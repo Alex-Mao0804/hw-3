@@ -3,10 +3,9 @@ import MultiDropdown from "@/components/MultiDropdown";
 import { OptionEntity } from "@/utils/types";
 import { extractOptionKey } from "@/utils/extractOption";
 import styles from "./CategoryFilter.module.scss";
-import CategoryStore from "@/stores/CategoryStore";
-import FilterStore from "@/stores/FilterStore";
 import { runInAction, toJS } from "mobx";
 import { useCallback } from "react";
+import { CategoryStore, FilterStore } from "@stores";
 
 type ICategoryFilter = {
   categoryStore: CategoryStore;

@@ -1,4 +1,3 @@
-
 export type TFiltersApi = Partial<{
   title: string;
   categoryId: number | null;

@@ -1,9 +1,5 @@
 import styles from "./CatalogProducts.module.scss";
-import Card from "@/components/Card";
-import Text from "@/components/Text";
 import { ProductEntity } from "@/utils/types";
-import Button from "@/components/Button";
-import Loader from "@/components/Loader";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "@/components/Card/SkeletonCard";
 import ROUTES from "@/utils/routes";
@@ -12,6 +8,7 @@ import { initialFilters } from "@/utils/constants";
 import { runInAction } from "mobx";
 import rootStore from "@/stores/RootStore/RootStore";
 import { useCallback } from "react";
+import { Text, Card, Button, Loader } from "@components";
 
 type CatalogProductsProps = {
   total: number;

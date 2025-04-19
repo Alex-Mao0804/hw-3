@@ -7,11 +7,11 @@
   @include vars.center-container;
   @include vars.respond-to(desktop-large) {
     padding-left: vars.$space-xl2;
-    padding-right: vars.$space-xl2;  
+    padding-right: vars.$space-xl2;
   }
   @include vars.respond-to(mobile) {
     padding-left: vars.$space-m;
-    padding-right: vars.$space-m;  
+    padding-right: vars.$space-m;
     padding-bottom: vars.$space-xl2;
   }
 }
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   @include vars.respond-to(tablet) {
-      margin-top: vars.$space-l;
+    margin-top: vars.$space-l;
 
     gap: vars.$space-m;
   }

@@ -5,7 +5,7 @@ import {
   TAuthRequestApi,
   TAuthResponseApi,
   TProfileApi,
-} from "@/api/type/directionAuth/list";
+} from "@/api/type/auth/list";
 
 export const postLoginApi = async ({
   email,

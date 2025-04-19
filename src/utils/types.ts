@@ -21,15 +21,14 @@ export type CategoryEntity = {
 
 export type ProductEntityWithQuantity = ProductEntity & { quantity: number };
 
-
 export type OptionEntity<K = string, V = string> = {
   value: K;
   key: V;
 };
 
 export const enum RequestStatus {
-	Idle = 'Idle',
-	Loading = 'Loading',
-	Success = 'Success',
-	Failed = 'Failed',
+  Idle = "Idle",
+  Loading = "Loading",
+  Success = "Success",
+  Failed = "Failed",
 }

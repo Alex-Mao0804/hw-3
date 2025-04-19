@@ -1,4 +1,4 @@
-import { TFiltersApi } from "@api/type/directionProduct/list";
+import { TFiltersApi } from "@/api/type/product/list";
 import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
 import { NavigateFunction } from "react-router-dom";
 

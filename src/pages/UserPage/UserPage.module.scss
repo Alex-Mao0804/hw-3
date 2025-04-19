@@ -6,11 +6,11 @@
   @include vars.center-container;
   @include vars.respond-to(desktop-large) {
     padding-right: vars.$space-xl2;
-    padding-left: vars.$space-xl2;  
+    padding-left: vars.$space-xl2;
   }
   @include vars.respond-to(mobile) {
     padding-right: vars.$space-m;
-    padding-left: vars.$space-m;  
+    padding-left: vars.$space-m;
   }
 }
 
@@ -31,12 +31,12 @@
     }
   }
   &__menu {
-
     position: sticky;
-    width: 100%;    height: fit-content;  
+    width: 100%;
+    height: fit-content;
     @include vars.respond-to(mobile) {
-      position:static;
-      width: fit-content; 
+      position: static;
+      width: fit-content;
       margin: 0 auto;
     }
     @include vars.respond-to(tablet) {

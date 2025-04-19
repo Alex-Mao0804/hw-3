@@ -1,9 +1,6 @@
 import { API_ROUTES } from "@/api/config/apiRoutes";
 import api from "@/api/config/axiosInstance";
-import {
-  TCreateUserRequestApi,
-  TUserResponseApi,
-} from "@/api/type/directionUsers/list";
+import { TCreateUserRequestApi, TUserResponseApi } from "@/api/type/users/list";
 
 export const postCreateUserApi = async ({
   name,

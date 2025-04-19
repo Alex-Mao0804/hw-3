@@ -1,17 +1,15 @@
 import { useCallback, useEffect } from "react";
 import styles from "./CatalogPage.module.scss";
-import Input from "@components/Input";
-import Button from "@components/Button";
+
 import CatalogProducts from "./components/CatalogProducts";
 import { observer } from "mobx-react-lite";
-import Pagination from "@components/Pagination";
 import CatalogPriceRange from "./components/CatalogPriceRange";
-import Text from "@components/Text";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocalStore } from "@utils/useLocalStore";
 import ProductStore from "@stores/ProductStore/ProductStore";
 import CategoryFilter from "@pages/CatalogPage/components/CategoryFilter";
 import LimitFilter from "./components/LimitFilter";
+import { Text, Input, Button, Pagination } from "@components";
 
 const CatalogPage = observer(() => {
   const navigate = useNavigate();

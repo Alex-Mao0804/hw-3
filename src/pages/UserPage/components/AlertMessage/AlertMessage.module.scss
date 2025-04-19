@@ -1,13 +1,15 @@
-@use '@variables' as vars;
+@use "@variables" as vars;
 
 .alert_message {
-  overflow: hidden; 
-  max-height: 0; 
-  opacity: 0; 
-  transition: max-height 0.4s ease, opacity 0.4s ease; 
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.4s ease;
 
   &__show {
-    max-height: 200px; 
-    opacity: 1; 
+    max-height: 200px;
+    opacity: 1;
   }
 }

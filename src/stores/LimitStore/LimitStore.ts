@@ -1,8 +1,7 @@
 import { IReactionDisposer, makeAutoObservable, reaction } from "mobx";
-import ProductStore from "@/stores/ProductStore";
+import { ProductStore, MultiDropdownStore } from "@stores";
 import { ILocalStore } from "@/utils/useLocalStore";
 import rootStore from "@/stores/RootStore";
-import MultiDropdownStore from "@/stores/MultyDropdownStore";
 import { LIMIT } from "@/utils/constants";
 import { OptionEntity } from "@/utils/types";
 

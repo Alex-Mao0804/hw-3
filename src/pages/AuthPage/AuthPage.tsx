@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useLocation, useNavigate } from "react-router";
 import Modal from "@/components/Modal";
 import rootStore from "@/stores/RootStore/RootStore";

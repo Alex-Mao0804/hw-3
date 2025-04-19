@@ -24,12 +24,11 @@
 
     @include vars.respond-to(desktop-large) {
       padding-right: vars.$space-xl2;
-      padding-left: vars.$space-xl2;  
+      padding-left: vars.$space-xl2;
     }
     @include vars.respond-to(mobile) {
       padding-right: vars.$space-m;
-      padding-left: vars.$space-m;  
+      padding-left: vars.$space-m;
     }
   }
 }
-

@@ -1,5 +1,5 @@
 import { makeAutoObservable, reaction } from "mobx";
-import {  OptionEntity } from "@/utils/types";
+import { OptionEntity } from "@/utils/types";
 import { ILocalStore } from "@/utils/useLocalStore";
 
 export default class MultyDropdownStore implements ILocalStore {
@@ -34,7 +34,6 @@ export default class MultyDropdownStore implements ILocalStore {
     this._search = search;
   }
 
-
   get options() {
     return this._options;
   }
@@ -43,13 +42,15 @@ export default class MultyDropdownStore implements ILocalStore {
     return this._value;
   }
 
-
-  getTitle(value: OptionEntity | OptionEntity[] | null, emptyValue = "Выберите категорию") {
+  getTitle(
+    value: OptionEntity | OptionEntity[] | null,
+    emptyValue = "Выберите категорию",
+  ) {
     if (Array.isArray(value)) {
       return value.map((option) => option.value).join(", ");
-    } else if (value) {      
+    } else if (value) {
       return value.value;
-    } else {    
+    } else {
       return emptyValue;
     }
   }
