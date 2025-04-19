@@ -9,11 +9,14 @@ import useCartNotifications from "@hooks/useCartNotifications";
 import rootStore from "@stores/RootStore";
 import { observer } from "mobx-react-lite";
 import { ProtectedRoute, ScrollToTop } from "@components";
+import useAuthNotifications from "./hooks/useAuthNotifications";
 
 const App = () => {
   const { totalQuantity } = rootStore.cart;
+  const { isLogin } = rootStore.user;
   useQueryParamsStoreInit();
   useCartNotifications(totalQuantity);
+  useAuthNotifications(isLogin);
   const location = useLocation();
   const background = location.state?.background;
   return (

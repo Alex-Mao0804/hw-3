@@ -23,6 +23,7 @@ export default class UserStore {
   private _loading: boolean = false;
   private _isAuthenticated: boolean = false;
   private _error: string | null = null;
+  private _isLogin: boolean | null = null;
 
   constructor() {
     makeAutoObservable<UserStore>(this, {
@@ -40,6 +41,10 @@ export default class UserStore {
       this._refreshToken = refresh;
       this.fetchProfile();
     }
+  }
+
+  get isLogin() {
+    return this._isLogin;
   }
 
   get token() {
@@ -69,6 +74,7 @@ export default class UserStore {
   async login(email: string, password: string) {
     this._loading = true;
     this._error = null;
+    this._isLogin = null;
     try {
       const { access_token, refresh_token } = await postLoginApi({
         email,
@@ -82,6 +88,7 @@ export default class UserStore {
         Cookies.set(COOKIE_KEYS.REFRESH_TOKEN, refresh_token);
         this._loading = false;
         this._isAuthenticated = true;
+        this._isLogin = true;
       });
 
       await this.fetchProfile();
@@ -157,6 +164,7 @@ export default class UserStore {
   logout() {
     this._token = null;
     this._refreshToken = null;
+    this._isLogin = false;
     this._user = null;
     Cookies.remove(COOKIE_KEYS.ACCESS_TOKEN);
     Cookies.remove(COOKIE_KEYS.REFRESH_TOKEN);

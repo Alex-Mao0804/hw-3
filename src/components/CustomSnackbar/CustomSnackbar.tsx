@@ -4,10 +4,11 @@ import styles from "./CustomSnackbar.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import Text from "@components/Text";
 import CheckIcon from "@/components/icons/CheckIcon";
-
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 interface CustomSnackbarProps {
   message: string;
-  variant: "success" | "remove" | "error" | "info";
+  variant: "success" | "remove" | "login" | "logout";
   onClose?: () => void;
   extraMessage?: string;
 }
@@ -22,6 +23,10 @@ const CustomSnackbar = React.forwardRef<HTMLDivElement, CustomSnackbarProps>(
           return <CheckIcon color="accent" />;
         case "remove":
           return <CheckIcon color="secondary" />;
+        case "login":
+          return <LoginIcon color="primary" />;
+        case "logout":
+          return <LogoutIcon color="secondary" />;
       }
     };
 
