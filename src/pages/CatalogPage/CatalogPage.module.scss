@@ -51,9 +51,6 @@
       @include vars.respond-to(tablet) {
         width: 84px;
       }
-      @include vars.respond-to(mobile) {
-        width: 72px;
-      }
       @include vars.respond-to(desktop) {
         width: 112px;
       }

@@ -30,6 +30,14 @@
       flex-direction: row;
     }
 
+    &:disabled {
+      cursor: unset;
+
+      svg {
+        color: vars.$color-secondary;
+      }
+    }
+
     &_ciffer {
       width: 38px;
       height: 42px;

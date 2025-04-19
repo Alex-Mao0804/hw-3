@@ -48,7 +48,7 @@ const ProductPage = observer(() => {
           <Text view="p-16" color="secondary">
             Нет похожих товаров
           </Text>
-        )}{" "}
+        )}
         <div className={styles.content__related}></div>
       </div>
     </div>

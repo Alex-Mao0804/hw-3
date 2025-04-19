@@ -11,7 +11,7 @@ const ButtonBack = () => {
         className={styles.navigation__button}
         onClick={() => navigate(-1)}
       >
-        <ArrowSideIcon className={styles.navigation__icon} />
+        <ArrowSideIcon color="primary" className={styles.navigation__icon} />
         <Text view="p-20" color="primary" weight="normal">
           Back
         </Text>

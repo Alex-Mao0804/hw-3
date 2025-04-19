@@ -65,7 +65,7 @@ const Pagination: React.FC<TPaginationProps> = ({
         disabled={Number(currentPage) === 1 || totalPages === 0}
         onClick={() => goToPage(Number(currentPage) - 1)}
       >
-        <ArrowSideIcon />
+        <ArrowSideIcon color="primary" />
       </button>
       <div className={styles.pagination__button_group}>
         {paginationGroup.map((item, index) => (
@@ -88,7 +88,7 @@ const Pagination: React.FC<TPaginationProps> = ({
         disabled={Number(currentPage) === totalPages || totalPages === 0}
         onClick={() => goToPage(Number(currentPage) + 1)}
       >
-        <ArrowSideIcon />
+        <ArrowSideIcon color="primary" />
       </button>
     </div>
   );
