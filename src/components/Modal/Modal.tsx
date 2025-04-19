@@ -1,6 +1,6 @@
 import { Modal as ModalMui } from "@mui/material";
 import styles from "./Modal.module.scss";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 type ModalProps = {
   className?: string;

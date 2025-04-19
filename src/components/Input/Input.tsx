@@ -1,5 +1,5 @@
 import React from "react";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 import styles from "./Input.module.scss";
 

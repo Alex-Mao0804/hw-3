@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AuthFormTabs.module.scss";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 import AuthFormUI from "@/pages/AuthPage/components/AuthFormUI/AuthFormUI";
 import { Box, Tab, Tabs } from "@mui/material";

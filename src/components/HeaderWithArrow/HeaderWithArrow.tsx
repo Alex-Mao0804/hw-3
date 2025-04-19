@@ -1,5 +1,5 @@
 import styles from "./HeaderWithArrow.module.scss";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 import { Text, ButtonBack } from "@components";
 
 type HeaderProps = {

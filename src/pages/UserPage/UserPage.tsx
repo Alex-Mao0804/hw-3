@@ -1,7 +1,7 @@
 import styles from "./UserPage.module.scss";
 import { observer } from "mobx-react-lite";
 import UserInfo from "./components/UserInfo";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 import { useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";

@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import { useState } from "react";
 import QuicklyOrder from "@/pages/ProductPage/components/QuicklyOrder";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 import { Text, Modal, Button } from "@components";
 
 type ProductItemProps = {

@@ -1,5 +1,5 @@
 import { StepIconProps } from "@mui/material";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 import styles from "./CustomStepIcon.module.scss";
 import CheckIcon from "@/components/icons/CheckIcon";

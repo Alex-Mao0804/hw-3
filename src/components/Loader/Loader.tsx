@@ -1,4 +1,4 @@
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 
 import styles from "./Loader.module.scss";
 

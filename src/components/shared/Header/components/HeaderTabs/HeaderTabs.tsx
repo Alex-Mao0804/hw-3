@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 import styles from "./HeaderTabs.module.scss";
 import Text from "@/components/Text";
 import ROUTES from "@/utils/routes";

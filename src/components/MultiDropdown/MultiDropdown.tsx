@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import styles from "./MultiDropdown.module.scss";
 import { OptionEntity } from "@/utils/types";

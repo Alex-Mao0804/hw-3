@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AuthFormUI.module.scss";
-import clsx from "@libs/clsx";
+import clsx from "clsx";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
