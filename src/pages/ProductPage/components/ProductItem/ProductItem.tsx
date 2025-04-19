@@ -1,15 +1,25 @@
-import Text from "@/components/Text";
 import styles from "./ProductItem.module.scss";
 import { ProductEntity } from "@/utils/types";
-import Button from "@/components/Button";
 import PreviewSwiper from "@/components/PreviewSwiper/PreviewSwiper";
 import { observer } from "mobx-react-lite";
+import rootStore from "@/stores/RootStore";
+import { useState } from "react";
+import QuicklyOrder from "@/pages/ProductPage/components/QuicklyOrder";
+import clsx from "clsx";
+import { Text, Modal, Button } from "@components";
 
 type ProductItemProps = {
   product: ProductEntity;
 };
 
-const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+const ProductItem: React.FC<ProductItemProps> = observer(({ product }) => {
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={styles.product_item}>
       <div className={styles.product_item__image}>
@@ -30,18 +40,35 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           </Text>
 
           <div className={styles.product_item__actions}>
-            <Button className={styles.product_item__actions__button}>
+            <Button
+              onClick={handleSubmitOrder}
+              className={styles.product_item__actions__button}
+            >
               Buy Now
             </Button>
-            <Button className={styles.product_item__actions__button}>
+            <Button
+              disabled={rootStore.cart.checkProduct(product)}
+              onClick={() => {
+                rootStore.cart.addProduct(product);
+              }}
+              className={styles.product_item__actions__button}
+            >
               Add to Cart
             </Button>
           </div>
         </div>
       </div>
+      <Modal
+        className={clsx(styles.modal, styles.modal__quicklyOrder)}
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+      >
+        <div className={styles.modal__content}>
+          <QuicklyOrder product={product} />
+        </div>
+      </Modal>
     </div>
   );
-};
+});
 
-const ObservedProductItem = observer(ProductItem);
-export default ObservedProductItem;
+export default ProductItem;

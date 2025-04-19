@@ -1,6 +1,7 @@
 import styles from "./Pagination.module.scss";
 import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
 import clsx from "clsx";
+
 import Button from "@/components/Button";
 import { useCallback, useMemo } from "react";
 
@@ -66,13 +67,13 @@ const Pagination: React.FC<TPaginationProps> = ({
       >
         <ArrowSideIcon />
       </button>
-      <div>
+      <div className={styles.pagination__button_group}>
         {paginationGroup.map((item, index) => (
           <Button
             key={index}
             onClick={changePage}
             className={clsx(
-              styles.pagination__button_group,
+              styles.pagination__button_ciffer,
               Number(currentPage) !== item &&
                 styles.pagination__button_noActive,
             )}

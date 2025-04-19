@@ -6,8 +6,8 @@ import {
   runInAction,
 } from "mobx";
 import { ProductEntity } from "@/utils/types";
-import { getRelatedProducts } from "@/api/handlers/directionProduct/related";
-import { getProduct } from "@api/handlers/directionProduct/item";
+import { getRelatedProducts } from "@/api/handlers/product/related";
+import { getProduct } from "@/api/handlers/product/item";
 import { ILocalStore } from "@utils/useLocalStore";
 
 type PrivateFields = "_item" | "_related";
@@ -61,7 +61,7 @@ class ItemStore implements ILocalStore {
 
   async fetchItem(id: string) {
     this._item.loading = true;
-
+    this._item.error = null;
     try {
       const product = await getProduct(id);
       runInAction(() => {

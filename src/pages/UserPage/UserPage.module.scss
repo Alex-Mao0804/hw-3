@@ -1,0 +1,61 @@
+@use "@variables" as vars;
+
+.user_page {
+  display: flex;
+  flex-direction: column;
+  @include vars.center-container;
+  @include vars.respond-to(desktop-large) {
+    padding-right: vars.$space-xl2;
+    padding-left: vars.$space-xl2;
+  }
+  @include vars.respond-to(mobile) {
+    padding-right: vars.$space-m;
+    padding-left: vars.$space-m;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: vars.$space-m;
+  margin-top: 10px;
+  @include vars.respond-to(mobile) {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: auto;
+  }
+
+  &__header {
+    @include vars.respond-to(mobile) {
+      display: none;
+    }
+  }
+  &__menu {
+    position: sticky;
+    width: 100%;
+    height: fit-content;
+    @include vars.respond-to(mobile) {
+      position: static;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    @include vars.respond-to(tablet) {
+      top: calc(vars.$header-height + vars.$space-s);
+    }
+    @include vars.respond-to(desktop) {
+      top: calc(vars.$header-height + vars.$space-l);
+    }
+  }
+}
+
+.tab_panel {
+  width: 100%;
+}
+
+.header {
+  display: none;
+  @include vars.respond-to(mobile) {
+    display: flex;
+    margin-bottom: auto;
+  }
+}

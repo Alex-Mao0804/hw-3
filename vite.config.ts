@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/hw-3/",
   resolve: {
     alias: {
       "@": path.join(__dirname, "src"),
@@ -20,6 +21,7 @@ export default defineConfig({
       "@utils": path.join(__dirname, "src/utils"),
       "@apiHandlers": path.join(__dirname, "src/api/handlers"),
       "@apiTypes": path.join(__dirname, "src/api/types"),
+      "@libs": path.join(__dirname, "src/components/libs"),
     },
   },
 });

@@ -1,0 +1,15 @@
+@use "@variables" as vars;
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: vars.$space-m;
+  @include vars.respond-to(tablet) {
+    margin-bottom: vars.$space-m;
+  }
+  &__title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

@@ -5,43 +5,26 @@
   flex-direction: column;
   padding-bottom: 128px;
   @include vars.center-container;
-}
-
-.navigation {
-  height: 48px;
-  margin-top: 60px;
-  margin-right: auto;
-  margin-bottom: 32px;
-  &__button {
-    display: flex;
-    align-items: center;
-    gap: vars.$space-xs;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-      gap: vars.$space-m;
-    }
-
-    &:active {
-      gap: vars.$space-xxs;
-    }
+  @include vars.respond-to(desktop-large) {
+    padding-left: vars.$space-xl2;
+    padding-right: vars.$space-xl2;
   }
-
-  &__icon {
-    width: 32px;
-    height: 32px;
-    rotate: 180deg;
+  @include vars.respond-to(mobile) {
+    padding-left: vars.$space-m;
+    padding-right: vars.$space-m;
+    padding-bottom: vars.$space-xl2;
   }
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: vars.$space-xxl;
-}
+  @include vars.respond-to(tablet) {
+    margin-top: vars.$space-l;
 
-@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
-  .product_page {
-    padding: 0 30px;
+    gap: vars.$space-m;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xxl;
   }
 }
