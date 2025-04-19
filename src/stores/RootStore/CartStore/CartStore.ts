@@ -1,5 +1,5 @@
-import { getProduct } from "@api/handlers/directionProduct/item";
-import { mockSendOrder } from "@api/handlers/directionOrder/details";
+import { getProduct } from "@/api/handlers/product/item";
+import { mockSendOrder } from "@/api/handlers/order/details";
 import AddressStore from "@stores/AddressStore";
 import { LOCAL_STORAGE_KEYS } from "@utils/constants";
 import { ProductEntity, ProductEntityWithQuantity } from "@types";

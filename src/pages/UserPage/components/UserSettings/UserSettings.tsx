@@ -6,11 +6,10 @@ import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
 import Button from "@/components/Button";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AlertMessage from "@/pages/UserPage/components/AlertMessage";
+import InputPassword from "@/components/InputPassword";
 
-const UserSettings = () => {
+const UserSettings = observer(() => {
   const { user, loading, resetError, updateProfile } = rootStore.user;
   const [form, setForm] = useState<TCreateUserRequestApi>({
     email: "",
@@ -31,16 +30,7 @@ const UserSettings = () => {
   );
 
   const [repeatPassword, setRepeatPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleClickShowRepeatPassword = () => {
-    setShowRepeatPassword(!showRepeatPassword);
-  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const filteredForm = Object.fromEntries(
@@ -64,105 +54,64 @@ const UserSettings = () => {
       <AlertMessage form={form} repeatPassword={repeatPassword} />
       <div className={styles.user_settings__avatar}>
         <Text view="p-14" weight="bold">
-          Введите ссылку на аватар
+          Entered new link avatar
         </Text>
         <Input
           value={form.avatar}
           name="avatar"
           onChange={(e) => setFormData("avatar", e)}
           type="url"
-          placeholder={user?.avatar || "Введите ссылку на аватар"}
+          placeholder={user?.avatar || "Enter link avatar"}
         />
       </div>
 
       <div className={styles.user_settings__email}>
         <Text view="p-14" weight="bold">
-          Введите email
+          Entered new email
         </Text>
         <Input
           value={form.email}
           name="email"
           onChange={(e) => setFormData("email", e)}
           type="email"
-          placeholder={user?.email || "Введите email"}
+          placeholder={user?.email || "Enter email"}
         />
       </div>
       <div className={styles.user_settings__name}>
         <Text view="p-14" weight="bold">
-          Введите новое имя
+          Entered new name
         </Text>
         <Input
           value={form.name}
           name="name"
           onChange={(e) => setFormData("name", e)}
           type="name"
-          placeholder={user?.name || "Введите имя"}
+          placeholder={user?.name || "Enter name"}
         />
       </div>
       <Text view="p-14" weight="bold">
-        Пароль
+        New password
       </Text>
       <div className={styles.user_settings__password}>
-        <Input
+        <InputPassword
           value={form.password}
           onChange={(e) => setFormData("password", e)}
-          type={showPassword ? "text" : "password"}
+          placeholder="Enter password"
           name="password"
-          placeholder="Введите пароль"
-          afterSlot={
-            !showPassword ? (
-              <VisibilityIcon
-                role="button"
-                aria-label="Показать пароль"
-                className={styles.user_settings__icon}
-                color="disabled"
-                onClick={handleClickShowPassword}
-              />
-            ) : (
-              <VisibilityOffIcon
-                role="button"
-                aria-label="Скрыть пароль"
-                className={styles.user_settings__icon}
-                onClick={handleClickShowPassword}
-              />
-            )
-          }
         />
-
-        <Input
+        <InputPassword
           value={repeatPassword}
           onChange={(e) => setRepeatPassword(e)}
-          type={showRepeatPassword ? "text" : "password"}
+          placeholder="Repeat password"
           name="repeatPassword"
-          placeholder="Повторите пароль"
-          afterSlot={
-            !showRepeatPassword ? (
-              <VisibilityIcon
-                role="button"
-                aria-label="Показать пароль"
-                className={styles.user_settings__icon}
-                color="disabled"
-                onClick={handleClickShowRepeatPassword}
-              />
-            ) : (
-              <VisibilityOffIcon
-                role="button"
-                aria-label="Скрыть пароль"
-                className={styles.user_settings__icon}
-                onClick={handleClickShowRepeatPassword}
-              />
-            )
-          }
         />
       </div>
 
       <Button disabled={disabled} loading={loading} type="submit">
-        Сохранить
+        Save
       </Button>
     </form>
   );
-};
+});
 
-const ObservedUserSettings = observer(UserSettings);
-
-export default ObservedUserSettings;
+export default UserSettings;

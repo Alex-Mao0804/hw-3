@@ -1,6 +1,7 @@
 import styles from "./Pagination.module.scss";
 import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
+
 import Button from "@/components/Button";
 import { useCallback, useMemo } from "react";
 

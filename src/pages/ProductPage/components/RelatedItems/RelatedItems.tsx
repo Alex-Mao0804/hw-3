@@ -17,63 +17,62 @@ type RelatedItemsProps = {
   };
 };
 
-const RelatedItems: React.FC<RelatedItemsProps> = ({
-  related: { relatedProducts, loading },
-}) => {
-  const navigate = useNavigate();
-  if (!relatedProducts || loading) {
+const RelatedItems: React.FC<RelatedItemsProps> = observer(
+  ({ related: { relatedProducts, loading } }) => {
+    const navigate = useNavigate();
+    if (!relatedProducts || loading) {
+      return (
+        <div className={styles.related_items}>
+          <Text view="title" weight="bold">
+            Related Items
+          </Text>
+          <ul className={styles.related_items__list}>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <li key={index}>
+                <SkeletonCard />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+    const handleClickCard = (id: number) => {
+      navigate(ROUTES.PRODUCT(String(id)), { replace: true });
+    };
     return (
       <div className={styles.related_items}>
         <Text view="title" weight="bold">
           Related Items
         </Text>
         <ul className={styles.related_items__list}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <li key={index}>
-              <SkeletonCard />
+          {relatedProducts.map((product: ProductEntity) => (
+            <li key={product.id}>
+              <Card
+                image={product.images[0]}
+                title={product.title}
+                subtitle={product.description}
+                captionSlot={product.category.name}
+                onClick={() => runInAction(() => handleClickCard(product.id))}
+                contentSlot={`$${product.price}`}
+                actionSlot={
+                  <Button
+                    disabled={false}
+                    loading={false}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      rootStore.cart.addProduct(product);
+                    }}
+                  >
+                    Add to cart
+                  </Button>
+                }
+              />
             </li>
           ))}
         </ul>
       </div>
     );
-  }
-  const handleClickCard = (id: number) => {
-    navigate(ROUTES.PRODUCT(String(id)), { replace: true });
-  };
-  return (
-    <div className={styles.related_items}>
-      <Text view="title" weight="bold">
-        Related Items
-      </Text>
-      <ul className={styles.related_items__list}>
-        {relatedProducts.map((product: ProductEntity) => (
-          <li key={product.id}>
-            <Card
-              image={product.images[0]}
-              title={product.title}
-              subtitle={product.description}
-              captionSlot={product.category.name}
-              onClick={() => runInAction(() => handleClickCard(product.id))}
-              contentSlot={`$${product.price}`}
-              actionSlot={
-                <Button
-                  disabled={false}
-                  loading={false}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    rootStore.cart.addProduct(product);
-                  }}
-                >
-                  Add to cart
-                </Button>
-              }
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+  },
+);
 
-const ObservedRelatedItems = observer(RelatedItems);
-export default ObservedRelatedItems;
+export default RelatedItems;

@@ -28,7 +28,8 @@
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@apiHandlers/*": ["src/api/handlers/*"],
-      "@apiTypes/*": ["src/api/types/*"]
+      "@apiTypes/*": ["src/api/types/*"],
+      "@libs/*": ["src/components/libs/*"]
     },
 
     /* Linting */

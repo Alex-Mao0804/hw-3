@@ -12,15 +12,15 @@ const HeaderActions = () => {
   const navigate = useNavigate();
 
   const isActive =
-    location.pathname === ROUTES.AUTHN || location.pathname === ROUTES.USER;
+    location.pathname === ROUTES.AUTH || location.pathname === ROUTES.USER;
 
   const handleClickUser = () => {
     if (login) {
       navigate(ROUTES.USER);
     } else {
-      navigate(ROUTES.AUTHN, {
+      navigate(ROUTES.AUTH, {
         state: {
-          background: location.pathname !== ROUTES.AUTHN && location,
+          background: location.pathname !== ROUTES.AUTH && location,
         },
       });
     }

@@ -4,7 +4,7 @@ import FilterStore from "@/stores/FilterStore/FilterStore";
 import CategoryStore from "@/stores/CategoryStore/CategoryStore";
 import { ProductEntity } from "@/utils/types";
 import { TFiltersApi } from "@/api/type/directionProduct/list";
-import { getProducts } from "@/api/handlers/directionProduct/list";
+import { getProducts } from "@/api/handlers/product/list";
 import { ILocalStore } from "@/utils/useLocalStore";
 import { initialFilters } from "@/utils/constants";
 import LimitStore from "@/stores/LimitStore/LimitStore";

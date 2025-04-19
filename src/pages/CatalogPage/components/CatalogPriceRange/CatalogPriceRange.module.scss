@@ -11,7 +11,11 @@
     gap: vars.$space-xl;
   }
   &__button {
+    max-width: 150px;
     width: 100%;
     text-wrap: nowrap;
+  }
+  &__input {
+    min-width: 95px;
   }
 }

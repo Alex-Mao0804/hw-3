@@ -1,7 +1,0 @@
-@use '@variables' as vars;
-
-.contactForm {
-  display: flex;
-  flex-direction: column;
-  gap: vars.$space-m;
-}

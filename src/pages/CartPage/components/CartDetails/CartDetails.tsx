@@ -7,8 +7,8 @@ import rootStore from "@/stores/RootStore";
 
 import Modal from "@/components/Modal";
 import { useState } from "react";
-import ContactForm from "@/components/ContactForm";
-import RatingChoice from "@/components/RatingChoice";
+import ContactForm from "@/components/shared/ContactForm";
+import RatingChoice from "@/components/shared/RatingChoice";
 
 const CartDetails = () => {
   const cartStore = rootStore.cart;
@@ -16,8 +16,8 @@ const CartDetails = () => {
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    await cartStore.submitOrder(); 
-    setIsModalOpen(true); 
+    await cartStore.submitOrder();
+    setIsModalOpen(true);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,11 +63,11 @@ const CartDetails = () => {
         className={styles.modal}
         open={isModalOpen}
         setOpen={setIsModalOpen}
-        >
-          <>
+      >
+        <>
           <div className={styles.modal__content}>
             <Text view="title" weight="bold">
-              Благодарим за заказ, {cartStore.contactName}
+              Thanks for your order, {cartStore.contactName}
             </Text>
             <ul className={styles.modal__list}>
               {cartStore.products.map((product) => (
@@ -79,14 +79,12 @@ const CartDetails = () => {
               ))}
             </ul>
             <Text view="p-20">
-              Наши менеджеры свяжутся с вами в ближайшее время по электронной
-              почте {cartStore.contactEmail}
+              Our manager will contact you via email {cartStore.contactEmail}
             </Text>
           </div>
           <RatingChoice />
-          </>
-        
-        </Modal>
+        </>
+      </Modal>
     </div>
   );
 };

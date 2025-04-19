@@ -7,14 +7,14 @@ import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import Modal from "@/components/Modal";
 import { useState } from "react";
-import QuicklyOrder from "@/components/QuicklyOrder";
-import clsx from "clsx";
+import QuicklyOrder from "@/pages/ProductPage/components/QuicklyOrder";
+import clsx from "@libs/clsx";
 
 type ProductItemProps = {
   product: ProductEntity;
 };
 
-const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+const ProductItem: React.FC<ProductItemProps> = observer(({ product }) => {
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsModalOpen(true);
@@ -42,7 +42,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           </Text>
 
           <div className={styles.product_item__actions}>
-            <Button onClick={handleSubmitOrder} className={styles.product_item__actions__button}>
+            <Button
+              onClick={handleSubmitOrder}
+              className={styles.product_item__actions__button}
+            >
               Buy Now
             </Button>
             <Button
@@ -60,15 +63,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       <Modal
         className={clsx(styles.modal, styles.modal__quicklyOrder)}
         open={isModalOpen}
-        setOpen={setIsModalOpen}>
-          <div className={styles.modal__content}>
-            <QuicklyOrder product={product} />
-          </div>
-        
-        </Modal>
+        setOpen={setIsModalOpen}
+      >
+        <div className={styles.modal__content}>
+          <QuicklyOrder product={product} />
+        </div>
+      </Modal>
     </div>
   );
-};
+});
 
-const ObservedProductItem = observer(ProductItem);
-export default ObservedProductItem;
+export default ProductItem;

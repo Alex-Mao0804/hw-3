@@ -13,7 +13,7 @@ const ButtonBack = () => {
       >
         <ArrowSideIcon className={styles.navigation__icon} />
         <Text view="p-20" color="primary" weight="normal">
-          Назад
+          Back
         </Text>
       </button>
     </div>

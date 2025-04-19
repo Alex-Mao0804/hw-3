@@ -3,7 +3,7 @@ const ROUTES = {
   PRODUCT: (id: string) => `/${id}`,
   CART: "/cart",
   USER: "/user",
-  AUTHN: "/authn",
+  AUTH: "/auth",
 };
 
 export default ROUTES;

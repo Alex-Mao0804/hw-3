@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
+
 import styles from "./HeaderTabs.module.scss";
 import Text from "@/components/Text";
 import ROUTES from "@/utils/routes";
@@ -50,7 +51,6 @@ const HeaderTabs = () => {
             )}
           </NavLink>
         </li>
-        
       </ul>
     </nav>
   );

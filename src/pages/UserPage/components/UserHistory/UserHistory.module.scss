@@ -1,4 +1,4 @@
-@use '@variables' as vars;
+@use "@variables" as vars;
 
 .user_history {
   display: flex;
@@ -20,12 +20,5 @@
       font-size: 32px;
       line-height: 112%;
     }
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: vars.$space-l;
   }
 }

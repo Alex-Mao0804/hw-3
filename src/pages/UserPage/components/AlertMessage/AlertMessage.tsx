@@ -4,14 +4,14 @@ import { TCreateUserRequestApi } from "@/api/type/directionUsers/list";
 import { observer } from "mobx-react-lite";
 import rootStore from "@/stores/RootStore";
 import { Alert, AlertColor } from "@mui/material";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
 
 type AlertMessageProps = {
   form: TCreateUserRequestApi;
   repeatPassword: string;
 };
 
-const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
+const AlertMessage = observer(({ form, repeatPassword }: AlertMessageProps) => {
   const { error, user } = rootStore.user;
 
   const [message, setMessage] = useState<{
@@ -31,7 +31,7 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
     if (someFieldFilled && !error) {
       setMessage({
         status: "success",
-        text: "Профиль успешно обновлён",
+        text: "Successfully updated",
       });
       setShowMessage(true);
     }
@@ -60,7 +60,7 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
     if (repeatPassword !== form.password) {
       setMessage({
         status: "warning",
-        text: "Пароли не совпадают",
+        text: "Passwords do not match",
       });
       setShowMessage(true);
     } else {
@@ -80,7 +80,6 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
       )}
     >
       <>
-        {" "}
         {message.text !== "" && (
           <Alert
             onClose={() => setShowMessage(false)}
@@ -92,8 +91,6 @@ const AlertMessage = ({ form, repeatPassword }: AlertMessageProps) => {
       </>
     </div>
   );
-};
+});
 
-const ObserveredAlertMessage = observer(AlertMessage);
-
-export default ObserveredAlertMessage;
+export default AlertMessage;

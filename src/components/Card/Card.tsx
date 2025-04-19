@@ -1,6 +1,6 @@
 import Text from "@/components/Text";
 import styles from "./Card.module.scss";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
 
 type CardProps = {
   /** Дополнительный classname */

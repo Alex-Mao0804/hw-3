@@ -1,4 +1,5 @@
-import clsx from "clsx";
+import clsx from "@libs/clsx";
+
 import styles from "./Icon.module.scss";
 
 export type IconProps = React.SVGAttributes<SVGElement> & {

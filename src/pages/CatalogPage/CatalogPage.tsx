@@ -27,15 +27,25 @@ const CatalogPage = observer(() => {
     filterStore.setNavigate(navigate);
   }, [navigate, filterStore]);
 
+  const isEqual =
+    String(filterStore.fieldTitle) === String(filterStore.filtersState.title);
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      filterStore.updateAndSync({
-        title: filterStore.getFieldTitle(),
-        page: 1,
-      });
+      if (!isEqual) {
+        filterStore.updateAndSync({
+          title: filterStore.getFieldTitle(),
+          page: 1,
+        });
+      } else {
+        filterStore.setTitle("");
+        filterStore.updateAndSync({
+          title: "",
+          page: 1,
+        });
+      }
     },
-    [filterStore],
+    [filterStore, isEqual],
   );
   const handleChangePage = useCallback(
     (page: number) => {
@@ -73,12 +83,14 @@ const CatalogPage = observer(() => {
             }}
             placeholder="Product name"
           />
-          <Button
-            className={styles.catalog_page__options__button}
-            disabled={false}
-          >
-            Find now
-          </Button>
+          <div className={styles.catalog_page__options__button_container}>
+            <Button
+              className={styles.catalog_page__options__button}
+              disabled={!filterStore.fieldTitle}
+            >
+              {!isEqual || !filterStore.fieldTitle ? "Find now" : "Reset"}
+            </Button>
+          </div>
         </form>
         <div className={styles.catalog_page__options__filters}>
           <div className={styles.catalog_page__options__filters__top}>

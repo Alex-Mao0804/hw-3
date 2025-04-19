@@ -11,7 +11,7 @@
     background: vars.$button-primary-text;
     @include vars.respond-to(tablet) {
       height: vars.$input_button_height-tablet;
-      padding: vars.$space-s vars.$space-s;
+      padding: vars.$space-xxs vars.$space-xxs;
     }
     @include vars.respond-to(desktop) {
       height: vars.$input_button_height;

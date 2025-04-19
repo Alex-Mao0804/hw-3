@@ -2,7 +2,7 @@ import { autorun, makeAutoObservable, runInAction } from "mobx";
 import { ILocalStore } from "@/utils/useLocalStore";
 import { TOrderByEmailResponse } from "@/api/type/directionSendOrder/list";
 import rootStore from "@stores/RootStore";
-import { mockGetOrdersByEmail } from "@/api/handlers/directionOrder/details";
+import { mockGetOrdersByEmail } from "@/api/handlers/order/details";
 
 export default class HistoryOrderStore implements ILocalStore {
   private _isLoading: boolean = false;

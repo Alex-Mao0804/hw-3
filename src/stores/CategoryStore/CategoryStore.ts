@@ -6,7 +6,7 @@ import {
 } from "mobx";
 import { CategoryEntity } from "@/utils/types";
 import ProductStore from "@/stores/ProductStore";
-import { getCategories } from "@/api/handlers/directionCategory/details";
+import { getCategories } from "@/api/handlers/category/details";
 import { ILocalStore } from "@/utils/useLocalStore";
 import rootStore from "@/stores/RootStore";
 import MultiDropdownStore from "@/stores/MultyDropdownStore";

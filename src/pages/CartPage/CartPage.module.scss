@@ -6,11 +6,11 @@
   @include vars.center-container;
   @include vars.respond-to(desktop-large) {
     padding-left: vars.$space-xl2;
-    padding-right: vars.$space-xl2;  
+    padding-right: vars.$space-xl2;
   }
   @include vars.respond-to(mobile) {
     padding-left: vars.$space-m;
-    padding-right: vars.$space-m;  
+    padding-right: vars.$space-m;
   }
 
   &__header {
@@ -21,25 +21,16 @@
     }
   }
 
-  &__content {    
+  &__content {
     @include vars.respond-to(tablet) {
       display: flex;
       flex-direction: column;
       gap: vars.$space-m;
-  }
-  @include vars.respond-to(desktop) {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: vars.$space-l;
-  }
-
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: vars.$space-l;
+    }
+    @include vars.respond-to(desktop) {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: vars.$space-l;
+    }
   }
 }
-

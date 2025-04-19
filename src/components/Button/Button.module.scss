@@ -13,9 +13,15 @@
   background-color: vars.$button-primary-bg;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+
   @include vars.respond-to(tablet) {
     height: vars.$input_button_height-tablet;
     padding: 0 vars.$space-s;
+    font-size: vars.$font-size-p-14;
+  }
+  @include vars.respond-to(mobile) {
+    height: vars.$input_button_height-tablet;
+    padding: 0 vars.$space-xxs;
     font-size: vars.$font-size-p-14;
   }
   @include vars.respond-to(desktop) {

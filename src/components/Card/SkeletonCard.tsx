@@ -1,5 +1,5 @@
 import styles from "./Card.module.scss";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
 
 export type SkeletonCardProps = {
   className?: string;

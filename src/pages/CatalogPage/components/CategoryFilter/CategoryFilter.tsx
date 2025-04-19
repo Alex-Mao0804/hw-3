@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import MultiDropdown from "@/components/MultiDropdown"; // твой компонент
+import MultiDropdown from "@/components/MultiDropdown";
 import { OptionEntity } from "@/utils/types";
 import { extractOptionKey } from "@/utils/extractOption";
 import styles from "./CategoryFilter.module.scss";
@@ -39,7 +39,9 @@ const CategoryFilter: React.FC<ICategoryFilter> = observer(
         value={toJS(multiDropdownStore.value)}
         onChange={handleMultiDropdownChange}
         isMulti={false}
-        getTitle={multiDropdownStore.getTitle}
+        getTitle={(value) =>
+          multiDropdownStore.getTitle(value, "Choose category")
+        }
       />
     );
   },

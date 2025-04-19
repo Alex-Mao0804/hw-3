@@ -12,7 +12,7 @@ type ItemOrderProps = {
   order: TOrderByEmailResponse;
 };
 
-const ItemOrder = ({ order }: ItemOrderProps) => {
+const ItemOrder = observer(({ order }: ItemOrderProps) => {
   const navigate = useNavigate();
   const isoString = order.datetime;
   const date = new Date(isoString);
@@ -25,7 +25,7 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
 
   const handleOrderClick = () => {
     addProductsWithQuantities(orderItems);
-  }
+  };
 
   const total = order.items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -37,7 +37,11 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
         <Text view="p-16" weight="bold" color="secondary">
           {date.toLocaleString()}
         </Text>
-        <button type="button" onClick={handleOrderClick} className={styles.item_order__repeatOrder}>
+        <button
+          type="button"
+          onClick={handleOrderClick}
+          className={styles.item_order__repeatOrder}
+        >
           <ReplayIcon />
         </button>
       </div>
@@ -45,7 +49,9 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
         {order.items.map((item, index) => (
           <li key={index}>
             <article
-              onClick={() => runInAction(() => handleProductClick(String(item.id)))}
+              onClick={() =>
+                runInAction(() => handleProductClick(String(item.id)))
+              }
               role="button"
               className={styles.item_order__product}
             >
@@ -68,8 +74,6 @@ const ItemOrder = ({ order }: ItemOrderProps) => {
       </div>
     </div>
   );
-};
+});
 
-const ItemOrderObserver = observer(ItemOrder);
-
-export default ItemOrderObserver;
+export default ItemOrder;

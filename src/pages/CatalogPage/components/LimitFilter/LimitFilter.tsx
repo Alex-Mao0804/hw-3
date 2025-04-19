@@ -4,7 +4,7 @@ import { OptionEntity } from "@/utils/types";
 import { extractOptionKey } from "@/utils/extractOption";
 import styles from "./LimitFilter.module.scss";
 import FilterStore from "@/stores/FilterStore";
-import { runInAction, toJS } from "mobx";
+import { toJS } from "mobx";
 import { useCallback } from "react";
 import LimitStore from "@/stores/LimitStore";
 import Text from "@/components/Text";
@@ -19,11 +19,9 @@ const LimitFilter: React.FC<LimitFilterProps> = observer(
 
     const handleMultiDropdownChange = useCallback(
       (value: OptionEntity | OptionEntity[] | null) => {
-        runInAction(() => {
-          const selectedId = extractOptionKey(value);
-          multiDropdownStore.setValue(value);
-          filterStore.updateAndSync({ limit: selectedId, page: 1 });
-        });
+        const selectedId = extractOptionKey(value);
+        multiDropdownStore.setValue(value);
+        filterStore.updateAndSync({ limit: selectedId, page: 1 });
       },
       [filterStore, multiDropdownStore],
     );

@@ -1,6 +1,6 @@
 import styles from "./Button.module.scss";
 import Loader from "@/components/Loader";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */

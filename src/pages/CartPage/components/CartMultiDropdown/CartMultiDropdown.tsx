@@ -3,7 +3,7 @@ import MultiDropdown from "@/components/MultiDropdown";
 import { OptionEntity } from "@/utils/types";
 import styles from "./CartMultiDropdown.module.scss";
 
-import { runInAction, toJS } from "mobx";
+import { toJS } from "mobx";
 import { useCallback } from "react";
 import AddressStore from "@/stores/AddressStore";
 
@@ -17,9 +17,7 @@ const CartMultiDropdown: React.FC<ICartMultiDropdown> = observer(
 
     const handleMultiDropdownChange = useCallback(
       (value: OptionEntity | OptionEntity[] | null) => {
-        runInAction(() => {
-          multiDropdownStore.setValue(value);
-        });
+        multiDropdownStore.setValue(value);
       },
       [multiDropdownStore],
     );

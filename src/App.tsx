@@ -11,12 +11,12 @@ import CartPage from "@pages/CartPage";
 import useCartNotifications from "@hooks/useCartNotifications";
 import rootStore from "@stores/RootStore";
 import { observer } from "mobx-react-lite";
-import AuthnPage from "@pages/AuthnPage";
-import ProtectedRoute from "@components/protected-route/ProtectedRoute";
+import AuthPage from "@pages/AuthPage";
+import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
 import UserPage from "@pages/UserPage";
 
 const App = () => {
-  const { totalQuantity} = rootStore.cart;
+  const { totalQuantity } = rootStore.cart;
   useQueryParamsStoreInit();
   useCartNotifications(totalQuantity);
   const location = useLocation();
@@ -31,10 +31,10 @@ const App = () => {
         <Route path="*" element={<h1>404</h1>} />
         <Route path={ROUTES.CART} element={<CartPage />} />
         <Route
-          path={ROUTES.AUTHN}
+          path={ROUTES.AUTH}
           element={
             <ProtectedRoute onlyUnAuth>
-              <AuthnPage />
+              <AuthPage />
             </ProtectedRoute>
           }
         />
@@ -48,10 +48,10 @@ const App = () => {
       {background && (
         <Routes>
           <Route
-            path={ROUTES.AUTHN}
+            path={ROUTES.AUTH}
             element={
               <ProtectedRoute onlyUnAuth>
-                <AuthnPage />
+                <AuthPage />
               </ProtectedRoute>
             }
           />

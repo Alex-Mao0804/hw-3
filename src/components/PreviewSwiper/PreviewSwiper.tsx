@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import { Mousewheel } from "swiper/modules";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
+
 import styles from "./PreviewSwiper.module.scss";
 import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
 import { ProductEntity } from "@/utils/types";
@@ -14,7 +15,7 @@ interface IPreviewSwiper {
   productData: ProductEntity;
 }
 
-const PreviewSwiper: React.FC<IPreviewSwiper> = ({ productData }) => {
+const PreviewSwiper: React.FC<IPreviewSwiper> = observer(({ productData }) => {
   const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -72,7 +73,6 @@ const PreviewSwiper: React.FC<IPreviewSwiper> = ({ productData }) => {
       </Swiper>
     </div>
   );
-};
+});
 
-const ObservedPreviewSwiper = observer(PreviewSwiper);
-export default ObservedPreviewSwiper;
+export default PreviewSwiper;

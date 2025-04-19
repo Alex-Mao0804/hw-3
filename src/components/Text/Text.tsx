@@ -1,5 +1,5 @@
 import styles from "./Text.module.scss";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
 
 type TextProps = {
   /** Дополнительный класс */

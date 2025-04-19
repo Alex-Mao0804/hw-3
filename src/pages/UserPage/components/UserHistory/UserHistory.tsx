@@ -6,12 +6,10 @@ import ItemOrder from "@pages/UserPage/components/ItemOrder";
 import Text from "@/components/Text";
 import Loader from "@/components/Loader";
 import SkeletonItemOrder from "@pages/UserPage/components/ItemOrder/SkeletonItemOrder";
-import { useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
-import ROUTES from "@routes";
-const UserHistory = () => {
+import EmptyList from "@/components/EmptyList";
+
+const UserHistory = observer(() => {
   const historyOrderStore = useLocalStore(() => new HistoryOrderStore());
-  const navigate = useNavigate();
 
   const loading = historyOrderStore.isLoading;
   const total = historyOrderStore.orders.length;
@@ -38,14 +36,7 @@ const UserHistory = () => {
         ) : (
           <>
             {historyOrderStore.orders.length === 0 && (
-              <div className={styles.user_history__empty}>
-                <Text view="title" weight="bold">
-                  No orders
-                </Text>
-                <Button onClick={() => navigate(ROUTES.CATALOG)}>
-                  Go to catalog
-                </Button>
-              </div>
+              <EmptyList text="No orders yet" />
             )}
             {historyOrderStore.orders.map((order) => (
               <ItemOrder key={order.id} order={order} />
@@ -55,8 +46,6 @@ const UserHistory = () => {
       </div>
     </div>
   );
-};
+});
 
-const ObservedUserHistory = observer(UserHistory);
-
-export default ObservedUserHistory;
+export default UserHistory;

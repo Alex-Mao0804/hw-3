@@ -1,8 +1,6 @@
 import { Modal as ModalMui } from "@mui/material";
 import styles from "./Modal.module.scss";
-import clsx from "clsx";
-
-
+import clsx from "@libs/clsx";
 
 type ModalProps = {
   className?: string;
@@ -22,17 +20,17 @@ const Modal = ({ open, setOpen, children, onClose, className }: ModalProps) => {
   };
   return (
     <>
-    <ModalMui
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <div className={clsx(className, styles.modal)}>
-        <div className={styles.modal__background} />
-        {children}
-      </div>
-    </ModalMui>
+      <ModalMui
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className={clsx(className, styles.modal)}>
+          <div className={styles.modal__background} />
+          {children}
+        </div>
+      </ModalMui>
     </>
   );
 };

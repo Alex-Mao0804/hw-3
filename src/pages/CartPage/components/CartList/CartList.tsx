@@ -15,13 +15,17 @@ type CartListProps = {
   handleRemoveProduct: (productId: number) => void;
 };
 
-const CartList = ({ products, handleSetProductQuantity, handleGetProductQuantity, handleRemoveProduct }: CartListProps) => {
+const CartList = ({
+  products,
+  handleSetProductQuantity,
+  handleGetProductQuantity,
+  handleRemoveProduct,
+}: CartListProps) => {
   const navigate = useNavigate();
 
   const handleProductClick = (productId: string) => {
     navigate(ROUTES.PRODUCT(productId));
   };
-
 
   return (
     <ul className={styles.cart_list}>
@@ -44,11 +48,13 @@ const CartList = ({ products, handleSetProductQuantity, handleGetProductQuantity
                   onClick={(e) => e.stopPropagation()}
                   value={String(handleGetProductQuantity(product.id))}
                   onChange={(e) => {
-                    runInAction(() => handleSetProductQuantity(product.id, Number(e)));
+                    runInAction(() =>
+                      handleSetProductQuantity(product.id, Number(e)),
+                    );
                   }}
                   type="number"
                   placeholder="quantity"
-                  afterSlot="шт"
+                  afterSlot="pc"
                 />
                 <Button
                   className={styles.card__actions}
@@ -56,7 +62,7 @@ const CartList = ({ products, handleSetProductQuantity, handleGetProductQuantity
                   loading={false}
                   onClick={(e) => {
                     e.stopPropagation();
-                    runInAction(() => handleRemoveProduct(product.id) );
+                    runInAction(() => handleRemoveProduct(product.id));
                   }}
                 >
                   Remove

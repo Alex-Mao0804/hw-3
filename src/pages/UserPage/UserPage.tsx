@@ -1,7 +1,8 @@
 import styles from "./UserPage.module.scss";
 import { observer } from "mobx-react-lite";
 import UserInfo from "./components/UserInfo";
-import clsx from "clsx";
+import clsx from "@libs/clsx";
+
 import { useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import rootStore from "@/stores/RootStore";
@@ -40,7 +41,7 @@ function a11yProps(index: number) {
   };
 }
 
-const UserPage = () => {
+const UserPage = observer(() => {
   const { user, logout } = rootStore.user;
   const navigate = useNavigate();
   const [value, setValue] = useState(1);
@@ -58,16 +59,13 @@ const UserPage = () => {
       <HeaderWithArrow className={styles.header} title="" />
       <div className={styles.content}>
         <CustomTabPanel value={value} index={1}>
-          <HeaderWithArrow
-            className={styles.content__header}
-            title="История покупок"
-          />
+          <HeaderWithArrow className={styles.content__header} title="History" />
           <UserHistory />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <HeaderWithArrow
             className={styles.content__header}
-            title="Настройки"
+            title="Settings"
           />
           <UserSettings />
         </CustomTabPanel>
@@ -93,14 +91,13 @@ const UserPage = () => {
             name={user!.name}
             email={user!.email}
           />
-          <Tab disableRipple label="История покупок" {...a11yProps(0)} />
-          <Tab disableRipple label="Настройки профиля" {...a11yProps(1)} />
-          <Tab disableRipple label="Выйти из профиля" {...a11yProps(2)} />
+          <Tab disableRipple label="History of orders" {...a11yProps(0)} />
+          <Tab disableRipple label="Settings profile" {...a11yProps(1)} />
+          <Tab disableRipple label="Logout" {...a11yProps(2)} />
         </Tabs>
       </div>
     </div>
   );
-};
+});
 
-const UserPageObserver = observer(UserPage);
-export default UserPageObserver;
+export default UserPage;

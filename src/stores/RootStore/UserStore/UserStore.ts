@@ -2,11 +2,11 @@ import {
   getProfileApi,
   postLoginApi,
   postRefreshApi,
-} from "@/api/handlers/directionAuth/details";
+} from "@/api/handlers/auth/details";
 import {
   postCreateUserApi,
   postUpdateUserApi,
-} from "@/api/handlers/directionUsers/details";
+} from "@/api/handlers/users/details";
 import { TProfileApi } from "@/api/type/directionAuth/list";
 import {
   TCreateUserRequestApi,
