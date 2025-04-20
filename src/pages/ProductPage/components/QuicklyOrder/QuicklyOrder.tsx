@@ -97,13 +97,13 @@ const QuicklyOrder = observer(({ product }: QuicklyOrderProps) => {
                 onChange={(value) => setCount(Number(value))}
                 afterSlot={
                   <Text view="p-14" color="secondary">
-                    шт.
+                    pc.
                   </Text>
                 }
               />
             </div>
             <Text view="p-16" color="secondary">
-              Всего на сумму: ${product.price * count}
+              Total price: ${product.price * count}
             </Text>
           </div>
           <ActionsButton
