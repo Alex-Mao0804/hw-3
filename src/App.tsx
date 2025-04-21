@@ -26,7 +26,6 @@ const App = () => {
       <Routes location={background || location}>
         <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
         <Route path={ROUTES.PRODUCT(":id")} element={<ProductPage />} />
-        <Route path="*" element={<h1>404</h1>} />
         <Route path={ROUTES.CART} element={<CartPage />} />
         <Route
           path={ROUTES.AUTH}
