@@ -20,6 +20,5 @@ createRoot(document.getElementById("root")!).render(
         </SnackbarProvider>
       </HashRouter>
     </ThemeProvider>
-    ,
   </StrictMode>,
 );
