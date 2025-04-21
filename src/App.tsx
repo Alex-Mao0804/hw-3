@@ -1,26 +1,62 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import styles from "./App.module.scss";
 import "@styles/main.scss";
-import CatalogPage from "@/pages/CatalogPage";
-import Header from "@/components/Header";
-import ProductPage from "@/pages/ProductPage";
-import ROUTES from "@/utils/routes";
-import ScrollToTop from "@/components/ScrollToTop";
-import { useQueryParamsStoreInit } from "@/stores/RootStore/hooks/useQueryParamsStoreInit";
+import { CatalogPage, ProductPage, CartPage, AuthPage, UserPage } from "@pages";
+import { Header } from "@/components/shared";
+import ROUTES from "@routes";
+import { useQueryParamsStoreInit } from "@stores/RootStore/hooks/useQueryParamsStoreInit";
+import useCartNotifications from "@hooks/useCartNotifications";
+import rootStore from "@stores/RootStore";
+import { observer } from "mobx-react-lite";
+import { ProtectedRoute, ScrollToTop } from "@components";
+import useAuthNotifications from "./hooks/useAuthNotifications";
 
 const App = () => {
+  const { totalQuantity } = rootStore.cart;
+  const { isLogin } = rootStore.user;
   useQueryParamsStoreInit();
-
+  useCartNotifications(totalQuantity);
+  useAuthNotifications(isLogin);
+  const location = useLocation();
+  const background = location.state?.background;
   return (
     <div className={styles.app}>
       <Header />
       <ScrollToTop />
-      <Routes>
+      <Routes location={background || location}>
         <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
         <Route path={ROUTES.PRODUCT(":id")} element={<ProductPage />} />
+        <Route path={ROUTES.CART} element={<CartPage />} />
+        <Route
+          path={ROUTES.AUTH}
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <AuthPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path={ROUTES.USER}
+          element={<ProtectedRoute>{<UserPage />}</ProtectedRoute>}
+        />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path={ROUTES.AUTH}
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <AuthPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
 
-export default App;
+const AppObserver = observer(App);
+export default AppObserver;

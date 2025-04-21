@@ -7,45 +7,83 @@
   overflow: hidden;
   font-family: "Roboto", sans-serif;
   background: vars.$color-card-bg;
-  cursor: pointer;
-  width: vars.$card-width;
-  height: vars.$card-height;
+
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  @include vars.respond-to(tablet) {
+    width: vars.$card-width-tablet;
+    height: vars.$card-height-tablet;
+  }
+  @include vars.respond-to(desktop) {
+    width: vars.$card-width;
+    height: vars.$card-height;
+  }
   &__subtitle {
-    height: 60px;
+    @include vars.respond-to(tablet) {
+      height: 52px;
+    }
+    @include vars.respond-to(desktop) {
+      height: 60px;
+    }
   }
   &:hover {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
   }
 
   &__image {
-    width: 360px;
-    height: 360px;
     object-fit: cover;
+    @include vars.respond-to(tablet) {
+      width: vars.$card-width-tablet;
+      aspect-ratio: 1 / 1;
+    }
+    @include vars.respond-to(desktop) {
+      width: vars.$card-width;
+      aspect-ratio: 1 / 1;
+    }
   }
   &__content {
     display: flex;
     flex-direction: column;
-    padding: vars.$space-xl vars.$space-xs;
+    justify-content: space-between;
+    width: -webkit-fill-available;
     background: vars.$color-bg;
+    @include vars.respond-to(tablet) {
+      padding: vars.$space-l vars.$space-xxs;
+    }
+    @include vars.respond-to(desktop) {
+      padding: vars.$space-xl vars.$space-xs;
+    }
   }
   &__text {
     display: flex;
     flex-direction: column;
     gap: vars.$space-xxs;
-    margin-bottom: vars.$space-l;
+    @include vars.respond-to(tablet) {
+      margin-bottom: vars.$space-s;
+    }
+    @include vars.respond-to(desktop) {
+      margin-bottom: vars.$space-l;
+    }
   }
   &__title {
-    height: 3rem;
+    @include vars.respond-to(tablet) {
+      height: 2.5rem;
+    }
+    @include vars.respond-to(desktop) {
+      height: 3rem;
+    }
   }
   &__footer {
     display: flex;
     flex-direction: row;
+    justify-content: end;
     align-items: center;
   }
   &__footer__action {
-    margin-left: auto;
-    width: 155px;
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    width: 100%;
   }
 }
 
@@ -66,6 +104,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     &__child {
       @include vars.skeleton(100%, 16px);
     }

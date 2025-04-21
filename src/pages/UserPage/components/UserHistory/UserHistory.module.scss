@@ -1,0 +1,24 @@
+@use "@variables" as vars;
+
+.user_history {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$space-m;
+
+  &__orders {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-s;
+  }
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: vars.$space-xl;
+
+    &__text {
+      font-size: 32px;
+      line-height: 112%;
+    }
+  }
+}

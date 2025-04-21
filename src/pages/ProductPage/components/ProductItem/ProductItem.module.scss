@@ -1,14 +1,15 @@
 @use "@variables" as vars;
 
 .product_item {
-  overflow: hidden;
   display: grid;
-  grid-template-columns: 50% 50%;
-  gap: vars.$space-xxl;
+  flex-direction: row;
+  grid-template-columns: 1fr 1fr;
+  gap: vars.$space-m;
   width: 100%;
 
   &__image {
     width: vars.$productImage-width;
+    margin: auto;
     aspect-ratio: 1 / 1;
 
     img {
@@ -18,10 +19,17 @@
   }
 
   &__info {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: vars.$space-xxl;
+    width: 100%;
+    @include vars.respond-to(tablet) {
+      margin-top: vars.$space-m;
+    }
+    @include vars.respond-to(desktop-large) {
+      gap: 0;
+    }
+
     &__top,
     &__bottom {
       display: flex;
@@ -31,8 +39,13 @@
       gap: vars.$space-xl;
     }
     &__bottom {
-      gap: vars.$space-xxl;
       margin-top: 32px;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xxl;
+      }
     }
   }
 
@@ -45,6 +58,12 @@
       padding: 16px 32px;
       &:last-child {
         border: 1px solid vars.$color-primary;
+        color: vars.$color-primary;
+        background: none;
+      }
+      &:last-child:disabled {
+        border: 1px solid vars.$color-primary;
+        opacity: 0.5;
         color: vars.$color-primary;
         background: none;
       }
@@ -75,6 +94,12 @@
   }
 }
 
+.modal {
+  &__content {
+    margin-top: 10px;
+  }
+}
+
 @media screen and (max-width: vars.$breakpoint-tablet) {
   .product_item {
     display: flex;
@@ -83,5 +108,25 @@
     &__image {
       width: 100%;
     }
+  }
+
+  .skeleton {
+    &__title {
+      @include vars.skeleton(100%, 1.5em);
+    }
+
+    &__price {
+      @include vars.skeleton(70px, 1.5em);
+    }
+
+    &__button {
+      @include vars.skeleton(119px, 40px);
+    }
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .product_item {
+    gap: vars.$space-xxl;
   }
 }

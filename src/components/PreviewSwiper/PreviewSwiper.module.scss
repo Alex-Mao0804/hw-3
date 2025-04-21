@@ -9,9 +9,9 @@
   &__slide {
     &__img {
       width: 100%;
-      height: auto !important;
+      height: auto;
       object-fit: cover;
-      aspect-ratio: 1 / 1 !important;
+      aspect-ratio: 1 / 1;
     }
   }
 }
@@ -20,16 +20,22 @@
   position: absolute;
   top: calc(50% - 32px);
   z-index: 10;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 64px;
+  height: 64px;
+
+  border-radius: 50%;
   color: vars.$color-bg;
   background-color: vars.$color-primary;
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  @include vars.respond-to(mobile) {
+    width: 40px;
+    height: 40px;
+  }
   &__prev {
     left: vars.$space-xl;
     transform: rotate(-180deg);

@@ -1,0 +1,8 @@
+@use "@variables" as vars;
+
+.cartMultiDropdown {
+  &__dropdown {
+    width: 300px;
+    height: fit-content;
+  }
+}

@@ -1,10 +1,9 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import rootStore from "@/stores/RootStore";
-import FilterStore from "@/stores/FilterStore/FilterStore";
-import CategoryStore from "@/stores/CategoryStore/CategoryStore";
+import { FilterStore, CategoryStore, LimitStore } from "@stores";
 import { ProductEntity } from "@/utils/types";
-import { TFiltersApi } from "@/api/type/directionProduct/list";
-import { getProducts } from "@/api/handlers/directionProduct/list";
+import { TFiltersApi } from "@/api/type/product/list";
+import { getProducts } from "@/api/handlers/product/list";
 import { ILocalStore } from "@/utils/useLocalStore";
 import { initialFilters } from "@/utils/constants";
 
@@ -15,12 +14,14 @@ class ProductStore implements ILocalStore {
   private _totalProducts: number = 0;
   private _filters: FilterStore;
   private _category: CategoryStore;
+  private _limitStore: LimitStore;
   private _disposeReaction: () => void = () => {};
 
   constructor(paramsUrl: URLSearchParams) {
     makeAutoObservable(this);
     this._filters = new FilterStore(rootStore.query);
     this._category = new CategoryStore(this);
+    this._limitStore = new LimitStore(this);
 
     if (paramsUrl.toString() === "") {
       this.fetchProducts(initialFilters);
@@ -62,6 +63,9 @@ class ProductStore implements ILocalStore {
     return this._category;
   }
 
+  get limitStore() {
+    return this._limitStore;
+  }
   get filters() {
     return this._filters;
   }

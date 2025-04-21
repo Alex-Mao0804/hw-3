@@ -1,0 +1,22 @@
+@use "@variables" as vars;
+
+.user_settings {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$space-s;
+
+  &__error {
+    color: red;
+    min-height: vars.$space-m;
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__password {
+    display: flex;
+    flex-direction: row;
+    gap: vars.$space-xs;
+  }
+}

@@ -2,7 +2,9 @@
 
 .categoryFilter {
   &__dropdown {
-    width: 300px;
     height: fit-content;
+    @include vars.respond-to(desktop) {
+      width: 300px;
+    }
   }
 }

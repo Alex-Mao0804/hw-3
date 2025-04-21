@@ -1,17 +1,15 @@
 import { useEffect } from "react";
 import styles from "./ProductPage.module.scss";
-import ArrowSideIcon from "@/components/icons/ArrowSideIcon";
-import Text from "@/components/Text";
 import ProductItem from "./components/ProductItem";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RelatedItems from "./components/RelatedItems";
 import SkeletonProductItem from "./components/ProductItem/SkeletonProductItem";
 import { observer } from "mobx-react-lite";
 import { useLocalStore } from "@/utils/useLocalStore";
 import ItemStore from "@/stores/ItemStore";
+import { Text, ButtonBack } from "@components";
 
 const ProductPage = observer(() => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const itemStore = useLocalStore(() => new ItemStore());
 
@@ -25,32 +23,32 @@ const ProductPage = observer(() => {
   }, [id, fetchItemAndRelated]);
 
   const { product, loading: loadingItem, error } = item;
+  let content;
+
+  if (loadingItem) {
+    content = <SkeletonProductItem />;
+  } else if (!product) {
+    content = (
+      <Text view="p-20" weight="bold">
+        {error}
+      </Text>
+    );
+  } else {
+    content = <ProductItem product={product} />;
+  }
 
   return (
     <div className={styles.product_page}>
-      <div className={styles.navigation}>
-        <button
-          className={styles.navigation__button}
-          onClick={() => navigate(-1)}
-        >
-          <ArrowSideIcon className={styles.navigation__icon} />
-          <Text view="p-20" color="primary" weight="normal">
-            Назад
-          </Text>
-        </button>
-      </div>
+      <ButtonBack />
       <div className={styles.content}>
-        {loadingItem ? (
-          <SkeletonProductItem />
-        ) : !product ? (
-          <Text view="p-20" weight="bold">
-            {error}
-          </Text>
+        {content}
+        {related.relatedProducts && related.relatedProducts?.length > 0 ? (
+          <RelatedItems related={related} />
         ) : (
-          <ProductItem product={product} />
+          <Text view="p-16" color="secondary">
+            Нет похожих товаров
+          </Text>
         )}
-
-        <RelatedItems related={related} />
         <div className={styles.content__related}></div>
       </div>
     </div>

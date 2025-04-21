@@ -3,14 +3,29 @@
 .catalog_page {
   display: flex;
   flex-direction: column;
+
+  @include vars.respond-to(desktop-large) {
+    padding-right: vars.$space-xl2;
+    padding-left: vars.$space-xl2;
+  }
+  @include vars.respond-to(mobile) {
+    padding-right: vars.$space-m;
+    padding-left: vars.$space-m;
+  }
   @include vars.center-container;
   &__header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: vars.$space-xl;
-    width: 653px;
-    margin: 100px auto 50px;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;
+      margin-bottom: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+      width: 653px;
+      margin: 100px auto 50px;
+    }
 
     &__description {
       text-align: center;
@@ -20,57 +35,70 @@
   &__options {
     display: flex;
     flex-direction: column;
-    gap: vars.$space-xl;
+    @include vars.respond-to(tablet) {
+      gap: vars.$space-m;
+    }
+    @include vars.respond-to(desktop) {
+      gap: vars.$space-xl;
+    }
 
     &__button {
-      padding: 16px 32px;
+      width: inherit;
       text-wrap: nowrap;
+    }
+
+    &__button_container {
+      @include vars.respond-to(tablet) {
+        width: 84px;
+      }
+      @include vars.respond-to(desktop) {
+        width: 112px;
+      }
     }
 
     &__search {
       display: flex;
       flex-direction: row;
-      gap: vars.$space-xl;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xl;
+      }
     }
 
     &__filters {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: vars.$space-xl;
+      flex-direction: column;
       flex-wrap: wrap;
+      justify-content: space-between;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
+      }
+      @include vars.respond-to(desktop) {
+        gap: vars.$space-xl;
+      }
+      &__top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        @include vars.respond-to(tablet) {
+          gap: vars.$space-m;
+        }
+        @include vars.respond-to(desktop) {
+          gap: vars.$space-xl;
+        }
+      }
     }
 
     &__filters &__dropdown {
-      width: 300px;
       height: fit-content;
-    }
-  }
-
-  &__pagination {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 69px auto 115px;
-
-    &__button {
-      width: 35px;
-      height: 35px;
-      text-align: center;
-      cursor: pointer;
-      &:first-child {
-        rotate: 180deg;
+      @include vars.respond-to(tablet) {
+        gap: vars.$space-m;
       }
-      svg {
-        width: 35px;
-        height: 35px;
+      @include vars.respond-to(desktop) {
+        width: 300px;
       }
     }
-  }
-}
-
-@media screen and (max-width: calc(vars.$breakpoint-desktop + 40px)) {
-  .catalog_page {
-    padding: 0 30px;
   }
 }

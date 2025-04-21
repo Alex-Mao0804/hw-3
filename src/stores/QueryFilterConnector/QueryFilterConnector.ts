@@ -1,5 +1,5 @@
-import { TFiltersApi } from "@/api/type/directionProduct/list";
-import QueryParamsStore from "@/stores/RootStore/QueryParamsStore";
+import { TFiltersApi } from "@/api/type/product/list";
+import QueryParamsStore from "@stores/RootStore/QueryParamsStore";
 import { NavigateFunction } from "react-router-dom";
 
 export default class QueryFilterConnector {
@@ -21,10 +21,11 @@ export default class QueryFilterConnector {
     if (filters.page) params.page = filters.page;
     if (filters.limit) params.limit = filters.limit;
 
-    this._queryParamsStore.setParams(new URLSearchParams(params).toString());
+    const queryString = new URLSearchParams(params).toString();
+    this._queryParamsStore.setParams(queryString);
 
     if (this._navigate) {
-      this._navigate(`?${new URLSearchParams(params).toString()}`);
+      this._navigate(`?${queryString}`);
     }
   }
 

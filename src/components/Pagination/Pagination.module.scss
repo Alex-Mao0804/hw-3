@@ -5,7 +5,12 @@
   flex-direction: row;
   align-items: center;
   gap: 15px;
-  margin: 69px auto 115px;
+  @include vars.respond-to(tablet) {
+    margin: vars.$space-xl auto;
+  }
+  @include vars.respond-to(desktop) {
+    margin: 69px auto 115px;
+  }
 
   &__button {
     width: 35px;
@@ -21,6 +26,19 @@
     }
 
     &_group {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &:disabled {
+      cursor: unset;
+
+      svg {
+        color: vars.$color-secondary;
+      }
+    }
+
+    &_ciffer {
       width: 38px;
       height: 42px;
       padding: 0;

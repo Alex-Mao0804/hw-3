@@ -1,36 +1,49 @@
 import { useCallback, useEffect } from "react";
 import styles from "./CatalogPage.module.scss";
-import Input from "@components/Input";
-import Button from "@components/Button";
+
 import CatalogProducts from "./components/CatalogProducts";
 import { observer } from "mobx-react-lite";
-import Pagination from "@components/Pagination";
 import CatalogPriceRange from "./components/CatalogPriceRange";
-import Text from "@components/Text";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocalStore } from "@utils/useLocalStore";
 import ProductStore from "@stores/ProductStore/ProductStore";
-import CategoryFilter from "./components/CategoryFilter";
+import CategoryFilter from "@pages/CatalogPage/components/CategoryFilter";
+import LimitFilter from "./components/LimitFilter";
+import { Text, Input, Button, Pagination } from "@components";
 
 const CatalogPage = observer(() => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const productStore = useLocalStore(() => new ProductStore(params));
-  const { filters: filterStore, category: categoryStore } = productStore;
+  const {
+    filters: filterStore,
+    category: categoryStore,
+    limitStore,
+  } = productStore;
 
   useEffect(() => {
     filterStore.setNavigate(navigate);
   }, [navigate, filterStore]);
 
+  const isEqual =
+    String(filterStore.fieldTitle) === String(filterStore.filtersState.title);
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      filterStore.updateAndSync({
-        title: filterStore.getFieldTitle(),
-        page: 1,
-      });
+      if (!isEqual) {
+        filterStore.updateAndSync({
+          title: filterStore.getFieldTitle(),
+          page: 1,
+        });
+      } else {
+        filterStore.setTitle("");
+        filterStore.updateAndSync({
+          title: "",
+          page: 1,
+        });
+      }
     },
-    [filterStore],
+    [filterStore, isEqual],
   );
   const handleChangePage = useCallback(
     (page: number) => {
@@ -68,18 +81,23 @@ const CatalogPage = observer(() => {
             }}
             placeholder="Product name"
           />
-          <Button
-            className={styles.catalog_page__options__button}
-            disabled={false}
-          >
-            Find now
-          </Button>
+          <div className={styles.catalog_page__options__button_container}>
+            <Button
+              className={styles.catalog_page__options__button}
+              disabled={!filterStore.fieldTitle}
+            >
+              {!isEqual || !filterStore.fieldTitle ? "Find now" : "Reset"}
+            </Button>
+          </div>
         </form>
         <div className={styles.catalog_page__options__filters}>
-          <CategoryFilter
-            categoryStore={categoryStore}
-            filterStore={filterStore}
-          />
+          <div className={styles.catalog_page__options__filters__top}>
+            <CategoryFilter
+              categoryStore={categoryStore}
+              filterStore={filterStore}
+            />
+            <LimitFilter limitStore={limitStore} filterStore={filterStore} />
+          </div>
           <CatalogPriceRange productStore={productStore} />
         </div>
       </div>

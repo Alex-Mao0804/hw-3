@@ -3,16 +3,19 @@
 .price_range {
   display: flex;
   flex-direction: row;
-  gap: vars.$space-xl;
+  width: fit-content;
+  @include vars.respond-to(tablet) {
+    gap: vars.$space-xxs;
+  }
+  @include vars.respond-to(desktop) {
+    gap: vars.$space-xl;
+  }
   &__button {
-    padding: 16px 32px;
+    max-width: 150px;
+    width: 100%;
     text-wrap: nowrap;
   }
-}
-
-@media screen and (max-width: calc(vars.$breakpoint-tablet)) {
-  .price_range {
-    flex-direction: column;
-    gap: vars.$space-m;
+  &__input {
+    min-width: 95px;
   }
 }

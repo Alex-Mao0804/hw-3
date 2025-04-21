@@ -1,4 +1,5 @@
 import clsx from "clsx";
+
 import styles from "./CheckBox.module.scss";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { useCallback } from "react";

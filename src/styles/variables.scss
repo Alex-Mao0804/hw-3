@@ -7,6 +7,7 @@ $color-text-disabled: rgba(0, 0, 0, 0.2);
 $color-bg: #fff;
 $color-bg-disabled: rgba(255, 255, 255, 0.5);
 $color-card-bg: #d9d9d9;
+$color-error: red;
 
 $color-bg-main: #fafafa;
 
@@ -18,6 +19,7 @@ $font-size-p-20: 20px;
 $font-size-button: 16px;
 
 $space-xxl: 48px;
+$space-xl2: 30px;
 $space-xl: 24px;
 $space-l: 20px;
 $space-m: 16px;
@@ -35,18 +37,54 @@ $button-hover-bg: $color-primary-hover;
 $button-active-bg: $color-primary-active;
 $button-disabled-bg: $color-card-bg;
 
+$breakpoint-mobile: 540px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1240px;
 
+$input_button_height: 52px;
+$input_button_height-tablet: 40px;
+
 @mixin center-container {
-  display: flex;
-  justify-content: center;
-  max-width: 1240px;
-  margin: 0 auto;
+  & {
+    display: flex;
+    justify-content: center;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: $header-height;
+  }
+
+  @media (max-width: calc($breakpoint-desktop + 40px)) {
+    @content;
+  }
 }
 
 $card-width: 360px;
 $card-height: 622px;
+$card-width-tablet: 300px;
+$card-height-tablet: 518px;
+
+$header-height: 90px;
+$header-height-mobile: 65px;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-mobile) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (max-width: $breakpoint-tablet) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: calc($breakpoint-tablet + 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == desktop-large {
+    @media (max-width: calc($breakpoint-desktop + 40px)) {
+      @content;
+    }
+  }
+}
 
 @mixin skeleton($width: 100%, $height: 100px) {
   width: $width;
