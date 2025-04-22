@@ -110,7 +110,6 @@ class ProductStore implements ILocalStore {
   }
   destroy() {
     this._disposeReaction();
-    // this._category.destroy();
     this._filters.destroy();
     this._products = [];
     this._isLoading = false;
