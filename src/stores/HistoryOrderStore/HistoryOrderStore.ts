@@ -11,7 +11,9 @@ export default class HistoryOrderStore implements ILocalStore {
 
   constructor() {
     makeAutoObservable(this);
+  }
 
+  init() {
     this._dispose = autorun(() => {
       if (rootStore.user.isAuth) {
         this.fetchOrders();
