@@ -4,8 +4,9 @@ import QueryParamsStore from "@/stores/RootStore/QueryParamsStore";
 import QueryFilterConnector from "@/stores/QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
 import { TFiltersApi } from "@/api/type/product/list";
-import rootStore from "@/stores/RootStore";
 import { ILocalStore } from "@/utils/useLocalStore";
+import LimitStore from "../LimitStore";
+import CategoryStore from "../CategoryStore";
 
 export default class FilterStore implements ILocalStore {
   private _fieldTitle: string = "";
@@ -13,28 +14,33 @@ export default class FilterStore implements ILocalStore {
   private _fieldPriceRangeMax: number | null = null;
   private _filtersState: TFiltersApi = initialFilters;
   private _connector: QueryFilterConnector;
+  private _limitStore: LimitStore;
+  private _categoryStore: CategoryStore;
 
-  constructor(private queryParamsStore: QueryParamsStore) {
+  constructor(private _queryParamsStore: QueryParamsStore) {
     makeAutoObservable(this);
 
-    this._connector = new QueryFilterConnector(this.queryParamsStore);
+    this._connector = new QueryFilterConnector(this.queryParamsStore, this);
+    this._connector.syncQueryToFilters();
 
-    this.syncFiltersWithQueryParams();
+    this._limitStore = new LimitStore(this.queryParamsStore);
+    this._categoryStore = new CategoryStore(this);
   }
 
-  syncFiltersWithQueryParams() {
-    const params = rootStore.query.getParams();
-    const { title, categoryId, price_min, price_max, page, limit } = params;
-    if (title) this.setTitle(String(title));
-    if (categoryId) this.setCategoryId(Number(categoryId));
-    if (price_min) this.setPriceRangeMin(Number(price_min));
-    if (price_max) this.setPriceRangeMax(Number(price_max));
-    if (page) this.setPage(Number(page));
-    if (limit) this.setLimit(Number(limit));
+  get queryParamsStore() {
+    return this._queryParamsStore;
   }
 
   get connector() {
     return this._connector;
+  }
+
+  get limitStore() {
+    return this._limitStore;
+  }
+
+  get categoryStore() {
+    return this._categoryStore;
   }
 
   get fieldTitle() {

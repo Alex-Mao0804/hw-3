@@ -11,9 +11,18 @@
     gap: vars.$space-xl;
   }
   &__button {
+    width: inherit;
     max-width: 150px;
-    width: 100%;
     text-wrap: nowrap;
+
+    &__container {
+      @include vars.respond-to(tablet) {
+        width: 110px;
+      }
+      @include vars.respond-to(desktop) {
+        width: 150px;
+      }
+    }
   }
   &__input {
     min-width: 95px;
