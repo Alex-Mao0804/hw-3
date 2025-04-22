@@ -22,6 +22,10 @@ const CatalogPage = observer(() => {
   } = productStore;
 
   useEffect(() => {
+    productStore.init();
+  }, [productStore]);
+
+  useEffect(() => {
     filterStore.setNavigate(navigate);
   }, [navigate, filterStore]);
 

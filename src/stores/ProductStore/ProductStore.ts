@@ -26,8 +26,6 @@ class ProductStore implements ILocalStore {
     if (paramsUrl.toString() === "") {
       this.fetchProducts(initialFilters);
     }
-
-    this.init();
   }
 
   init() {
@@ -124,7 +122,7 @@ class ProductStore implements ILocalStore {
     }
   }
   destroy() {
-    this._disposeReaction(); // теперь это корректно отключает реакцию
+    this._disposeReaction();
     this._category.destroy();
     this._filters.destroy();
     this._products = [];

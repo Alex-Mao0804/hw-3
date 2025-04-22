@@ -67,7 +67,6 @@ export const mockGetOrdersByEmail = async (
         ),
       );
 
-      // Type guard для фильтрации null
       const enrichedItems: ProductEntityWithQuantity[] =
         itemsWithNullableProducts.filter(
           (item): item is ProductEntityWithQuantity => item !== null,

@@ -5,9 +5,14 @@ import { useLocalStore } from "@/utils/useLocalStore";
 import ItemOrder from "@pages/UserPage/components/ItemOrder";
 import { Text, Loader, EmptyList } from "@components";
 import SkeletonItemOrder from "@pages/UserPage/components/ItemOrder/SkeletonItemOrder";
+import { useEffect } from "react";
 
 const UserHistory = observer(() => {
   const historyOrderStore = useLocalStore(() => new HistoryOrderStore());
+
+  useEffect(() => {
+    historyOrderStore.init();
+  }, [historyOrderStore]);
 
   const loading = historyOrderStore.isLoading;
   const total = historyOrderStore.orders.length;
