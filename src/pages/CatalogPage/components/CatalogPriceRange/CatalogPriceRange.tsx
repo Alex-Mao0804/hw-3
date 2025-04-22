@@ -13,15 +13,18 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
     const { filters } = productStore;
     const price_min = filters.fieldPriceRangeMin;
     const price_max = filters.fieldPriceRangeMax;
-    const price_min_query = filters.filtersState.price_min;
-    const price_max_query = filters.filtersState.price_max;
-
-    const hasQueryValue = Boolean(price_min_query) || Boolean(price_max_query);
+    const price_min_query = Number(filters.filtersState.price_min) || 0;
+    const price_max_query = Number(filters.filtersState.price_max) || 0;
 
     const handleSubmit = useCallback(
       (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!hasQueryValue) {
+
+        const hasQueryValue = price_min_query || price_max_query;
+        const isChanged =
+          price_min !== price_min_query || price_max !== price_max_query;
+
+        if (!hasQueryValue || isChanged) {
           filters.updateAndSync({
             price_min,
             price_max,
@@ -37,14 +40,20 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
           });
         }
       },
-      [filters, price_min, price_max, hasQueryValue],
+      [filters, price_min, price_max, price_min_query, price_max_query],
     );
+
     const isDisabled =
       !price_min ||
       !price_max ||
       price_max === 0 ||
       price_min === 0 ||
       price_max < price_min;
+
+    const showFilterButton =
+      !(price_min_query || price_max_query) ||
+      price_min !== price_min_query ||
+      price_max !== price_max_query;
 
     return (
       <form onSubmit={handleSubmit} className={styles.price_range}>
@@ -88,9 +97,11 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
             </div>
           }
         />
-        <Button className={styles.price_range__button} disabled={isDisabled}>
-          {!hasQueryValue ? "Filter by price" : "Reset"}
-        </Button>
+        <div className={styles.price_range__button__container}>
+          <Button className={styles.price_range__button} disabled={isDisabled}>
+            {showFilterButton ? "Filter by price" : "Reset"}
+          </Button>
+        </div>
       </form>
     );
   },

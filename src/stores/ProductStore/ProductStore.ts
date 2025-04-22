@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import rootStore from "@/stores/RootStore";
-import { FilterStore, CategoryStore, LimitStore } from "@stores";
+import { FilterStore } from "@stores";
 import { ProductEntity } from "@/utils/types";
 import { TFiltersApi } from "@/api/type/product/list";
 import { getProducts } from "@/api/handlers/product/list";
@@ -13,15 +13,11 @@ class ProductStore implements ILocalStore {
   private _totalPages: number = 1;
   private _totalProducts: number = 0;
   private _filters: FilterStore;
-  private _category: CategoryStore;
-  private _limitStore: LimitStore;
   private _disposeReaction: () => void = () => {};
 
   constructor(paramsUrl: URLSearchParams) {
     makeAutoObservable(this);
     this._filters = new FilterStore(rootStore.query);
-    this._category = new CategoryStore(this);
-    this._limitStore = new LimitStore(this);
 
     if (paramsUrl.toString() === "") {
       this.fetchProducts(initialFilters);
@@ -29,8 +25,6 @@ class ProductStore implements ILocalStore {
   }
 
   init() {
-    this._category.fetchCategories();
-
     this._disposeReaction = reaction(
       () => rootStore.query.getParams(),
       (params) => {
@@ -57,13 +51,6 @@ class ProductStore implements ILocalStore {
     return rootStore.query.getParams();
   }
 
-  get category() {
-    return this._category;
-  }
-
-  get limitStore() {
-    return this._limitStore;
-  }
   get filters() {
     return this._filters;
   }
@@ -123,7 +110,6 @@ class ProductStore implements ILocalStore {
   }
   destroy() {
     this._disposeReaction();
-    this._category.destroy();
     this._filters.destroy();
     this._products = [];
     this._isLoading = false;

@@ -54,7 +54,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = observer(
                 contentSlot={`$${product.price}`}
                 actionSlot={
                   <Button
-                    disabled={false}
+                    disabled={rootStore.cart.checkProduct(product)}
                     loading={false}
                     onClick={(e) => {
                       e.stopPropagation();

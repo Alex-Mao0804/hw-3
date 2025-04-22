@@ -15,11 +15,7 @@ const CatalogPage = observer(() => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const productStore = useLocalStore(() => new ProductStore(params));
-  const {
-    filters: filterStore,
-    category: categoryStore,
-    limitStore,
-  } = productStore;
+  const { filters: filterStore } = productStore;
 
   useEffect(() => {
     productStore.init();
@@ -97,10 +93,13 @@ const CatalogPage = observer(() => {
         <div className={styles.catalog_page__options__filters}>
           <div className={styles.catalog_page__options__filters__top}>
             <CategoryFilter
-              categoryStore={categoryStore}
+              categoryStore={filterStore.categoryStore}
               filterStore={filterStore}
             />
-            <LimitFilter limitStore={limitStore} filterStore={filterStore} />
+            <LimitFilter
+              limitStore={filterStore.limitStore}
+              filterStore={filterStore}
+            />
           </div>
           <CatalogPriceRange productStore={productStore} />
         </div>
