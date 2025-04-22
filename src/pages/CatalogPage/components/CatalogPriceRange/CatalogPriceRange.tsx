@@ -1,7 +1,7 @@
 import styles from "./CatalogPriceRange.module.scss";
 import { observer } from "mobx-react-lite";
 import ProductStore from "@/stores/ProductStore/ProductStore";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Text, Input, Button } from "@components";
 
 type TPriceRange = {
@@ -16,9 +16,6 @@ const CatalogPriceRange: React.FC<TPriceRange> = observer(
     const price_min_query = Number(filters.filtersState.price_min) || 0;
     const price_max_query = Number(filters.filtersState.price_max) || 0;
 
-    useEffect(() => {
-      console.log(price_min_query, price_max_query);
-    }, [price_min_query, price_max_query]);
     const handleSubmit = useCallback(
       (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
