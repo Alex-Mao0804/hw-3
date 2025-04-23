@@ -1,8 +1,9 @@
-import { TFiltersApi } from "@/api/type/product/list";
+import { TFiltersState } from "@/api/type/product/list";
 import QueryParamsStore from "@/stores/RootStore/QueryParamsStore";
 import FilterStore from "@/stores/FilterStore";
 import { NavigateFunction } from "react-router-dom";
 import { ILocalStore } from "@/utils/useLocalStore";
+import * as qs from "qs";
 
 export default class QueryFilterConnector implements ILocalStore {
   private _queryParamsStore: QueryParamsStore;
@@ -32,18 +33,13 @@ export default class QueryFilterConnector implements ILocalStore {
     if (params.limit) this._filterStore.setLimit(Number(params.limit));
   }
 
-  syncFiltersToQuery(filters: TFiltersApi) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const params: Record<string, any> = {};
+  syncFiltersToQuery() {
+    const filters: TFiltersState = this._filterStore.filtersState;
+    const queryString = qs.stringify(filters, {
+      addQueryPrefix: false,
+      skipNulls: true,
+    });
 
-    if (filters.title) params.title = filters.title;
-    if (filters.categoryId) params.categoryId = filters.categoryId;
-    if (filters.price_min) params.price_min = filters.price_min;
-    if (filters.price_max) params.price_max = filters.price_max;
-    if (filters.page) params.page = filters.page;
-    if (filters.limit) params.limit = filters.limit;
-
-    const queryString = new URLSearchParams(params).toString();
     this._queryParamsStore.setParams(queryString);
 
     if (this._navigate) {

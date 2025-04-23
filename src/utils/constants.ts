@@ -1,8 +1,8 @@
-import { TFiltersApi } from "@/api/type/product/list";
+import { TFiltersState } from "@/api/type/product/list";
 import { OptionEntity } from "@types";
 
-export const initialFilters: TFiltersApi = {
-  title: "",
+export const initialFilters: TFiltersState = {
+  title: null,
   categoryId: null,
   page: 1,
   limit: 9,

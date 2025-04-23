@@ -27,6 +27,7 @@ const CatalogPage = observer(() => {
 
   const isEqual =
     String(filterStore.fieldTitle) === String(filterStore.filtersState.title);
+
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -36,9 +37,9 @@ const CatalogPage = observer(() => {
           page: 1,
         });
       } else {
-        filterStore.setTitle("");
+        filterStore.setTitle(null);
         filterStore.updateAndSync({
-          title: "",
+          title: null,
           page: 1,
         });
       }
@@ -75,7 +76,7 @@ const CatalogPage = observer(() => {
           className={styles.catalog_page__options__search}
         >
           <Input
-            value={String(filterStore.fieldTitle)}
+            value={filterStore.fieldTitle || ""}
             onChange={(e) => {
               filterStore.setTitle(e);
             }}

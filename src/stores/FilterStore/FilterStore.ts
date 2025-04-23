@@ -3,16 +3,16 @@ import { initialFilters } from "@/utils/constants";
 import QueryParamsStore from "@/stores/RootStore/QueryParamsStore";
 import QueryFilterConnector from "@/stores/QueryFilterConnector";
 import { NavigateFunction } from "react-router-dom";
-import { TFiltersApi } from "@/api/type/product/list";
+import { TFiltersState } from "@/api/type/product/list";
 import { ILocalStore } from "@/utils/useLocalStore";
 import LimitStore from "../LimitStore";
 import CategoryStore from "../CategoryStore";
 
 export default class FilterStore implements ILocalStore {
-  private _fieldTitle: string = "";
+  private _fieldTitle: string | null = null;
   private _fieldPriceRangeMin: number | null = null;
   private _fieldPriceRangeMax: number | null = null;
-  private _filtersState: TFiltersApi = initialFilters;
+  private _filtersState: TFiltersState = initialFilters;
   private _connector: QueryFilterConnector;
   private _limitStore: LimitStore;
   private _categoryStore: CategoryStore;
@@ -59,12 +59,12 @@ export default class FilterStore implements ILocalStore {
     return this._fieldPriceRangeMax;
   }
 
-  updateAndSync(filters: TFiltersApi) {
+  updateAndSync(filters: TFiltersState) {
     this.setFilters(filters);
-    this.connector.syncFiltersToQuery(this.filtersState);
+    this.connector.syncFiltersToQuery();
   }
 
-  setFilters(filters: TFiltersApi) {
+  setFilters(filters: TFiltersState) {
     this._filtersState = {
       ...this._filtersState,
       ...filters,
@@ -79,7 +79,7 @@ export default class FilterStore implements ILocalStore {
     return this._filtersState;
   }
 
-  setTitle(title: string) {
+  setTitle(title: string | null) {
     this._fieldTitle = title;
   }
 
