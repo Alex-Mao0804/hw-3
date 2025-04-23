@@ -1,5 +1,5 @@
-export type TFiltersApi = Partial<{
-  title: string;
+export type TFiltersState = Partial<{
+  title: string | null;
   categoryId: number | null;
   page: number;
   limit: number;

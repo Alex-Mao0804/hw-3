@@ -2,7 +2,7 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import rootStore from "@/stores/RootStore";
 import { FilterStore } from "@stores";
 import { ProductEntity } from "@/utils/types";
-import { TFiltersApi } from "@/api/type/product/list";
+import { TFiltersState } from "@/api/type/product/list";
 import { getProducts } from "@/api/handlers/product/list";
 import { ILocalStore } from "@/utils/useLocalStore";
 import { initialFilters } from "@/utils/constants";
@@ -38,7 +38,7 @@ class ProductStore implements ILocalStore {
     );
   }
 
-  private setFiltersFromParams(params: TFiltersApi) {
+  private setFiltersFromParams(params: TFiltersState) {
     this._filters.setFilters(params);
     if (params.title) this._filters.setTitle(String(params.title));
     if (params.price_max)
@@ -70,7 +70,7 @@ class ProductStore implements ILocalStore {
     return this._totalProducts;
   }
 
-  async fetchProducts(filters: TFiltersApi) {
+  async fetchProducts(filters: TFiltersState) {
     this._isLoading = true;
 
     try {
